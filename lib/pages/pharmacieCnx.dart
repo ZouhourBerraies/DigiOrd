@@ -216,6 +216,9 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
 
       body: Container(
         padding: EdgeInsets.all(0.0),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
         child:Form(
           key: _formKey,
           child: Column(children: <Widget>[
@@ -266,7 +269,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
               ],
             ),
           ]),
-        ),),
+        ),),),
       bottomNavigationBar:
       new BottomNavigationBar(items:[
         new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),

@@ -111,6 +111,9 @@ class _medecin_loginstate extends State<medecin_login>{
       body: Center(
         child: Container(
           padding: EdgeInsets.all(50.0),
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
           child: Form(
             key: _formKey,
           child:Column(
@@ -118,7 +121,11 @@ class _medecin_loginstate extends State<medecin_login>{
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child:Image(image:AssetImage('images/doctor.jpg')),),
+                      child:Image(image:AssetImage('images/doctor.jpg'),
+                       // width: 1000,
+                       // height: 100,
+                      ),
+                    ),
                     Expanded(
                       child: Column(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -242,7 +249,6 @@ class _medecin_loginstate extends State<medecin_login>{
                                 SizedBox(
                                   height: 30,
                                 ),
-                                buildAff(),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:<Widget> [
@@ -263,7 +269,8 @@ class _medecin_loginstate extends State<medecin_login>{
                                         padding: EdgeInsets.all(15.0),
                                         splashColor: Colors.cyan.shade600,)
                                     ]
-                                )
+                                ),
+                                buildAff(),
                               ],
                             ),
 
@@ -278,7 +285,7 @@ class _medecin_loginstate extends State<medecin_login>{
               ]
           ),
     ),
-        ),
+        ),),
       ),
       bottomNavigationBar: new BottomNavigationBar(items:[
         new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),

@@ -119,6 +119,9 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
             //     fit: BoxFit.cover),
         ),
           //width: 1000, height: 1000,
+    child: SingleChildScrollView(
+    physics: AlwaysScrollableScrollPhysics(),
+    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
     child:Form(
     key: _formKey,
           child:Column(
@@ -144,9 +147,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                     fontWeight: FontWeight.bold,
                                     color: Colors.deepOrange.shade700,
                                   ),),
-                                SizedBox(
-                                  height: 50,
-                                ),
+                                SizedBox(height: 50,),
                                 TextFormField(
                                   controller: _cinController,
                                   onChanged: (value){
@@ -252,10 +253,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
 
                                   splashColor: Colors.black45,
                                 ),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                buildAff(),
+                                SizedBox(height: 30,),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:<Widget> [
@@ -267,7 +265,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                             )
                                         );
                                       },
-                                      //createbtn, 
+
                                       child: Text('S\'inscrire',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                                         //color: Colors.black45,
                                         shape: RoundedRectangleBorder(
@@ -277,7 +275,9 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                         padding: EdgeInsets.all(15.0),
                                         splashColor: Colors.deepOrange.shade700,)
                                     ]
-                                )
+                                ),
+                                buildAff(),
+
                               ],
                             ),
                           ),
@@ -290,6 +290,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                 ),
               ]
           ),
+    ),
     ),
         ),
       ),

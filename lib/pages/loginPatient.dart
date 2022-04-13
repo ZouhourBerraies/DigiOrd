@@ -121,7 +121,11 @@ class _patient_loginstate extends State<patient_login>{
             //     fit: BoxFit.cover),
           ),
           //width: 1000, height: 1000,
+    child: SingleChildScrollView(
+    physics: AlwaysScrollableScrollPhysics(),
+    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
     child:Form(
+
     key: _formKey,
           child:Column(
             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -255,7 +259,6 @@ class _patient_loginstate extends State<patient_login>{
                                 SizedBox(
                                   height: 30,
                                 ),
-                                buildAff(),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:<Widget> [
@@ -276,7 +279,9 @@ class _patient_loginstate extends State<patient_login>{
                                         padding: EdgeInsets.all(15.0),
                                         splashColor: Colors.indigo.shade300,)
                                     ]
-                                )
+                                ),
+                                buildAff(),
+
                               ],
                             ),
                           ),
@@ -290,6 +295,7 @@ class _patient_loginstate extends State<patient_login>{
               ]
           ),
     ),
+        ),
         ),
       ),
       bottomNavigationBar:
