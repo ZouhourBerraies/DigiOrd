@@ -243,6 +243,8 @@ class _medecin_cnxState extends State<medecin_cnx> {
                     Container(
                       padding: EdgeInsets.all(50),
 
+
+
                       child: Column(
                         children: [
                           Text(
