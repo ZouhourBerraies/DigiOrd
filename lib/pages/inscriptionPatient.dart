@@ -47,6 +47,7 @@ class _InscriptionState extends State<Inscription> {
   String password='0000';
   String mdpc='0000';
   int tel= 00000000;
+  String id='X';
 
 
   Widget builCin() {
@@ -83,6 +84,7 @@ class _InscriptionState extends State<Inscription> {
                 }else
                   //return null;
                   cin=int.parse(value);
+                id=value;
 
               }
             },
@@ -539,8 +541,8 @@ class _InscriptionState extends State<Inscription> {
               content: Text('inscription a été effectué avec succès.'),
             ),
           );
-          profileList
-              .add({
+          profileList.doc(id)
+              .set({
             'cin': cin,
             'nom': nom,
             'prenom':prenom,

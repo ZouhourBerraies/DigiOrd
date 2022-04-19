@@ -12,7 +12,7 @@ class _AddnoteState extends State<Addnote> {
   TextEditingController time = TextEditingController();
   // CollectionReference ref = FirebaseFirestore.instance.collection('dossiers');
 
-  DateTime date = DateTime(2022, 03, 22);
+  DateTime date = new DateTime.now();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
