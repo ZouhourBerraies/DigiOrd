@@ -5,12 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
+import 'gereOrdonnance.dart';
 
 
 
 
 class Addord extends StatefulWidget {
   @override
+  String idmedecin;
+  String idpatient;
+  Addord({required this.idmedecin,required this.idpatient});
   _AddordState createState() => _AddordState();
 }
 
@@ -19,7 +23,8 @@ class _AddordState extends State<Addord> {
   /* variable */
   final _formKey = GlobalKey<FormState>();
   final _Key = GlobalKey<FormState>();
-  final CollectionReference ordList = FirebaseFirestore.instance.collection('ListeOrdonnance');
+
+  final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPatient');
   TextEditingController _medicController = TextEditingController();
   TextEditingController _doseController = TextEditingController();
   TextEditingController _parjourController = TextEditingController();
@@ -40,6 +45,9 @@ class _AddordState extends State<Addord> {
   int medecin=0;
   String random='X';
   DateTime date = new DateTime.now();
+  String signature='';
+  String idd='X';
+
 
 
   Widget buildRnadom(){
@@ -69,6 +77,18 @@ class _AddordState extends State<Addord> {
           // height: 70,
           color: Colors.white,),
         ),
+        /*SizedBox(height: 10),
+      Expanded(
+          child:
+          ElevatedButton.icon(
+  onPressed: () {
+  openDialogueBox(context);
+  },
+  icon: const Icon(Icons.add),
+  label: const Text('ajouter medicament'),
+  ),
+
+  ),*/
 
 
 
@@ -102,8 +122,8 @@ class _AddordState extends State<Addord> {
       ],
     );
   }
-  /*Widget buildAff() {
-    final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('ListeOrdonnance').doc(random).collection("ListeMedicament").snapshots();
+  Widget buildAff() {
+    final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('profileInfoPatient').doc(widget.idpatient).collection('ListeOrdonnance').doc(random).collection("ListeMedicament").snapshots();
 
     return Container(
       height: 250,
@@ -154,7 +174,7 @@ class _AddordState extends State<Addord> {
       ),
 
     );
-  }*/
+  }
 
 
 
@@ -194,8 +214,17 @@ class _AddordState extends State<Addord> {
     );
   }
 
-  Widget buildTextField(BuildContext context) => TextField(
+  Widget buildTextField(BuildContext context) => TextFormField(
     controller: controllerqr,
+    onChanged: (value){
+      signature=value;
+    },
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'entrer votre signature !';
+      } else
+        return null;
+    },
     style: TextStyle(
       color: Colors.black,
       //fontWeight: FontWeight.bold,
@@ -241,7 +270,7 @@ class _AddordState extends State<Addord> {
                 ),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              hintText: "Entrer numero du Medecin ...",
+              hintText: "Entrer numero du Medecin ...${widget.idmedecin}",
               hintStyle: TextStyle(
                 color: Color.fromARGB(255, 255, 255, 255),
                 fontStyle: FontStyle.italic,
@@ -258,6 +287,7 @@ class _AddordState extends State<Addord> {
             controller: _patientController,
             onChanged: (value){
               patient=int.parse(value);
+
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -275,7 +305,7 @@ class _AddordState extends State<Addord> {
                 ),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              hintText: "Entrer le nom du Patient ...",
+              hintText: "Entrer le nom du Patient ...${widget.idpatient}",
               hintStyle: TextStyle(
                 color: Color.fromARGB(255, 255, 255, 255),
                 fontStyle: FontStyle.italic,
@@ -292,6 +322,10 @@ class _AddordState extends State<Addord> {
 
   /*      **************            */
   @override
+  /*void initState(){
+    getData();
+    super.initState();
+  }*/
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -323,6 +357,17 @@ class _AddordState extends State<Addord> {
                     Container(
                       height: double.infinity,
                       width: double.infinity,
+                      //decoration: BoxDecoration(
+                      /*gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.indigo.shade400,
+                              Colors.indigo.shade300,
+                              Colors.indigo.shade200,
+                              Colors.indigo.shade100,
+                            ])*/
+                      //),
                       child: SingleChildScrollView(
                         physics: AlwaysScrollableScrollPhysics(),
                         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
@@ -392,30 +437,38 @@ class _AddordState extends State<Addord> {
                               //),
                               SizedBox(
                                 //height: 10,
-                                //child:buildAff(),
-                                 ),
+                                child:buildAff(),),
                               SizedBox(height: 10,),
                               buildqr(context),
                               SizedBox(height: 10,),
                               ElevatedButton.icon(
-                                  onPressed: ()
-                                  {
-                                   /* ordList.doc(random)
+                                  onPressed: (){
+                                    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(random)
                                         .set({
                                       'date':date,
                                       'medecin': medecin,
                                       'patient':patient,
+                                      'signature':signature,
+                                      'numero':random,
                                     }).then((value) => print('user added'))
                                         .catchError((error) => print('erreur add user:$error'));
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text('Sending data to cloud firesstore'),
                                       ),
-                                    );     */
-                                    },
+                                    );
+                                    //Navigator.pop(context);
+
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (_) =>gerer_ord(
+                                        idpatient:widget.idpatient,idmedecin:widget.idmedecin                                )));
+                                  },
                                   icon: const Icon(Icons.save),
                                   label: const Text('Save')),
-
+                              /*Scrollbar(
+              showTrackOnHover: true,
+              child:buildqr(context),
+            ),*/
 
 
 
@@ -517,7 +570,7 @@ class _AddordState extends State<Addord> {
             actions: [
               FlatButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (_Key.currentState!.validate()) {
                     submitAction(context);
                     Navigator.pop(context);
                   }
@@ -536,7 +589,7 @@ class _AddordState extends State<Addord> {
   }
 
   submitAction(BuildContext context) {
-   /* ordList.doc(random).collection("ListeMedicament")
+    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(random).collection("ListeMedicament")
         .add({'Medicament': medic,
       'dose': dose,
       'par jour': parjour,
@@ -547,7 +600,7 @@ class _AddordState extends State<Addord> {
       SnackBar(
         content: Text('Sending data to cloud firesstore'),
       ),
-    );*/
+    );
     _medicController.clear();
     _doseController.clear();
     _parjourController.clear();

@@ -23,6 +23,7 @@ class _medecin_loginstate extends State<medecin_login>{
   String password='0000';
   int cin=11111111;
   List itemsList=[];
+  String id="";
   /* login */
   Widget buildAff(){
     final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoMedecin').snapshots();
@@ -150,6 +151,7 @@ class _medecin_loginstate extends State<medecin_login>{
                                   controller: _cinController,
                                   onChanged: (value){
                                     cin=int.parse(value);
+                                    id=value;
                                   },
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -222,7 +224,7 @@ class _medecin_loginstate extends State<medecin_login>{
 
                                       Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => medecin_cnx()
+                                          MaterialPageRoute(builder: (context) => medecin_cnx( idmedecin:id)
                                           )
                                       );
 

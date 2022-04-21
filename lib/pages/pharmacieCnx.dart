@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../pages/pharmacieGere.dart';
 
 
 class pharmacie_cnx extends StatefulWidget {
@@ -25,6 +26,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
 
 
   int cin=11111111;
+  String id="";
 
 
 
@@ -62,6 +64,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
                 }else
                   //return null;
                   cin=int.parse(value);
+                id=value;
 
               }
             },
@@ -152,11 +155,11 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
                   content: Text('Patient existe !'),
                 ),
               );
-              /*Navigator.push(
+              Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => medecin_gerer()
+                  MaterialPageRoute(builder: (context) => pharamcie_gere(idpatient:id)
                   )
-              );*/
+              );
               _cinController.clear();
             } else{
               ScaffoldMessenger.of(context).showSnackBar(
@@ -194,7 +197,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Zone Médecin'),
+        title: Text('Zone Pharmacie'),
         backgroundColor: Colors.cyan.shade700,
 
         actions: [

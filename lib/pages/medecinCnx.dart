@@ -8,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class medecin_cnx extends StatefulWidget {
   @override
+  String idmedecin;
+  medecin_cnx({required this.idmedecin});
   _medecin_cnxState createState() => _medecin_cnxState();
 }
 
@@ -25,7 +27,7 @@ class _medecin_cnxState extends State<medecin_cnx> {
 
 
   int cin=11111111;
-
+  String id='';
 
 
   Widget builNumero() {
@@ -62,6 +64,7 @@ class _medecin_cnxState extends State<medecin_cnx> {
                 }else
                   //return null;
                   cin=int.parse(value);
+                id=value;
 
               }
             },
@@ -152,13 +155,13 @@ class _medecin_cnxState extends State<medecin_cnx> {
                   content: Text('Ajouter nouveau patient'),
                 ),
               );
-              profileList
-                  .add({
+              profileList.doc(id)
+                  .set({
                 'cin': cin,
-                'nom': '',
-                'prenom':'',
-                'email':'',
-                'telephone':'',
+                'nom': '?',
+                'prenom':'?',
+                'email':'?',
+                'telephone':'?',
                 'password': cin.toString(),
               }).then((value) => print('user added'))
                   .catchError((error) => print('erreur add user:$error'));
@@ -172,7 +175,7 @@ class _medecin_cnxState extends State<medecin_cnx> {
             }
             Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => medecin_gerer()
+                MaterialPageRoute(builder: (context) => medecin_gerer( idpatient:id,idmedecin:widget.idmedecin)
                 )
             );
 

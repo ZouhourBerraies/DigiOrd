@@ -2,21 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-import '../pages/gereDossier.dart';
-import '../pages/gereOrdonnance.dart';
+
+import '../pages/listeOrdPatient.dart';
 
 
-class medecin_gerer extends StatefulWidget{
+class patient_cnx extends StatefulWidget{
   @override
-  String idmedecin;
   String idpatient;
-  medecin_gerer({required this.idmedecin,required this.idpatient});
+  patient_cnx({required this.idpatient});
   State<StatefulWidget> createState() {
-    return new _medecin_gererState();
+    return new _patient_cnxState();
   }
 }
 
-class _medecin_gererState extends State<medecin_gerer> {
+class _patient_cnxState extends State<patient_cnx> {
   void shownBottomSheet(){
     showModalBottomSheet(context: context, builder:( BuildContext context){
       return new Container(
@@ -41,23 +40,23 @@ class _medecin_gererState extends State<medecin_gerer> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        
 
-         backgroundColor: Colors.white,
-          actions: [
-        RaisedButton(
-    onPressed: () async {
-      //await _auth.signOut().then((result) {
-        Navigator.of(context).pop(true);
-     // });
-    },
-    child : Icon(
-    Icons.exit_to_app,
-    color: Colors.white,
-      ),
-      color: Colors.cyan,
-    ),
-          ],
+
+        backgroundColor: Colors.white,
+        actions: [
+          RaisedButton(
+            onPressed: () async {
+              //await _auth.signOut().then((result) {
+              Navigator.of(context).pop(true);
+              // });
+            },
+            child : Icon(
+              Icons.exit_to_app,
+              color: Colors.white,
+            ),
+            color: Colors.cyan,
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -69,7 +68,7 @@ class _medecin_gererState extends State<medecin_gerer> {
               color: Colors.cyan.shade100,
               //color: Colors.deepOrange.shade100,
             ),
-            
+
             child: new Stack(
               children: [
                 Positioned(
@@ -87,7 +86,7 @@ class _medecin_gererState extends State<medecin_gerer> {
                 Positioned(
                     left: 35,
                     top: 80,
-                    child: new Text("Espace Médecin",style: TextStyle(fontSize:35.0,color: Colors.cyan.shade700,fontWeight: FontWeight.bold),))
+                    child: new Text("Espace Patient",style: TextStyle(fontSize:35.0,color: Colors.cyan.shade700,fontWeight: FontWeight.bold),))
               ],
             ),
           ),
@@ -178,32 +177,18 @@ class _medecin_gererState extends State<medecin_gerer> {
                         padding: const EdgeInsets.only(left: 20,right: 10,bottom: 20),
                         child: new Container(
                           decoration: BoxDecoration(
-                            color: Colors.cyan,
+                            color: Colors.white,
                             borderRadius:const  BorderRadius.only(bottomLeft: Radius.circular(80)) ,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                offset: Offset(-10.0, 10.0), //(x,y)
+                                color: Colors.white,
+                                //offset: Offset(-10.0, 10.0), //(x,y)
                                 blurRadius: 20,
                                 spreadRadius: 4,
                               ),
                             ],
                           ),
                           padding: const EdgeInsets.only(left: 32,top: 50,bottom: 50
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              new FlatButton(onPressed: () {
-                        Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => gerer_doss(
-                        )
-                        )
-                        );
-                        },child: new Text('Gérer dossier médical',style: new TextStyle(fontSize:30.0,color: Colors.white,fontWeight: FontWeight.bold,
-                              ),)),
-                            ],
                           ),
                         ),
                       ),
@@ -229,16 +214,16 @@ class _medecin_gererState extends State<medecin_gerer> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              new FlatButton(onPressed: 
+                              new FlatButton(onPressed:
                                   () {
-                       Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => gerer_ord(idpatient:widget.idpatient,idmedecin:widget.idmedecin)
-                       )
-                         );
-                         }
-                        ,child: new Text('Gérer Ordonnance',style: new TextStyle(fontSize:30.0,color: Colors.white,fontWeight: FontWeight.bold,
-                              ),)),
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => afficheord(idpatient:widget.idpatient)
+                                    )
+                                );
+                              }
+                                  ,child: new Text('Listes Des Ordonnance',style: new TextStyle(fontSize:30.0,color: Colors.white,fontWeight: FontWeight.bold,
+                                  ),)),
                             ],
                           ),
                         ),
@@ -252,7 +237,7 @@ class _medecin_gererState extends State<medecin_gerer> {
 
         ],
       ),
-      
+
     );
   }
 }

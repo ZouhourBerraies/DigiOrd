@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../pages/inscriptionPatient.dart';
 import 'acceuil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'patientCnx.dart';
 
 class patient_login extends StatefulWidget{
   @override
@@ -21,6 +22,7 @@ class _patient_loginstate extends State<patient_login>{
 
   String password='0000';
   int cin=11111111;
+  String id="";
   List itemsList=[];
   /* login */
   Widget buildAff(){
@@ -157,6 +159,7 @@ class _patient_loginstate extends State<patient_login>{
                                   controller: _cinController,
                                   onChanged: (value){
                                     cin=int.parse(value);
+                                    id=value;
                                   },
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -227,11 +230,11 @@ class _patient_loginstate extends State<patient_login>{
                                 _cinController.clear();
                                 _passwordController.clear();
 
-                                /*Navigator.push(
+                                Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => medecin_cnx()
+                                MaterialPageRoute(builder: (context) => patient_cnx(idpatient:id)
                                 )
-                                );*/
+                                );
 
                                 } else{
                                 print('cin incorrect or password incorrect');
