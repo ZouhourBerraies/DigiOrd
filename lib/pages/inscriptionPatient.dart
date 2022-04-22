@@ -48,7 +48,9 @@ class _InscriptionState extends State<Inscription> {
   String mdpc='0000';
   int tel= 00000000;
   String id='X';
+  List genretype = ['-----', 'Homme', 'Femme'];
 
+  String dropdownValue = "-----";
 
   Widget builCin() {
     return Column(
@@ -200,7 +202,7 @@ class _InscriptionState extends State<Inscription> {
       ],
     );
   }
-  Widget buildgenre() {
+  /*Widget buildgenre() {
     final List<genreModel> _genreModels = [
       genreModel( id:'0',name:"Homme"),
       genreModel(id:'1',name:"Femme"),
@@ -265,6 +267,69 @@ class _InscriptionState extends State<Inscription> {
         ),
       ),
     );
+
+  }*/
+  Widget buildgenre() {
+
+    return Container(
+
+        padding: EdgeInsets.only(left: 16.0, right: 16.0),
+
+        decoration: BoxDecoration(
+
+            color: Colors.white,
+
+            borderRadius: BorderRadius.circular(10),
+
+            boxShadow: [
+
+              BoxShadow(
+
+                  color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+
+            ]),
+
+        child: DropdownButton(
+
+          hint: Text('Select Genre'),
+
+          dropdownColor: Color.fromARGB(255, 246, 242, 242),
+
+          elevation: 5,
+
+          icon: Icon(Icons.arrow_drop_down),
+
+          iconSize: 36,
+
+          isExpanded: true,
+
+          value: dropdownValue,
+
+          style: TextStyle(color: Colors.black, fontSize: 16),
+
+          onChanged: (value) {
+
+            setState(() {
+
+              dropdownValue = value as String;
+
+            });
+
+          },
+
+          items: genretype.map((value) {
+
+            return DropdownMenuItem(
+
+              value: value,
+
+              child: Text(value),
+
+            );
+
+          }).toList(),
+
+        ));
 
   }
 
@@ -546,7 +611,7 @@ class _InscriptionState extends State<Inscription> {
             'cin': cin,
             'nom': nom,
             'prenom':prenom,
-            'genre':genre,
+            'genre': dropdownValue,
             'email':email,
             'telephone':tel,
             'password': password,

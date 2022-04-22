@@ -197,7 +197,7 @@ class _medecin_gererState extends State<medecin_gerer> {
                               new FlatButton(onPressed: () {
                         Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => gerer_doss(
+                        MaterialPageRoute(builder: (context) => gerer_doss(idmedecin: widget.idmedecin,idpatient: widget.idpatient,
                         )
                         )
                         );
