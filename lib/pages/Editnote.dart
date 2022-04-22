@@ -60,46 +60,12 @@ class _EditNoteState extends State<EditNote> {
 
   DateTime date = DateTime(2022, 03, 22);
 
-  // @override
-
-  // void initState() {
-
-  //   numpatient =
-
-  //       TextEditingController(text: widget.docToEdit.data('Numpatient'));
-
-  //   nommedecin =
-
-  //       TextEditingController(text: widget.docToEdit.data('NumMedecin'));
-
-  //   content = TextEditingController(text: widget.docToEdit.data('content'));
-
-  //   time = TextEditingController(text: widget.docToEdit.data('Date'));
-
-  //   super.initState();
-
-  // }
+  
 
 
 
 
-  // @override
-
-  // void initState() {
-
-  //   super.initState();
-
-  //   print(widget.doss);
-
-  //   nommedecin.text = widget.doss['NomMedecin'];
-
-  //   numpatient.text = widget.doss['Numpatient'];
-
-  //   time.text = widget.doss['Date'];
-
-  //   content.text = widget.doss['content'];
-
-  // }
+  
 
 
 
