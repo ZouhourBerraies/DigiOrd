@@ -28,11 +28,6 @@ class EditNote extends StatefulWidget {
 
 
 
-  // Map doss;
-
-  // Databasedossier db;
-
-  // EditNote({Key? key, required this.doss, required this.db}) : super(key: key);
 
 
 
@@ -56,9 +51,8 @@ class _EditNoteState extends State<EditNote> {
 
   TextEditingController time = TextEditingController();
 
-  //final AuthenticationDossier _auth = AuthenticationDossier();
+   DateTime date = new DateTime.now();
 
-  DateTime date = DateTime(2022, 03, 22);
 
   
 
