@@ -28,11 +28,6 @@ class EditNote extends StatefulWidget {
 
 
 
-  // Map doss;
-
-  // Databasedossier db;
-
-  // EditNote({Key? key, required this.doss, required this.db}) : super(key: key);
 
 
 
@@ -56,50 +51,15 @@ class _EditNoteState extends State<EditNote> {
 
   TextEditingController time = TextEditingController();
 
-  //final AuthenticationDossier _auth = AuthenticationDossier();
-
-  DateTime date = DateTime(2022, 03, 22);
-
-  // @override
-
-  // void initState() {
-
-  //   numpatient =
-
-  //       TextEditingController(text: widget.docToEdit.data('Numpatient'));
-
-  //   nommedecin =
-
-  //       TextEditingController(text: widget.docToEdit.data('NumMedecin'));
-
-  //   content = TextEditingController(text: widget.docToEdit.data('content'));
-
-  //   time = TextEditingController(text: widget.docToEdit.data('Date'));
-
-  //   super.initState();
-
-  // }
+  DateTime date = new DateTime.now();
 
 
 
 
-  // @override
 
-  // void initState() {
 
-  //   super.initState();
 
-  //   print(widget.doss);
 
-  //   nommedecin.text = widget.doss['NomMedecin'];
-
-  //   numpatient.text = widget.doss['Numpatient'];
-
-  //   time.text = widget.doss['Date'];
-
-  //   content.text = widget.doss['content'];
-
-  // }
 
 
 
@@ -399,4 +359,3 @@ class _EditNoteState extends State<EditNote> {
   }
 
 }
-

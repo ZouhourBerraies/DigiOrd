@@ -4,23 +4,23 @@ import 'package:flutter/material.dart';
 //import 'package:qr_flutter/qr_flutter.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'dart:math';
 import 'gereOrdonnance.dart';
 
 
 
 
-class Addord extends StatefulWidget {
+
+class affichageMedecin extends StatefulWidget {
   @override
-  String idmedecin;
+  _affichageMedecinState createState() => _affichageMedecinState();
+  DocumentSnapshot index;
   String idpatient;
-  String doctor;
-  String patient;
-  Addord({required this.idmedecin,required this.idpatient,required this.doctor,required this.patient});
-  _AddordState createState() => _AddordState();
+  affichageMedecin({required this.index ,required this.idpatient});
 }
 
-class _AddordState extends State<Addord> {
+class _affichageMedecinState extends State<affichageMedecin> {
 
   /* variable */
   final _formKey = GlobalKey<FormState>();
@@ -28,16 +28,18 @@ class _AddordState extends State<Addord> {
 
   final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPatient');
   TextEditingController _medicController = TextEditingController();
-  TextEditingController _doseController = TextEditingController();
+  TextEditingController _NummedicController = TextEditingController();
   TextEditingController _parjourController = TextEditingController();
   TextEditingController _nbrjourController = TextEditingController();
+  TextEditingController _doseController = TextEditingController();
 
   TextEditingController _signateurController = TextEditingController();
 
 
-  final controllerqr = TextEditingController();
+  late final controllerqr = TextEditingController();
 
   String medic = '';
+  String Nummedic='';
   int dose = 0;
   int nbrjour = 0;
   int parjour = 0;
@@ -45,56 +47,80 @@ class _AddordState extends State<Addord> {
   int patient=0;
   int medecin=0;
   String random='X';
-  DateTime date = new DateTime.now();
+
+
+
   String signature='';
-  String idd='X';
-  String numero='';
-  int n=0;
+  String id='X';
+
+  void initState() {
+
+
+    _signateurController= TextEditingController(text: '${widget.index['signature']}');
+
+
+    super.initState();
+
+  }
+
+
+
+
 
 
   Widget buildRnadom(){
-    return Row(
-      children: [
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: [
 
-        Text(
-          "Numéro d\'ordonnance: $random",
-          style: TextStyle(
-              fontSize: 20.0),
-        ),
-        SizedBox(width: 20,),
+              Expanded(
+                flex:1,
+                child:Container(
+                  width: 100,
+                  // height: 70,
+                  alignment: Alignment.center,
+                  color: Colors.white,),
+              ),
+              Expanded(
+                flex:2,
+                child:Container(
+                  width: 100,
+                  // height: 70,
+                  alignment: Alignment.center,
+                  color: Colors.white,),
+              ),
 
-        Expanded(
-          flex:1,
-          child:
-          ElevatedButton(
-            child: Text('Numero Oradonnance'),
-            onPressed: (){
-              setState(() {});
-              random= Random().nextInt(500).toString();
-            },
+              Expanded(flex:3,
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: 100,
+                    //height: 100,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.lightBlue,
+                        width: 5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Colors.grey,
+                          //offset: new Offset(10.0, 10.0),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                        child: Text("Numéro d\'ordonnance: ${widget.index['numero']}",
+                            style: TextStyle(fontSize: 20))
+                    ),
+                  )
+              ),
+
+            ],
           ),
-        ),
-        Expanded(flex:2,child:Container(
-          width: 50,
-          // height: 70,
-          color: Colors.white,),
-        ),
-        /*SizedBox(height: 10),
-      Expanded(
-          child:
-          ElevatedButton.icon(
-  onPressed: () {
-  openDialogueBox(context);
-  },
-  icon: const Icon(Icons.add),
-  label: const Text('ajouter medicament'),
-  ),
+        ]
 
-  ),*/
-
-
-
-      ],
     );
   }
   Widget buildAjouter(){
@@ -112,7 +138,7 @@ class _AddordState extends State<Addord> {
               openDialogueBox(context);
             },
             icon: const Icon(Icons.add),
-            label: const Text('ajouter medicament'),
+            label: const Text('modifier medicament'),
           ),
         ),
         SizedBox(
@@ -125,7 +151,7 @@ class _AddordState extends State<Addord> {
     );
   }
   Widget buildAff() {
-    final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('profileInfoPatient').doc(widget.idpatient).collection('ListeOrdonnance').doc(random).collection("ListeMedicament").snapshots();
+    final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('profileInfoPatient').doc(widget.idpatient).collection('ListeOrdonnance').doc(widget.index['numero']).collection("ListeMedicament").snapshots();
 
     return Container(
       height: 250,
@@ -151,23 +177,37 @@ class _AddordState extends State<Addord> {
             itemBuilder: (context, index) {
               itemsList.add(data.docs[index]);
               return
-                Table(
-                  border: TableBorder.all(),
-                  columnWidths: {
-                    0: FractionColumnWidth(0.35),
-                    1: FractionColumnWidth(0.15),
-                    2: FractionColumnWidth(0.25),
-                    3: FractionColumnWidth(0.25),
-                  },
-                  children: [
+                Center(
+                  child:
+                  Table(
+                    border: TableBorder.all(),
+                    columnWidths: {
+                      0: FractionColumnWidth(0.10),
+                      1: FractionColumnWidth(0.15),
+                      2: FractionColumnWidth(0.15),
+                      3: FractionColumnWidth(0.15),
+                      4: FractionColumnWidth(0.15),
+                      5: FractionColumnWidth(0.15),
+                      6: FractionColumnWidth(0.15),
 
-                    buildRow([
-                      '${data.docs[index]['Medicament']}',
-                      '${data.docs[index]['dose']}',
-                      '${data.docs[index]['par jour']}',
-                      '${data.docs[index]['nombre de jour']}'
-                    ]),
-                  ],
+                    },
+                    children: [
+
+                      buildRow([
+                        '${data.docs[index]['numeroMedic']}',
+                        '${data.docs[index]['Medicament']}',
+                        '${data.docs[index]['dose']}',
+                        '${data.docs[index]['par jour']}',
+                        '${data.docs[index]['nombre de jour']}',
+                        '${data.docs[index]['délivrer']}',
+                        '${data.docs[index]['substituer']}',
+
+
+
+
+                      ]),
+                    ],
+                  ),
                 );
             },
           );
@@ -187,7 +227,6 @@ class _AddordState extends State<Addord> {
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
 
-          //buildsave(context),
           Row(
             children: [
               Expanded(child: buildTextField(context)),
@@ -218,6 +257,7 @@ class _AddordState extends State<Addord> {
 
   Widget buildTextField(BuildContext context) => TextFormField(
     controller: controllerqr,
+    //   controller:_signateurController,
     onChanged: (value){
       signature=value;
     },
@@ -229,11 +269,12 @@ class _AddordState extends State<Addord> {
     },
     style: TextStyle(
       color: Colors.black,
-      //fontWeight: FontWeight.bold,
       fontSize: 20,
     ),
     decoration: InputDecoration(
-      hintText: 'Enter Signature',
+      //hintText: 'Enter Signature',
+      hintText: '${_signateurController.text} ',
+
       hintStyle: TextStyle(color: Colors.grey),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
@@ -273,8 +314,8 @@ class _AddordState extends State<Addord> {
                 ],
               ),
               child: Center(
-                  child: Text("Nom de medecin: ${widget.doctor}",
-                      style: TextStyle(fontSize: 20),
+                  child: Text("Nom de medecin: ${widget.index["nom medecin"]}",
+                    style: TextStyle(fontSize: 20),
                   )
               ),
             ),
@@ -285,42 +326,39 @@ class _AddordState extends State<Addord> {
   }
 
   Widget buildPatient(){
-  return  Column( crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-    Column(
-    children: [
+    return  Column( crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Column(
+          children: [
 
-    Container(
-    //width: 250,
-    //height: 200,
-    decoration: BoxDecoration(
-    border: Border.all(
-    color: Colors.lightBlue,
-    width: 1,
-    ),
-    borderRadius: BorderRadius.circular(10),
-    boxShadow: [
-    new BoxShadow(
-    // color: Colors.grey,
-    color:  Color.fromARGB(255, 235, 233, 233)
-    // offset: new Offset(10.0, 10.0),
-    ),
-    ],
-    ),
-    child: Center(
-    child: Text("Nom de Patient: ${widget.patient}",
-    style: TextStyle(fontSize: 20),
-    )
-    ),
-    ),
-    ],
-    ),
-    ],
+            Container(
+              //width: 250,
+              //height: 200,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.lightBlue,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  new BoxShadow(
+                    // color: Colors.grey,
+                      color:  Color.fromARGB(255, 235, 233, 233)
+                    // offset: new Offset(10.0, 10.0),
+                  ),
+                ],
+              ),
+              child: Center(
+                  child: Text("Nom de Patient: ${widget.index["patient"]}",
+                    style: TextStyle(fontSize: 20),
+                  )
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
-
-
-
 
 
 
@@ -381,14 +419,21 @@ class _AddordState extends State<Addord> {
                           key: _formKey,
                           child: Column(
                             children: [
-                              Text(
-                                '${date.day}/${date.month}/${date.year}',
-                                style: TextStyle(fontSize: 32),
-                                textAlign: TextAlign.left,
+                              SizedBox(
+                                width: double.infinity,
+                                child:
+                                Text(
+                                  //'Date:${widget.index['date'].toDate().toString()}',
+                                  'Date : ${formattedDate(widget.index['date'])}',
 
-                              ),
+                                  //'Date: ${date.day}/${date.month}/${date.year}',
+                                  style: TextStyle(fontSize: 20),
+                                  textAlign: TextAlign.right,
+
+                                ),),
+
                               SizedBox(height: 16),
-                              ElevatedButton(
+                              /*ElevatedButton(
                                 child: Text(
                                   'Entrer la date d\'aujourd\'hui',
                                 ),
@@ -402,20 +447,21 @@ class _AddordState extends State<Addord> {
                                   if (newDate == null) return;
                                   setState(() => date = newDate);
                                 },
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildMedecin(),
-                              SizedBox(
-                                height: 10,
-                              ),
-
-                              buildPatient(),
+                              ),*/
                               SizedBox(
                                 height: 10,
                               ),
                               buildRnadom(),
+
+                              SizedBox(
+                                height: 10,
+                              ),
+                              buildMedecin(),
+
+                              SizedBox(
+                                height: 10,
+                              ),
+                              buildPatient(),
                               SizedBox(
                                 height: 10,
                               ),
@@ -429,13 +475,18 @@ class _AddordState extends State<Addord> {
                                 Table(
                                   border: TableBorder.all(),
                                   columnWidths: {
-                                    0: FractionColumnWidth(0.35),
+                                    0: FractionColumnWidth(0.10),
                                     1: FractionColumnWidth(0.15),
-                                    2: FractionColumnWidth(0.25),
-                                    3: FractionColumnWidth(0.25),
+                                    2: FractionColumnWidth(0.15),
+                                    3: FractionColumnWidth(0.15),
+                                    4: FractionColumnWidth(0.15),
+                                    5: FractionColumnWidth(0.15),
+                                    6: FractionColumnWidth(0.15),
+
+
                                   },
                                   children: [
-                                    buildRow(['medicament', 'dose', 'parjour', 'nbrJour'],isHeader: true),
+                                    buildRow(['numero','medicament', 'dose', 'parjour', 'nbrJour','délivrer','substituer'],isHeader: true),
                                     //buildRow(['${itemsList['Medicament']}', 'cell2', 'cell3']),
                                   ],
                                 ),
@@ -443,20 +494,19 @@ class _AddordState extends State<Addord> {
                               //),
                               SizedBox(
                                 //height: 10,
-                                child:buildAff(),),
+                                child:buildAff(),
+                              ),
                               SizedBox(height: 10,),
                               buildqr(context),
                               SizedBox(height: 10,),
-                              ElevatedButton.icon(
+                              /*ElevatedButton.icon(
                                   onPressed: (){
-                                    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(random)
+                                    ordList.doc(random)
                                         .set({
                                       'date':date,
-                                      'nom medecin': widget.doctor,
-                                      'num medecin':widget.idmedecin,
-                                      'patient':widget.patient,
+                                      'medecin': medecin,
+                                      'patient':patient,
                                       'signature':signature,
-                                      'numero':random,
                                     }).then((value) => print('user added'))
                                         .catchError((error) => print('erreur add user:$error'));
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -466,16 +516,11 @@ class _AddordState extends State<Addord> {
                                     );
                                     //Navigator.pop(context);
 
-                                    Navigator.push(
-                                        context, MaterialPageRoute(builder: (_) =>gerer_ord(
-                                        idpatient:widget.idpatient,
-                                      idmedecin:widget.idmedecin ,
-                                      patient: widget.patient,
-                                      doctor: widget.doctor,
-                                    )));
+                                    /*Navigator.push(
+                                        context, MaterialPageRoute(builder: (_) => gerer_doss()));*/
                                   },
                                   icon: const Icon(Icons.save),
-                                  label: const Text('Save')),
+                                  label: const Text('Save')),*/
                               /*Scrollbar(
               showTrackOnHover: true,
               child:buildqr(context),
@@ -512,7 +557,7 @@ class _AddordState extends State<Addord> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Ajouter Medicament'),
+            title: Text('Modifier Medicament'),
             content: Container(
               height: 300,
               child: Form(
@@ -520,14 +565,27 @@ class _AddordState extends State<Addord> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: _NummedicController,
+                      decoration: InputDecoration(hintText: 'Numero medicament'),
+                      onChanged: (value) {
+                        Nummedic = value;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Entrez numero de medicament à modifier!';
+                        } else
+                          return null;
+                      },
+                    ),
+                    TextFormField(
                       controller: _medicController,
-                      decoration: InputDecoration(hintText: 'medicament'),
+                      decoration: InputDecoration(hintText: 'nouveau medicament'),
                       onChanged: (value) {
                         medic = value;
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Entrez nom de medicament!';
+                          return 'Entrez numero de medicament à deliver!';
                         } else
                           return null;
                       },
@@ -582,13 +640,11 @@ class _AddordState extends State<Addord> {
               FlatButton(
                 onPressed: () {
                   if (_Key.currentState!.validate()) {
-                    numero=n.toString();
                     submitAction(context);
                     Navigator.pop(context);
                   }
-                  n=n+1;
                 },
-                child: Text('Submit'),
+                child: Text('Modifier'),
               ),
               FlatButton(
                 onPressed: () {
@@ -602,15 +658,14 @@ class _AddordState extends State<Addord> {
   }
 
   submitAction(BuildContext context) {
-    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(random).collection("ListeMedicament")
-        .doc(numero).set({
+    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(widget.index['numero']).collection("ListeMedicament")
+        .doc(Nummedic)
+        .update({
       'Medicament': medic,
       'dose': dose,
       'par jour': parjour,
       'nombre de jour': nbrjour,
-      'numeroMedic':numero,
-      'substituer':"non",
-      'délivrer':"non"
+
     }).then((value) => print('user added'))
         .catchError((error) => print('erreur add user:$error'));
     ScaffoldMessenger.of(context).showSnackBar(
@@ -622,5 +677,16 @@ class _AddordState extends State<Addord> {
     _doseController.clear();
     _parjourController.clear();
     _nbrjourController.clear();
+    _NummedicController.clear();
   }
+
+
+
+
+
+}
+String formattedDate(timeStamp) {
+  var dateFromTimeStamp =
+  DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds * 1000);
+  return DateFormat('dd-MM-yyyy').format(dateFromTimeStamp);
 }

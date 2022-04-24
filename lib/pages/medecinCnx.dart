@@ -9,7 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class medecin_cnx extends StatefulWidget {
   @override
   String idmedecin;
-  medecin_cnx({required this.idmedecin});
+  String doctor;
+  medecin_cnx({required this.idmedecin,required this.doctor});
   _medecin_cnxState createState() => _medecin_cnxState();
 }
 
@@ -28,6 +29,7 @@ class _medecin_cnxState extends State<medecin_cnx> {
 
   int cin=11111111;
   String id='';
+  String patient="????";
 
 
   Widget builNumero() {
@@ -115,7 +117,7 @@ class _medecin_cnxState extends State<medecin_cnx> {
           return ListView.builder(
             itemCount: data.size,
             itemBuilder: (context,index)
-            { itemsList.add(data.docs[index]['cin']);
+            { itemsList.add(data.docs[index]);
             return
               //Text('');
               Text('cin= ${data.docs[index]['cin']} ');
@@ -131,8 +133,9 @@ class _medecin_cnxState extends State<medecin_cnx> {
   Future<dynamic> exist(cinn) async {
     dynamic t=false;
     for(var user in itemsList){
-      if(cinn == user) {
+      if(cinn == user['cin']) {
         t = true;
+        patient="${user['nom']}"+"  "+"${user['prenom']}";
         break;
       }
     }
@@ -169,13 +172,13 @@ class _medecin_cnxState extends State<medecin_cnx> {
             } else{
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Patient existe déjà'),
+                  content: Text('Patient existe déjà $patient'),
                 ),
               );
             }
             Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => medecin_gerer( idpatient:id,idmedecin:widget.idmedecin)
+                MaterialPageRoute(builder: (context) => medecin_gerer( idpatient:id,idmedecin:widget.idmedecin,doctor:widget.doctor,patient: patient,)
                 )
             );
 

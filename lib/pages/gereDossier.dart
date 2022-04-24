@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 import 'Editnote.dart';
 
@@ -184,7 +185,7 @@ class _gerer_dossState extends State<gerer_doss> {
 
                             Text('${data.docs[index]['NomMedecin']}'),
 
-                            trailing: Text('${data.docs[index]['Date']}'),
+                            //trailing: Text('${data.docs[index]['Date']}'),
 
                             onTap: () {
 
@@ -226,7 +227,12 @@ class _gerer_dossState extends State<gerer_doss> {
 
   }
 
-} 
+}
+String formattedDate(timeStamp) {
+  var dateFromTimeStamp =
+  DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds * 1000);
+  return DateFormat('dd-MM-yyyy').format(dateFromTimeStamp);
+}
 
  
  

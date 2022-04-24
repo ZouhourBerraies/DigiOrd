@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+
+import 'affichage.dart';
 
 
 
@@ -52,23 +55,20 @@ class _afficheordState extends State<afficheord> {
 
                           //selected: true,
                           leading: Icon(Icons.article_outlined),
-                          subtitle: Text('${data.docs[index]['medecin']}'),
-                          trailing: Text('${data.docs[index]['date']}'),
+                          subtitle: Text('${data.docs[index]['nom medecin']}'),
+                          trailing: Text(formattedDate(data.docs[index]['date'])),
 
-                          //subtitle: Text(list[index]['medecin']),
-                          //trailing: Text(list[index]['date']),
 
                           onTap: () {
-                            /* Navigator.pushReplacement(
+                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => affichage(
-                                    //docToEdit: querySnapshot.data!.docs[index]
                                       index:data.docs[index],
                                       idpatient:widget.idpatient
                                   )
                               )
-                          );*/
+                          );
                           },
                         ),
                       );
@@ -78,6 +78,11 @@ class _afficheordState extends State<afficheord> {
               }),
         ));
   }
+}
+String formattedDate(timeStamp) {
+  var dateFromTimeStamp =
+  DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds * 1000);
+  return DateFormat('dd-MM-yyyy').format(dateFromTimeStamp);
 }
 
 

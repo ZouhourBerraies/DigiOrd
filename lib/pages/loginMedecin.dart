@@ -63,11 +63,13 @@ class _medecin_loginstate extends State<medecin_login>{
     );
   }
   /* cin et mot de passe conforme */
+  String doctor="";
   Future<dynamic> exist(cinn,mdp) async {
     dynamic t=false;
     for(var user in itemsList){
       if(cinn == user['cin'] && mdp == user['password']) {
         t = true;
+        doctor="dr."+"${user['nom']}"+" "+"${user['prenom']}";
         break;
       }
 
@@ -216,7 +218,7 @@ class _medecin_loginstate extends State<medecin_login>{
                                     if (test==true) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
-                                          content: Text('connecter'),
+                                          content: Text('connecter $doctor'),
                                         ),
                                       );
                                       _cinController.clear();
@@ -224,7 +226,7 @@ class _medecin_loginstate extends State<medecin_login>{
 
                                       Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => medecin_cnx( idmedecin:id)
+                                          MaterialPageRoute(builder: (context) => medecin_cnx( doctor:doctor,idmedecin:id)
                                           )
                                       );
 

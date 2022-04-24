@@ -1,15 +1,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'affichage.dart';
+import 'affichageMedecin.dart';
 import 'ordonnance.dart';
 
 
 
 class gerer_ord extends StatefulWidget {
-  //const gerer_ord({Key? key}) : super(key: key);
+
   String idmedecin;
   String idpatient;
-  gerer_ord({required this.idmedecin,required this.idpatient});
+  String doctor;
+  String patient;
+
+  gerer_ord({required this.idmedecin,required this.idpatient,required this.doctor,required this.patient});
   @override
   _gerer_ordState createState() => _gerer_ordState();
 }
@@ -23,7 +29,11 @@ class _gerer_ordState extends State<gerer_ord> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) =>Addord(idpatient: widget.idpatient,idmedecin: widget.idmedecin,)));
+          Navigator.push(context, MaterialPageRoute(builder: (_) =>Addord(
+            idpatient: widget.idpatient,idmedecin: widget.idmedecin,
+            doctor:widget.doctor,
+            patient:widget.patient
+          )));
         },
       ),
       body: Container(
@@ -58,23 +68,34 @@ class _gerer_ordState extends State<gerer_ord> {
 
                         //selected: true,
                         leading: Icon(Icons.article_outlined),
-                        subtitle: Text('${data.docs[index]['medecin']}'),
-                        trailing: Text('${data.docs[index]['date']}'),
-
-                        //subtitle: Text(list[index]['medecin']),
-                        //trailing: Text(list[index]['date']),
+                        subtitle: Text('${data.docs[index]['nom medecin']}'),
+                        trailing: Text(formattedDate(data.docs[index]['date'])),
 
                         onTap: () {
-                         /* Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => affichage(
-                                    //docToEdit: querySnapshot.data!.docs[index]
-                                      index:data.docs[index],
-                                      idpatient:widget.idpatient
-                                  )
-                              )
-                          );*/
+                          if(widget.idmedecin==data.docs[index]['num medecin']) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        affichageMedecin(
+                                            index: data.docs[index],
+                                            idpatient: widget.idpatient
+                                        )
+                                )
+                            );
+                          }
+                          else{
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        affichage(
+                                            index: data.docs[index],
+                                            idpatient: widget.idpatient
+                                        )
+                                )
+                            );
+                          }
                         },
                       ),
                     );
@@ -86,7 +107,11 @@ class _gerer_ordState extends State<gerer_ord> {
   }
   }
 
-
+String formattedDate(timeStamp) {
+  var dateFromTimeStamp =
+  DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds * 1000);
+  return DateFormat('dd-MM-yyyy').format(dateFromTimeStamp);
+}
 
 
 

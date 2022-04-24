@@ -10,7 +10,9 @@ class medecin_gerer extends StatefulWidget{
   @override
   String idmedecin;
   String idpatient;
-  medecin_gerer({required this.idmedecin,required this.idpatient});
+  String doctor;
+  String patient;
+  medecin_gerer({required this.idmedecin,required this.idpatient,required this.doctor,required this.patient});
   State<StatefulWidget> createState() {
     return new _medecin_gererState();
   }
@@ -233,7 +235,11 @@ class _medecin_gererState extends State<medecin_gerer> {
                                   () {
                        Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => gerer_ord(idpatient:widget.idpatient,idmedecin:widget.idmedecin)
+                        MaterialPageRoute(builder: (context) => gerer_ord(
+                            idpatient:widget.idpatient,
+                            idmedecin:widget.idmedecin,
+                            patient:widget.patient,
+                            doctor:widget.doctor)
                        )
                          );
                          }
