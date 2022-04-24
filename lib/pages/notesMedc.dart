@@ -121,22 +121,10 @@ class _AddnoteState extends State<Addnote> {
 
               children: [
 
-                TextField(
-
-                  controller: time,
-
-                  decoration: InputDecoration(
-
-                    hintText: "$date",
-
-                    hintStyle: TextStyle(
-
-                      color: Color.fromARGB(255, 198, 196, 196),
-
-                    ),
-
-                  ),
-
+                Text(
+                  '${date.day}/${date.month}/${date.year}',
+                  style: TextStyle(fontSize: 32),
+                  textAlign: TextAlign.left,
                 ),
 
                 SizedBox(height: 16),
@@ -173,7 +161,7 @@ class _AddnoteState extends State<Addnote> {
 
                     setState(() => date = newDate);
 
-                    time.text = '${date.year}/${date.month}/${date.day}';
+                    //time.text = '${date.year}/${date.month}/${date.day}';
 
                   },
 
@@ -377,7 +365,7 @@ class _AddnoteState extends State<Addnote> {
 
         .set({
 
-      'Date': time.text,
+      'Date': date,
 
       'NomMedecin': nommedecin.text,
 

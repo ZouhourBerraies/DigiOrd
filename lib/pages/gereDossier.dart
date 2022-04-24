@@ -185,7 +185,7 @@ class _gerer_dossState extends State<gerer_doss> {
 
                             Text('${data.docs[index]['NomMedecin']}'),
 
-                            //trailing: Text('${data.docs[index]['Date']}'),
+                            trailing: Text(formattedDate(data.docs[index]['Date']),),
 
                             onTap: () {
 

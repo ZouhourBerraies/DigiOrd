@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 import 'gereDossier.dart';
 
@@ -76,7 +77,7 @@ class _EditNoteState extends State<EditNote> {
 
         TextEditingController(text: widget.docToEdit.get('Numpatient'));
 
-    time = TextEditingController(text: widget.docToEdit.get('Date'));
+    //time = TextEditingController(text: widget.docToEdit.get('Date'));
 
 
 
@@ -130,27 +131,17 @@ class _EditNoteState extends State<EditNote> {
 
               children: [
 
-                TextFormField(
+        Text(
 
-                  controller: time,
+        'Date : ${formattedDate(widget.docToEdit['Date'])}',
+        style: TextStyle(fontSize: 20),
+        textAlign: TextAlign.right,
 
-                  decoration: InputDecoration(
-
-                    hintText: "",
-
-                    hintStyle: TextStyle(
-
-                      color: Color.fromARGB(255, 198, 196, 196),
-
-                    ),
-
-                  ),
-
-                ),
+      ),
 
                 SizedBox(height: 16),
 
-                ElevatedButton(
+               /* ElevatedButton(
 
                   child: Text(
 
@@ -182,11 +173,11 @@ class _EditNoteState extends State<EditNote> {
 
                     setState(() => date = newDate);
 
-                    time.text = '${date.year}/${date.month}/${date.day}';
+                    //time.text = '${date.year}/${date.month}/${date.day}';
 
                   },
 
-                ),
+                ),*/
 
               ],
 
@@ -220,7 +211,7 @@ class _EditNoteState extends State<EditNote> {
 
                     ),
 
-                    hintText: ('$nommedecin.text'))),
+                    hintText: ('${nommedecin.text}'))),
 
             SizedBox(
 
@@ -298,16 +289,6 @@ class _EditNoteState extends State<EditNote> {
 
             ElevatedButton.icon(
 
-              // onPressed: () {
-
-              //   widget.db.updatedossierList(nommedecin.text, numpatient.text,
-
-              //       time.text, content.text);
-
-              //   Navigator.pop(context, true);
-
-              // },
-
                 onPressed: () {
 
                   widget.docToEdit.reference.update({
@@ -316,7 +297,8 @@ class _EditNoteState extends State<EditNote> {
 
                     'Numpatient': numpatient.text,
 
-                    'Date': time.text,
+                    //'Date': time.text,
+                    //'Date': date,
 
                     'content': content.text,
 
@@ -357,5 +339,9 @@ class _EditNoteState extends State<EditNote> {
     );
 
   }
-
+  String formattedDate(timeStamp) {
+    var dateFromTimeStamp =
+    DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds * 1000);
+    return DateFormat('dd-MM-yyyy').format(dateFromTimeStamp);
+  }
 }

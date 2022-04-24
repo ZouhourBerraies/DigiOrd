@@ -47,7 +47,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
   int patient=0;
   int medecin=0;
   String random='X';
-  //DateTime date = DateTime(2022, 03, 22);
+
   DateTime date = new DateTime.now();
 
 
