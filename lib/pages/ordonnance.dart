@@ -7,6 +7,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
 import 'gereOrdonnance.dart';
+import '../data/CreateOrd.dart';
 
 
 
@@ -28,6 +29,9 @@ class _AddordState extends State<Addord> {
   final _Key = GlobalKey<FormState>();
 
   final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPatient');
+  final CreateOrd ord=CreateOrd();
+
+
   TextEditingController _medicController = TextEditingController();
   TextEditingController _doseController = TextEditingController();
   TextEditingController _parjourController = TextEditingController();
@@ -284,7 +288,6 @@ class _AddordState extends State<Addord> {
       ],
     );
   }
-
   Widget buildPatient(){
   return  Column( crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -364,17 +367,7 @@ class _AddordState extends State<Addord> {
                     Container(
                       height: double.infinity,
                       width: double.infinity,
-                      //decoration: BoxDecoration(
-                      /*gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.indigo.shade400,
-                              Colors.indigo.shade300,
-                              Colors.indigo.shade200,
-                              Colors.indigo.shade100,
-                            ])*/
-                      //),
+
                       child: SingleChildScrollView(
                         physics: AlwaysScrollableScrollPhysics(),
                         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
@@ -450,16 +443,7 @@ class _AddordState extends State<Addord> {
                               SizedBox(height: 10,),
                               ElevatedButton.icon(
                                   onPressed: (){
-                                    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(random)
-                                        .set({
-                                      'date':date,
-                                      'nom medecin': widget.doctor,
-                                      'num medecin':widget.idmedecin,
-                                      'patient':widget.patient,
-                                      'signature':signature,
-                                      'numero':random,
-                                    }).then((value) => print('user added'))
-                                        .catchError((error) => print('erreur add user:$error'));
+                                   ord.AjouterOrd(date, widget.doctor, widget.idmedecin, widget.patient, signature, widget.idpatient, random);
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text('Sending data to cloud firesstore'),
@@ -477,10 +461,7 @@ class _AddordState extends State<Addord> {
                                   },
                                   icon: const Icon(Icons.save),
                                   label: const Text('Save')),
-                              /*Scrollbar(
-              showTrackOnHover: true,
-              child:buildqr(context),
-            ),*/
+
 
 
 
@@ -603,17 +584,7 @@ class _AddordState extends State<Addord> {
   }
 
   submitAction(BuildContext context) {
-    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(random).collection("ListeMedicament")
-        .doc(numero).set({
-      'Medicament': medic,
-      'dose': dose,
-      'par jour': parjour,
-      'nombre de jour': nbrjour,
-      'numeroMedic':numero,
-      'substituer':"non",
-      'délivrer':"non"
-    }).then((value) => print('user added'))
-        .catchError((error) => print('erreur add user:$error'));
+    ord.AjouterMedic(random, dose, medic, numero, parjour, widget.idpatient, nbrjour);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Sending data to cloud firesstore'),

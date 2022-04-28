@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 import 'gereOrdonnance.dart';
-
+import '../data/CreateOrd.dart';
 
 
 
@@ -26,7 +26,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
   /* variable */
   final _formKey = GlobalKey<FormState>();
   final _Key = GlobalKey<FormState>();
-
+  final CreateOrd ord=CreateOrd();
   final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPatient');
   TextEditingController _medicController = TextEditingController();
   TextEditingController _NummedicController = TextEditingController();
@@ -166,18 +166,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
 
           ]
       );
-    /* FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-    child: Icon(Icons.done, size: 10),
-    onPressed: () {
-    //setState(() {});
-    },
-      );*/
-    /*IconButton(
-        icon: const Icon(Icons.android),
-        color: Colors.black,
-        onPressed: () {},
-      );*/
+
   }
   Widget buildAff() {
     final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('profileInfoPatient').doc(widget.idpatient).collection('ListeOrdonnance').doc(widget.index['numero']).collection("ListeMedicament").snapshots();
@@ -395,10 +384,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
 
   /*      **************            */
   @override
-  /*void initState(){
-    getData();
-    super.initState();
-  }*/
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -411,17 +397,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
             ),
           ),
           backgroundColor: Colors.blue.shade500),
-      /*floatingActionButton:FloatingActionButton(
-        onPressed: () {
-          openDialogueBox(context);
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 24.0,
-          semanticLabel: 'ajouter medicament',
-        ),
-      ),*/
+
       body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: GestureDetector(
@@ -430,17 +406,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                     Container(
                       height: double.infinity,
                       width: double.infinity,
-                      //decoration: BoxDecoration(
-                      /*gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.indigo.shade400,
-                              Colors.indigo.shade300,
-                              Colors.indigo.shade200,
-                              Colors.indigo.shade100,
-                            ])*/
-                      //),
+
                       child: SingleChildScrollView(
                         physics: AlwaysScrollableScrollPhysics(),
                         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
@@ -452,7 +418,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                 width: double.infinity,
                                 child:
                                 Text(
-                                  //'Date:${widget.index['date'].toDate().toString()}',
+
                                   'Date : ${formattedDate(widget.index['date'])}',
 
                                   //'Date: ${date.day}/${date.month}/${date.year}',
@@ -462,21 +428,6 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                 ),),
 
                               SizedBox(height: 16),
-                              /*ElevatedButton(
-                                child: Text(
-                                  'Entrer la date d\'aujourd\'hui',
-                                ),
-                                onPressed: () async {
-                                  DateTime? newDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: date,
-                                    firstDate: DateTime(1999),
-                                    lastDate: DateTime(2100),
-                                  );
-                                  if (newDate == null) return;
-                                  setState(() => date = newDate);
-                                },
-                              ),*/
                               SizedBox(
                                 height: 10,
                               ),
@@ -516,7 +467,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                   },
                                   children: [
                                     buildRow(['numero','medicament', 'dose', 'parjour', 'nbrJour','délivrer','substituer'],isHeader: true),
-                                    //buildRow(['${itemsList['Medicament']}', 'cell2', 'cell3']),
+
                                   ],
                                 ),
                               ),
@@ -528,32 +479,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                               SizedBox(height: 10,),
                               buildqr(context),
                               SizedBox(height: 10,),
-                              /*ElevatedButton.icon(
-                                  onPressed: (){
-                                    ordList.doc(random)
-                                        .set({
-                                      'date':date,
-                                      'medecin': medecin,
-                                      'patient':patient,
-                                      'signature':signature,
-                                    }).then((value) => print('user added'))
-                                        .catchError((error) => print('erreur add user:$error'));
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Sending data to cloud firesstore'),
-                                      ),
-                                    );
-                                    //Navigator.pop(context);
 
-                                    /*Navigator.push(
-                                        context, MaterialPageRoute(builder: (_) => gerer_doss()));*/
-                                  },
-                                  icon: const Icon(Icons.save),
-                                  label: const Text('Save')),*/
-                              /*Scrollbar(
-              showTrackOnHover: true,
-              child:buildqr(context),
-            ),*/
 
 
 
@@ -606,48 +532,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                           return null;
                       },
                     ),
-                    /*TextFormField(
-                      controller: _doseController,
-                      decoration: InputDecoration(hintText: 'dose'),
-                      onChanged: (value) {
-                        dose = int.parse(value);
-                      },
 
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Quel est la dose de medicament?';
-                        } else
-                          return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _parjourController,
-                      decoration: InputDecoration(hintText: 'parjour'),
-                      onChanged: (value) {
-                        parjour = int.parse(value);
-                      },
-
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Combien de fois par jour?';
-                        } else
-                          return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _nbrjourController,
-                      decoration: InputDecoration(hintText: 'nbrJour'),
-                      onChanged: (value) {
-                        nbrjour = int.parse(value);
-                      },
-
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'combien de jour utilise ce médicament?';
-                        } else
-                          return null;
-                      },
-                    )*/
                   ],
                 ),
               ),
@@ -674,12 +559,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
   }
 
   submitAction(BuildContext context) {
-    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(widget.index['numero']).collection("ListeMedicament")
-        .doc(medic)
-        .update({
-      "délivrer":"oui"
-    }).then((value) => print('user added'))
-        .catchError((error) => print('erreur add user:$error'));
+    ord.delivrerMedic(medic,widget.index['numero'], widget.idpatient);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Sending data to cloud firesstore'),
@@ -781,12 +661,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
   }
 
   submitActionSub(BuildContext context) {
-    profilList.doc(widget.idpatient).collection('ListeOrdonnance').doc(widget.index['numero']).collection("ListeMedicament")
-        .doc(Nummedic)
-        .update({
-      "substituer":medic
-    }).then((value) => print('user added'))
-        .catchError((error) => print('erreur add user:$error'));
+    ord.substituerMedic(Nummedic, medic, widget.index['numero'], widget.idpatient);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Sending data to cloud firesstore'),

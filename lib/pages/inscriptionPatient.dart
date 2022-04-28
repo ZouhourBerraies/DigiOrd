@@ -8,6 +8,7 @@ import 'loginPatient.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../data/Create.dart';
 
 
 
@@ -17,18 +18,12 @@ class Inscription extends StatefulWidget {
   @override
   _InscriptionState createState() => _InscriptionState();
 }
-class genreModel{
-  final String id;
-  final String name;
-  genreModel({
-    required this.id,
-    required this.name,
-  });
-}
+
 
 
 class _InscriptionState extends State<Inscription> {
-  final CollectionReference profileList = FirebaseFirestore.instance.collection('profileInfoPatient');
+  final Create newuser= Create(table:'profileInfoPatient');
+  //final CollectionReference profileList = FirebaseFirestore.instance.collection('profileInfoPatient');
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _cinController = TextEditingController();
@@ -39,11 +34,10 @@ class _InscriptionState extends State<Inscription> {
   TextEditingController _mdpcContoller = TextEditingController();
   TextEditingController _telController = TextEditingController();
   int cin=11111111;
-  String  nom='';
-  String  prenom='';
-  //late genreModel  genre;
-  String genre='';
-  String  email='';
+  String  nom='?';
+  String  prenom='?';
+  String genre='?';
+  String  email='?';
   String password='0000';
   String mdpc='0000';
   int tel= 00000000;
@@ -361,13 +355,6 @@ class _InscriptionState extends State<Inscription> {
             onChanged: (value){
               email=value;
             },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-
-                return 'Entrez votre emil !';
-              } else
-                return null;
-            },
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -408,13 +395,6 @@ class _InscriptionState extends State<Inscription> {
             controller: _telController,
             onChanged: (value){
               tel=int.parse(value);
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-
-                return 'Entrez votre numéro de téléphone !';
-              } else
-                return null;
             },
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
@@ -532,61 +512,61 @@ class _InscriptionState extends State<Inscription> {
       ],
     );
   }
-/* s'inscrire firebase*/
- /*liste des identifiants */
-  List itemsList = [];
-  Widget buildAff(){
-    final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPatient').snapshots();
-
-    return Container(
-      height:250 ,
-      padding: const EdgeInsets.symmetric(vertical:20),
-      child:
-      StreamBuilder<QuerySnapshot>(
-        stream: users,
-        builder: (
-            BuildContext context,
-            AsyncSnapshot<QuerySnapshot>snapshot,
-            ){
-          if(snapshot.hasError)
-          {
-            return Text('Something went wrong.');
-          }
-          if (snapshot.connectionState==ConnectionState.waiting)
-          {
-            return Text( 'Loading');
-          }
-          final data=snapshot.requireData;
-          return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context,index)
-            {
-              itemsList.add(data.docs[index]['cin']);
-              bool t=(cin==data.docs[index]['cin']);
-              return Text('cin= ${data.docs[index]['cin']} ++++ ${t}++++${cin}');
-              //Text('');
-            },
-          );
-        },
-
-      ),
-
-    );
-  }
-
-
-
-/* recherche si in identifant existe déjà */
-  Future<dynamic> exist(cinn) async {
-    dynamic t=false;
-    for(var user in itemsList){
-      if(cinn==user){
-        t= true;
-        break;
-      }
-    }
-    return t;
-  }
+// /* s'inscrire firebase*/
+//  /*liste des identifiants */
+//   List itemsList = [];
+//   Widget buildAff(){
+//     final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPatient').snapshots();
+//
+//     return Container(
+//       height:250 ,
+//       padding: const EdgeInsets.symmetric(vertical:20),
+//       child:
+//       StreamBuilder<QuerySnapshot>(
+//         stream: users,
+//         builder: (
+//             BuildContext context,
+//             AsyncSnapshot<QuerySnapshot>snapshot,
+//             ){
+//           if(snapshot.hasError)
+//           {
+//             return Text('Something went wrong.');
+//           }
+//           if (snapshot.connectionState==ConnectionState.waiting)
+//           {
+//             return Text( 'Loading');
+//           }
+//           final data=snapshot.requireData;
+//           return ListView.builder(
+//             itemCount: data.size,
+//             itemBuilder: (context,index)
+//             {
+//               itemsList.add(data.docs[index]['cin']);
+//               bool t=(cin==data.docs[index]['cin']);
+//               return Text('cin= ${data.docs[index]['cin']} ++++ ${t}++++${cin}');
+//               //Text('');
+//             },
+//           );
+//         },
+//
+//       ),
+//
+//     );
+//   }
+//
+//
+//
+// /* recherche si in identifant existe déjà */
+//   Future<dynamic> exist(cinn) async {
+//     dynamic t=false;
+//     for(var user in itemsList){
+//       if(cinn==user){
+//         t= true;
+//         break;
+//       }
+//     }
+//     return t;
+//   }
 
 
   Widget buildInscritBtn() {
@@ -597,26 +577,14 @@ class _InscriptionState extends State<Inscription> {
 
         onPressed: () async {
       if (_formKey.currentState!.validate()) {
-        dynamic test= await exist(cin);
-        print(test);
-
+        dynamic test= await newuser.exist(cin);
         if (test==false) {
+          newuser.CreateUserPatient(id, cin, nom, prenom, email, tel, password,dropdownValue);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('inscription a été effectué avec succès.'),
             ),
           );
-          profileList.doc(id)
-              .set({
-            'cin': cin,
-            'nom': nom,
-            'prenom':prenom,
-            'genre': dropdownValue,
-            'email':email,
-            'telephone':tel,
-            'password': password,
-          }).then((value) => print('user added'))
-              .catchError((error) => print('erreur add user:$error'));
           _cinController.clear();
           _nomController.clear();
           _prenomController.clear();
@@ -787,7 +755,7 @@ class _InscriptionState extends State<Inscription> {
                           SizedBox(
                             height: 20,
                           ),
-                          buildAff(),
+                          //buildAff(),
                         ],
                       ),
                       ),

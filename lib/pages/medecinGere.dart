@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
+import '../data/authentification.dart';
 import '../pages/gereDossier.dart';
 import '../pages/gereOrdonnance.dart';
 
@@ -12,8 +13,8 @@ class medecin_gerer extends StatefulWidget{
   String idmedecin;
   String idpatient;
   String doctor;
-  String patient;
-  medecin_gerer({required this.idmedecin,required this.idpatient,required this.doctor,required this.patient});
+
+  medecin_gerer({required this.idmedecin,required this.idpatient,required this.doctor});
   State<StatefulWidget> createState() {
     return new _medecin_gererState();
   }
@@ -35,7 +36,23 @@ class _medecin_gererState extends State<medecin_gerer> {
     },);
   }
 
+  final Authentication login= Authentication(table:'profileInfoPatient');
+  // String patient="!!!";
+  // Future data() async {
+  //   patient="${await login.getdonne(widget.idpatient,'nom')}"+"  "+"${await login.getdonne(widget.idpatient,'prenom')}";
+  // }
 
+  Future data() async {
+    //String patient="";
+    String nom='///';
+    String prenom='!!!!!!!';
+    nom=await login.getdonne(widget.idpatient,'nom');
+    prenom=await login.getdonne(widget.idpatient,'prenom');
+    patient=nom+" "+prenom;
+
+    //return patient;
+  }
+String patient="!!!!!!!!!!!!!!!";
   @override
   Widget build(BuildContext context) {
     final double height=MediaQuery.of(context).size.height;
@@ -197,10 +214,12 @@ class _medecin_gererState extends State<medecin_gerer> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              new FlatButton(onPressed: () {
+                              new FlatButton(onPressed: ()
+                              {
                         Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => gerer_doss(idmedecin: widget.idmedecin,idpatient: widget.idpatient,
+                        MaterialPageRoute(builder: (context) => gerer_doss(idmedecin: widget.idmedecin,idpatient:
+                        widget.idpatient,
                         )
                         )
                         );
@@ -232,14 +251,18 @@ class _medecin_gererState extends State<medecin_gerer> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              new FlatButton(onPressed: 
-                                  () {
+                              new FlatButton(
+                                  onPressed: () async {
+                                //String nompatient=await data();
+                                    await data();
+                                    print(patient);
                        Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => gerer_ord(
                             idpatient:widget.idpatient,
                             idmedecin:widget.idmedecin,
-                            patient:widget.patient,
+                            //patient:widget.patient,
+                            patient:patient,
                             doctor:widget.doctor)
                        )
                          );

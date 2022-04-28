@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'dart:math';
-import 'gereOrdonnance.dart';
+import '../data/authentification.dart';
+
 
 
 
@@ -25,7 +25,6 @@ class _affichageState extends State<affichage> {
 
   /* variable */
   final _formKey = GlobalKey<FormState>();
-  final _Key = GlobalKey<FormState>();
 
   final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPatient');
 
@@ -285,6 +284,7 @@ class _affichageState extends State<affichage> {
   }
 
   Widget buildPatient(){
+
     return  Column( crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Column(
@@ -309,6 +309,7 @@ class _affichageState extends State<affichage> {
               ),
               child: Center(
                   child: Text("Nom de Patient: ${widget.index["patient"]}",
+
                     style: TextStyle(fontSize: 20),
                   )
               ),

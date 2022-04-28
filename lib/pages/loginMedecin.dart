@@ -6,6 +6,7 @@ import '../pages/acceuil.dart';
 import 'inscriptionMedc.dart';
 import 'medecinCnx.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../data/authentification.dart';
 
 class medecin_login extends StatefulWidget{
   @override
@@ -15,6 +16,9 @@ class medecin_login extends StatefulWidget{
 }
 
 class _medecin_loginstate extends State<medecin_login>{
+
+  final Authentication login= Authentication(table:'profileInfoMedecin');
+
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _passwordController = TextEditingController();
@@ -25,58 +29,61 @@ class _medecin_loginstate extends State<medecin_login>{
   int cin=11111111;
   List itemsList=[];
   String id="";
-  /* login */
-  Widget buildAff(){
-    final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoMedecin').snapshots();
-
-    return Container(
-      height:250 ,
-      padding: const EdgeInsets.symmetric(vertical:20),
-      child:
-      StreamBuilder<QuerySnapshot>(
-        stream: users,
-        builder: (
-            BuildContext context,
-            AsyncSnapshot<QuerySnapshot>snapshot,
-            ){
-          if(snapshot.hasError)
-          {
-            return Text('Something went wrong.');
-          }
-          if (snapshot.connectionState==ConnectionState.waiting)
-          {
-            return Text( 'Loading');
-          }
-          final data=snapshot.requireData;
-          return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context,index)
-            { itemsList.add(data.docs[index]);
-            return
-              //Text('');
-              Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
-            },
-          );
-        },
-
-      ),
-
-    );
-  }
-  /* cin et mot de passe conforme */
   String doctor="";
-  Future<dynamic> exist(cinn,mdp) async {
-    dynamic t=false;
-    for(var user in itemsList){
-      if(cinn == user['cin'] && mdp == user['password']) {
-        t = true;
-        doctor="dr."+"${user['nom']}"+" "+"${user['prenom']}";
-        break;
-      }
 
-    }
-    return t;
-  }
+
+  // /* login */
+  // Widget buildAff(){
+  //   final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoMedecin').snapshots();
+  //
+  //   return Container(
+  //     height:250 ,
+  //     padding: const EdgeInsets.symmetric(vertical:20),
+  //     child:
+  //     StreamBuilder<QuerySnapshot>(
+  //       stream: users,
+  //       builder: (
+  //           BuildContext context,
+  //           AsyncSnapshot<QuerySnapshot>snapshot,
+  //           ){
+  //         if(snapshot.hasError)
+  //         {
+  //           return Text('Something went wrong.');
+  //         }
+  //         if (snapshot.connectionState==ConnectionState.waiting)
+  //         {
+  //           return Text( 'Loading');
+  //         }
+  //         final data=snapshot.requireData;
+  //         return ListView.builder(
+  //           itemCount: data.size,
+  //           itemBuilder: (context,index)
+  //           { itemsList.add(data.docs[index]);
+  //           return
+  //             //Text('');
+  //             Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
+  //           },
+  //         );
+  //       },
+  //
+  //     ),
+  //
+  //   );
+  // }
+  // /* cin et mot de passe conforme */
+  // String doctor="";
+  // Future<dynamic> exist(cinn,mdp) async {
+  //   dynamic t=false;
+  //   for(var user in itemsList){
+  //     if(cinn == user['cin'] && mdp == user['password']) {
+  //       t = true;
+  //       doctor="dr."+"${user['nom']}"+" "+"${user['prenom']}";
+  //       break;
+  //     }
+  //
+  //   }
+  //   return t;
+  // }
 
   /*  ********** */
   @override
@@ -213,7 +220,8 @@ class _medecin_loginstate extends State<medecin_login>{
                                 RaisedButton(onPressed: () async{
 
                                   if (_formKey.currentState!.validate()) {
-                                    dynamic test= await exist(cin,password);
+                                    doctor="dr."+"${await login.getdonne(cin,'nom')}"+" "+"${await login.getdonne(cin,'prenom')}";
+                                    dynamic test= await login.connecter(cin,password);
                                     print(test);
 
                                     if (test==true) {
@@ -275,7 +283,7 @@ class _medecin_loginstate extends State<medecin_login>{
                                         splashColor: Colors.cyan.shade600,)
                                     ]
                                 ),
-                                buildAff(),
+                                login.buildAff(),
                               ],
                             ),
 

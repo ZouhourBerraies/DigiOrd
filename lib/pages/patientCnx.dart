@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 
 import '../pages/listeOrdPatient.dart';
+import '../pages/profilPatient.dart';
 
 
 class patient_cnx extends StatefulWidget{
@@ -38,10 +39,50 @@ class _patient_cnxState extends State<patient_cnx> {
     final double width=MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(''),
+            ),
+            ListTile(
+              title: const Text('Profil'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => profile(idpatient: widget.idpatient)));
+              },
+            ),
+            ListTile(
+              title: const Text(''),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
+
+
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-
-
+       // automaticallyImplyLeading: false,
+        leading: Builder(builder: (context){
+          return IconButton(
+            onPressed:()=>Scaffold.of(context).openDrawer(),
+              icon:Icon(Icons.person_pin_rounded,),
+            color: Colors.cyan,
+          );
+        }),
         backgroundColor: Colors.white,
         actions: [
           RaisedButton(
@@ -58,6 +99,40 @@ class _patient_cnxState extends State<patient_cnx> {
           ),
         ],
       ),
+      // drawer: Drawer(
+      //   // Add a ListView to the drawer. This ensures the user can scroll
+      //   // through the options in the drawer if there isn't enough vertical
+      //   // space to fit everything.
+      //   child: ListView(
+      //     // Important: Remove any padding from the ListView.
+      //     padding: EdgeInsets.zero,
+      //     children: [
+      //       const DrawerHeader(
+      //         decoration: BoxDecoration(
+      //           color: Colors.blue,
+      //         ),
+      //         child: Text(''),
+      //       ),
+      //       ListTile(
+      //         title: const Text('Profil'),
+      //         onTap: () {
+      //           Navigator.push(
+      //               context,
+      //               MaterialPageRoute(
+      //                   builder: (_) => profilPatient(idpatient: widget.idpatient)));
+      //         },
+      //       ),
+      //       ListTile(
+      //         title: const Text(''),
+      //         onTap: () {
+      //           // Update the state of the app.
+      //           // ...
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
+
       body: Column(
         children: [
           new Container(

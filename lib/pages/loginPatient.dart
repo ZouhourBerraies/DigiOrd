@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pcd/pages/profilePatientInsc.dart';
+
 import '../pages/inscriptionPatient.dart';
 import 'acceuil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'patientCnx.dart';
+import '../data/authentification.dart';
 
 class patient_login extends StatefulWidget{
   @override
@@ -23,57 +26,62 @@ class _patient_loginstate extends State<patient_login>{
   String password='0000';
   int cin=11111111;
   String id="";
-  List itemsList=[];
-  /* login */
-  Widget buildAff(){
-    final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPatient').snapshots();
 
-    return Container(
-      height:250 ,
-      padding: const EdgeInsets.symmetric(vertical:20),
-      child:
-      StreamBuilder<QuerySnapshot>(
-        stream: users,
-        builder: (
-            BuildContext context,
-            AsyncSnapshot<QuerySnapshot>snapshot,
-            ){
-          if(snapshot.hasError)
-          {
-            return Text('Something went wrong.');
-          }
-          if (snapshot.connectionState==ConnectionState.waiting)
-          {
-            return Text( 'Loading');
-          }
-          final data=snapshot.requireData;
-          return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context,index)
-            { itemsList.add(data.docs[index]);
-            return
-              //Text('');
-              Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
-            },
-          );
-        },
+  final Authentication login= Authentication(table:'profileInfoPatient');
 
-      ),
-
-    );
-  }
-  /* cin et mot de passe conforme */
-  Future<dynamic> exist(cinn,mdp) async {
-    dynamic t=false;
-    for(var user in itemsList){
-      if(cinn == user['cin'] && mdp == user['password']) {
-        t = true;
-        break;
-      }
-
-    }
-    return t;
-  }
+  //List itemsList=[];
+  // /* login */
+  // Widget buildAff(){
+  //   final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPatient').snapshots();
+  //
+  //   return Container(
+  //     height:250 ,
+  //     padding: const EdgeInsets.symmetric(vertical:20),
+  //     child:
+  //     StreamBuilder<QuerySnapshot>(
+  //       stream: users,
+  //       builder: (
+  //           BuildContext context,
+  //           AsyncSnapshot<QuerySnapshot>snapshot,
+  //           ){
+  //         if(snapshot.hasError)
+  //         {
+  //           return Text('Something went wrong.');
+  //         }
+  //         if (snapshot.connectionState==ConnectionState.waiting)
+  //         {
+  //           return Text( 'Loading');
+  //         }
+  //         final data=snapshot.requireData;
+  //         return ListView.builder(
+  //           itemCount: data.size,
+  //           itemBuilder: (context,index)
+  //           { itemsList.add(data.docs[index]);
+  //           return
+  //             //Text('');
+  //             Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
+  //           },
+  //         );
+  //       },
+  //
+  //     ),
+  //
+  //   );
+  // }
+  // /* cin et mot de passe conforme */
+  // String nom='';
+  // Future<dynamic> exist(cinn,mdp) async {
+  //   dynamic t=false;
+  //   for(var user in itemsList){
+  //     if(cinn == user['cin'] && mdp == user['password']) {
+  //       t = true;
+  //       nom=user['nom'];
+  //       break;
+  //     }
+  //
+  //   }
+  //   return t;
+  // }
 
 
   /* **********  */
@@ -218,9 +226,7 @@ class _patient_loginstate extends State<patient_login>{
                                 RaisedButton(
                                   onPressed :() async {
                                 if (_formKey.currentState!.validate()) {
-                                dynamic test= await exist(cin,password);
-                                print(test);
-
+                                dynamic test= await login.connecter(cin,password);
                                 if (test==true) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -229,12 +235,15 @@ class _patient_loginstate extends State<patient_login>{
                                 );
                                 _cinController.clear();
                                 _passwordController.clear();
-
                                 Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => patient_cnx(idpatient:id)
                                 )
                                 );
+                                String nom=await login.getdonne(cin,'nom');
+                                if (nom=='?'){
+                                  openDialogueBox(context);
+                                }
 
                                 } else{
                                 print('cin incorrect or password incorrect');
@@ -283,7 +292,7 @@ class _patient_loginstate extends State<patient_login>{
                                         splashColor: Colors.indigo.shade300,)
                                     ]
                                 ),
-                                buildAff(),
+                                login.buildAff(),
 
                               ],
                             ),
@@ -321,5 +330,35 @@ class _patient_loginstate extends State<patient_login>{
         fixedColor: Colors.indigo.shade300,
       ),
     );
+  }
+  openDialogueBox(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('entrer vos informations'),
+
+            actions: [
+              FlatButton(
+                onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => profile(idpatient: id)
+                )
+            );
+          },
+
+                child: Text('Submit'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel'),
+              )
+            ],
+          );
+        });
   }
 }

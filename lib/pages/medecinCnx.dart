@@ -2,9 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pcd/pages/profilMedecin.dart';
 
 import 'medecinGere.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../data/Create.dart';
+import '../data/authentification.dart';
 
 
 class medecin_cnx extends StatefulWidget {
@@ -21,16 +24,23 @@ class medecin_cnx extends StatefulWidget {
 
 class _medecin_cnxState extends State<medecin_cnx> {
   final _formKey = GlobalKey<FormState>();
-  final CollectionReference profileList = FirebaseFirestore.instance.collection('profileInfoPatient');
+  final _Key = GlobalKey<FormState>();
 
+  //final CollectionReference profileList = FirebaseFirestore.instance.collection('profileInfoPatient');
+
+  final Create newuser= Create(table:'profileInfoPatient');
+  final Authentication login= Authentication(table:'profileInfoPatient');
 
   TextEditingController _cinController = TextEditingController();
-
+  TextEditingController nom = TextEditingController();
+  TextEditingController prenom = TextEditingController();
 
 
   int cin=11111111;
   String id='';
-  String patient="????";
+  String nompatient="?";
+  String prenompatient="?";
+
 
 
   Widget builNumero() {
@@ -86,62 +96,13 @@ class _medecin_cnxState extends State<medecin_cnx> {
   }
 
 
-  List itemsList=[];
 
 
 
 
 
-  /* login */
-  Widget buildAff(){
-    final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPatient').snapshots();
 
-    return Container(
-      height:250 ,
-      padding: const EdgeInsets.symmetric(vertical:20),
-      child:
-      StreamBuilder<QuerySnapshot>(
-        stream: users,
-        builder: (
-            BuildContext context,
-            AsyncSnapshot<QuerySnapshot>snapshot,
-            ){
-          if(snapshot.hasError)
-          {
-            return Text('Something went wrong.');
-          }
-          if (snapshot.connectionState==ConnectionState.waiting)
-          {
-            return Text( 'Loading');
-          }
-          final data=snapshot.requireData;
-          return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context,index)
-            { itemsList.add(data.docs[index]);
-            return
-              //Text('');
-              Text('cin= ${data.docs[index]['cin']} ');
-            },
-          );
-        },
 
-      ),
-
-    );
-  }
-  /* rechercher patient */
-  Future<dynamic> exist(cinn) async {
-    dynamic t=false;
-    for(var user in itemsList){
-      if(cinn == user['cin']) {
-        t = true;
-        patient="${user['nom']}"+"  "+"${user['prenom']}";
-        break;
-      }
-    }
-    return t;
-  }
   Widget buildOkBtn(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25),
@@ -150,42 +111,39 @@ class _medecin_cnxState extends State<medecin_cnx> {
         elevation: 5,
         onPressed: () async{
           if (_formKey.currentState!.validate()) {
-            dynamic test= await exist(cin);
-            print(test);
-
+            dynamic test= await newuser.exist(cin);
             if (test==false) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Ajouter nouveau patient'),
-                ),
-              );
-              profileList.doc(id)
-                  .set({
-                'cin': cin,
-                'nom': '?',
-                'prenom':'?',
-                'email':'?',
-                'telephone':'?',
-                'password': cin.toString(),
-              }).then((value) => print('user added'))
-                  .catchError((error) => print('erreur add user:$error'));
-              _cinController.clear();
+             //newuser.CreateUserPatient(id, cin, nompatient, prenompatient, '?', 0, cin.toString(),'?');
+
+             // ScaffoldMessenger.of(context).showSnackBar(
+             //   SnackBar(
+             //     content: Text('Ajouter nouveau patient'),
+             //   ),
+             // );
+             Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) => medecin_gerer( idpatient:id,idmedecin:widget.idmedecin,doctor:widget.doctor,
+                   )
+                 )
+             );
+             openDialogueBox(context);
             } else{
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Patient existe déjà $patient'),
+                  content: Text('Patient existe déjà '),
                 ),
               );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => medecin_gerer( idpatient:id,idmedecin:widget.idmedecin,doctor:widget.doctor,
+                    )
+                  )
+              );
             }
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => medecin_gerer( idpatient:id,idmedecin:widget.idmedecin,doctor:widget.doctor,patient: patient,)
-                )
-            );
+            _cinController.clear();
+
 
           }
-
-
         },
 
         padding: EdgeInsets.all(20.0),
@@ -228,8 +186,39 @@ class _medecin_cnxState extends State<medecin_cnx> {
           ),
         ],
       ),
-
-      
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(''),
+            ),
+            ListTile(
+              title: const Text('Profil'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => profile(idmedecin: widget.idmedecin,nommedecin:widget.doctor)));
+              },
+            ),
+            ListTile(
+              title: const Text(''),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.all(0.0),
     child: SingleChildScrollView(
@@ -277,7 +266,7 @@ class _medecin_cnxState extends State<medecin_cnx> {
                           SizedBox(
                             height: 30,
                           ),
-                          buildAff(),
+                          newuser.buildAff(),
                         ],
                       ),
                     ),
@@ -311,4 +300,113 @@ class _medecin_cnxState extends State<medecin_cnx> {
       ),
     );
   }
+
+  openDialogueBox(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Ajouter Medicament'),
+            content: Container(
+              height: 300,
+              child: Form(
+                key: _Key,
+                child: Column(
+                  children: [
+                    TextFormField(
+                  controller: nom,
+                      onChanged: (value) {
+                        nompatient = value;
+                      },
+
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Quel est la dose de medicament?';
+                        } else
+                          return null;
+                      },
+                  autocorrect: true,
+                  autofocus: true,
+                  maxLength: 30,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(bottom: 3),
+                    labelText: 'Nom',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    hintText: 'Tapez Nom',
+
+                    hintStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.blueGrey
+                    ),
+                    icon: Icon(Icons.perm_identity),
+                  ),
+                ),
+                    TextFormField(
+                      controller: prenom,
+                      onChanged: (value) {
+                       prenompatient = value;
+                      },
+
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Quel est la dose de medicament?';
+                        } else
+                          return null;
+                      },
+                      autocorrect: true,
+                      autofocus: true,
+                      maxLength: 30,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(bottom: 3),
+                        labelText: 'Prénom',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: 'Tapez Prénom',
+                        hintStyle: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blueGrey
+                        ),
+                        icon: Icon(Icons.perm_identity),
+                      ),
+
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              FlatButton(
+                onPressed: () {
+                  if (_Key.currentState!.validate()) {
+                    submitAction(context);
+                    Navigator.pop(context);
+                  };
+                },
+                child: Text('Submit'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel'),
+              )
+            ],
+          );
+        });
+  }
+
+  submitAction(BuildContext context) {
+    newuser.CreateUserPatient(id, cin, nompatient, prenompatient, '?', 0, cin.toString(),'?');
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Ajouter nouveau patient'),
+        ),
+      );
+    nom.clear();
+   prenom.clear();
+
+  }
 }
+

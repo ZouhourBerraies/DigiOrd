@@ -6,6 +6,7 @@ import 'inscriptionPhar.dart';
 import 'acceuil.dart';
 import 'pharmacieCnx.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../data/authentification.dart';
 class pharmacie_login extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -14,6 +15,8 @@ class pharmacie_login extends StatefulWidget{
 }
 
 class _pharmacie_loginstate extends State<pharmacie_login>{
+
+  final Authentication login= Authentication(table:'profileInfoPharmacie');
 
   final _formKey = GlobalKey<FormState>();
 
@@ -24,56 +27,56 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
   String password='0000';
   int cin=11111111;
   List itemsList=[];
-  /* login */
-  Widget buildAff(){
-    final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPharmacie').snapshots();
-
-    return Container(
-      height:250 ,
-      padding: const EdgeInsets.symmetric(vertical:20),
-      child:
-      StreamBuilder<QuerySnapshot>(
-        stream: users,
-        builder: (
-            BuildContext context,
-            AsyncSnapshot<QuerySnapshot>snapshot,
-            ){
-          if(snapshot.hasError)
-          {
-            return Text('Something went wrong.');
-          }
-          if (snapshot.connectionState==ConnectionState.waiting)
-          {
-            return Text( 'Loading');
-          }
-          final data=snapshot.requireData;
-          return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context,index)
-            { itemsList.add(data.docs[index]);
-            return
-              //Text('');
-              Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
-            },
-          );
-        },
-
-      ),
-
-    );
-  }
-  /* cin et mot de passe conforme */
-  Future<dynamic> exist(cinn,mdp) async {
-    dynamic t=false;
-    for(var user in itemsList){
-      if(cinn == user['cin'] && mdp == user['password']) {
-        t = true;
-        break;
-      }
-
-    }
-    return t;
-  }
+  // /* login */
+  // Widget buildAff(){
+  //   final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPharmacie').snapshots();
+  //
+  //   return Container(
+  //     height:250 ,
+  //     padding: const EdgeInsets.symmetric(vertical:20),
+  //     child:
+  //     StreamBuilder<QuerySnapshot>(
+  //       stream: users,
+  //       builder: (
+  //           BuildContext context,
+  //           AsyncSnapshot<QuerySnapshot>snapshot,
+  //           ){
+  //         if(snapshot.hasError)
+  //         {
+  //           return Text('Something went wrong.');
+  //         }
+  //         if (snapshot.connectionState==ConnectionState.waiting)
+  //         {
+  //           return Text( 'Loading');
+  //         }
+  //         final data=snapshot.requireData;
+  //         return ListView.builder(
+  //           itemCount: data.size,
+  //           itemBuilder: (context,index)
+  //           { itemsList.add(data.docs[index]);
+  //           return
+  //             //Text('');
+  //             Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
+  //           },
+  //         );
+  //       },
+  //
+  //     ),
+  //
+  //   );
+  // }
+  // /* cin et mot de passe conforme */
+  // Future<dynamic> exist(cinn,mdp) async {
+  //   dynamic t=false;
+  //   for(var user in itemsList){
+  //     if(cinn == user['cin'] && mdp == user['password']) {
+  //       t = true;
+  //       break;
+  //     }
+  //
+  //   }
+  //   return t;
+  // }
 
   /* ********* */
   @override
@@ -210,7 +213,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                 RaisedButton(onPressed:()async {
                                   if (_formKey.currentState!.validate())
                                 {
-                                  dynamic test = await exist(cin, password);
+                                  dynamic test = await login.connecter(cin, password);
                                   print(test);
 
                                   if (test == true) {
@@ -276,7 +279,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                         splashColor: Colors.deepOrange.shade700,)
                                     ]
                                 ),
-                                buildAff(),
+                                login.buildAff(),
 
                               ],
                             ),

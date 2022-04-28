@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'loginMedecin.dart';
 import 'scanqr.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../data/Create.dart';
 
 
 class Inscription extends StatefulWidget {
@@ -18,58 +18,10 @@ class Inscription extends StatefulWidget {
 
 
 
-Widget builddiplome(context) {
-  return Container(
-    padding: EdgeInsets.symmetric(vertical: 25),
-    width: double.infinity,
-    child: RaisedButton(
-      elevation: 5,
-      onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) => QRScanPage(),)),
-      padding: EdgeInsets.all(15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      color: Colors.white,
-      child: Text(
-        'Scan QR Code',
-
-        style: TextStyle(
-            color: Colors.cyan,
-            fontWeight: FontWeight.bold),
-      ),
-    ),
-  );
-}
-
-
-Widget buildRetourBtn(BuildContext context) {
-
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => medecin_login()
-          )
-      );
-    },
-    //onTap: () => print("retour login"),
-    child: RichText(
-        text: TextSpan(children: [
-          TextSpan(
-              text: 'Avez-vous déjà un compte ?',
-              style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500)),
-          TextSpan(
-              text: 'S\'identifier',
-              style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold))
-        ])),
-  );
-}
-
-
-
-
 
 class _InscriptionState extends State<Inscription> {
-  final CollectionReference profileList = FirebaseFirestore.instance.collection('profileInfoMedecin');
+  //final CollectionReference profileList = FirebaseFirestore.instance.collection('profileInfoMedecin');
+  final Create newuser= Create(table:'profileInfoMedecin');
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _cinController = TextEditingController();
@@ -437,61 +389,110 @@ class _InscriptionState extends State<Inscription> {
       ],
     );
   }
-/* s'inscrire firebase*/
-  /*liste des identifiants */
-  List itemsList = [];
-  Widget buildAff(){
-    final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoMedecin').snapshots();
+// /* s'inscrire firebase*/
+//   /*liste des identifiants */
+//   List itemsList = [];
+//   Widget buildAff(){
+//     final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoMedecin').snapshots();
+//
+//     return Container(
+//       height:250 ,
+//       padding: const EdgeInsets.symmetric(vertical:20),
+//       child:
+//       StreamBuilder<QuerySnapshot>(
+//         stream: users,
+//         builder: (
+//             BuildContext context,
+//             AsyncSnapshot<QuerySnapshot>snapshot,
+//             ){
+//           if(snapshot.hasError)
+//           {
+//             return Text('Something went wrong.');
+//           }
+//           if (snapshot.connectionState==ConnectionState.waiting)
+//           {
+//             return Text( 'Loading');
+//           }
+//           final data=snapshot.requireData;
+//           return ListView.builder(
+//             itemCount: data.size,
+//             itemBuilder: (context,index)
+//             {
+//               itemsList.add(data.docs[index]['cin']);
+//               bool t=(cin==data.docs[index]['cin']);
+//               return Text('cin= ${data.docs[index]['cin']} ++++ ${t}++++${cin}');
+//               //Text('');
+//             },
+//           );
+//         },
+//
+//       ),
+//
+//     );
+//   }
+//
+//
+//
+// /* recherche si in identifant existe déjà */
+//   Future<dynamic> exist(cinn) async {
+//     dynamic t=false;
+//     for(var user in itemsList){
+//       if(cinn==user){
+//         t= true;
+//         break;
+//       }
+//     }
+//     return t;
+//   }
 
+  Widget builddiplome(context) {
     return Container(
-      height:250 ,
-      padding: const EdgeInsets.symmetric(vertical:20),
-      child:
-      StreamBuilder<QuerySnapshot>(
-        stream: users,
-        builder: (
-            BuildContext context,
-            AsyncSnapshot<QuerySnapshot>snapshot,
-            ){
-          if(snapshot.hasError)
-          {
-            return Text('Something went wrong.');
-          }
-          if (snapshot.connectionState==ConnectionState.waiting)
-          {
-            return Text( 'Loading');
-          }
-          final data=snapshot.requireData;
-          return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context,index)
-            {
-              itemsList.add(data.docs[index]['cin']);
-              bool t=(cin==data.docs[index]['cin']);
-              return Text('cin= ${data.docs[index]['cin']} ++++ ${t}++++${cin}');
-              //Text('');
-            },
-          );
-        },
+      padding: EdgeInsets.symmetric(vertical: 25),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5,
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => QRScanPage(),)),
+        padding: EdgeInsets.all(15),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        color: Colors.white,
+        child: Text(
+          'Scan QR Code',
 
+          style: TextStyle(
+              color: Colors.cyan,
+              fontWeight: FontWeight.bold),
+        ),
       ),
+    );
+  }
 
+
+  Widget buildRetourBtn(BuildContext context) {
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => medecin_login()
+            )
+        );
+      },
+      //onTap: () => print("retour login"),
+      child: RichText(
+          text: TextSpan(children: [
+            TextSpan(
+                text: 'Avez-vous déjà un compte ?',
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500)),
+            TextSpan(
+                text: 'S\'identifier',
+                style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold))
+          ])),
     );
   }
 
 
 
-/* recherche si in identifant existe déjà */
-  Future<dynamic> exist(cinn) async {
-    dynamic t=false;
-    for(var user in itemsList){
-      if(cinn==user){
-        t= true;
-        break;
-      }
-    }
-    return t;
-  }
 
 
   Widget buildInscritBtn() {
@@ -502,26 +503,15 @@ class _InscriptionState extends State<Inscription> {
 
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
-            dynamic test= await exist(cin);
-            print(test);
 
+            dynamic test= await newuser.exist(cin);
             if (test==false) {
+              newuser.CreateUser(id, cin, nom, prenom, email, tel, password);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('inscription a été effectué avec succès.'),
                 ),
               );
-              profileList.doc(id)
-                  .set({
-                'cin': cin,
-                'nom': nom,
-                'prenom':prenom,
-
-                'email':email,
-                'telephone':tel,
-                'password': password,
-              }).then((value) => print('user added'))
-                  .catchError((error) => print('erreur add user:$error'));
               _cinController.clear();
               _nomController.clear();
               _prenomController.clear();
@@ -665,7 +655,7 @@ class _InscriptionState extends State<Inscription> {
                             SizedBox(
                               height: 20,
                             ),
-                            buildAff(),
+                            newuser.buildAff(),
                           ],
                         ),
                       ),

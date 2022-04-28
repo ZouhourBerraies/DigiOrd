@@ -60,7 +60,7 @@ class _afficheordState extends State<afficheord> {
                           trailing: Text(formattedDate(data.docs[index]['date'])),
 
 
-                          onTap: () {
+                          onTap: ()async {
                              Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
