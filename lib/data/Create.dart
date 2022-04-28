@@ -89,7 +89,6 @@ class Create {
         'cin': cin,
         'nom': nom,
         'prenom': prenom,
-        'location': '',
         'email': email,
         'telephone': tel,
         'password': password,

@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:pcd/data/authentification.dart';
+import '../data/authentification.dart';
 import 'affichage.dart';
 import 'affichageMedecin.dart';
 import 'ordonnance.dart';
@@ -21,15 +23,20 @@ class gerer_ord extends StatefulWidget {
   _gerer_ordState createState() => _gerer_ordState();
 }
 
-
 class _gerer_ordState extends State<gerer_ord> {
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Les ordonnances médicales')),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
+        onPressed: ()async {
+
           Navigator.push(context, MaterialPageRoute(builder: (_) =>Addord(
             idpatient: widget.idpatient,idmedecin: widget.idmedecin,
             doctor:widget.doctor,

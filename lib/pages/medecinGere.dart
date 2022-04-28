@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
+import '../data/Create.dart';
 import '../data/authentification.dart';
 import '../pages/gereDossier.dart';
 import '../pages/gereOrdonnance.dart';
@@ -13,8 +14,9 @@ class medecin_gerer extends StatefulWidget{
   String idmedecin;
   String idpatient;
   String doctor;
+  String patient;
 
-  medecin_gerer({required this.idmedecin,required this.idpatient,required this.doctor});
+  medecin_gerer({required this.idmedecin,required this.idpatient,required this.doctor,required this.patient});
   State<StatefulWidget> createState() {
     return new _medecin_gererState();
   }
@@ -36,23 +38,18 @@ class _medecin_gererState extends State<medecin_gerer> {
     },);
   }
 
-  final Authentication login= Authentication(table:'profileInfoPatient');
-  // String patient="!!!";
-  // Future data() async {
-  //   patient="${await login.getdonne(widget.idpatient,'nom')}"+"  "+"${await login.getdonne(widget.idpatient,'prenom')}";
-  // }
+  final Authentication user =Authentication (table:'profileInfoPatient');
+  final _Key = GlobalKey<FormState>();
 
-  Future data() async {
-    //String patient="";
-    String nom='///';
-    String prenom='!!!!!!!';
-    nom=await login.getdonne(widget.idpatient,'nom');
-    prenom=await login.getdonne(widget.idpatient,'prenom');
-    patient=nom+" "+prenom;
 
-    //return patient;
-  }
-String patient="!!!!!!!!!!!!!!!";
+
+  final Create newuser= Create(table:'profileInfoPatient');
+
+  TextEditingController nom = TextEditingController();
+  TextEditingController prenom = TextEditingController();
+  String nomp="?";
+  String prenomp="?";
+
   @override
   Widget build(BuildContext context) {
     final double height=MediaQuery.of(context).size.height;
@@ -67,8 +64,8 @@ String patient="!!!!!!!!!!!!!!!";
           actions: [
         RaisedButton(
     onPressed: () async {
-      //await _auth.signOut().then((result) {
-        Navigator.of(context).pop(true);
+      Navigator.pop(context);
+      //Navigator.of(context).pop(true);
      // });
     },
     child : Icon(
@@ -251,23 +248,27 @@ String patient="!!!!!!!!!!!!!!!";
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              new FlatButton(
+                              //new
+                              FlatButton(
                                   onPressed: () async {
-                                //String nompatient=await data();
-                                    await data();
-                                    print(patient);
                        Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => gerer_ord(
+                        MaterialPageRoute(
+                            builder: (context) => gerer_ord(
                             idpatient:widget.idpatient,
                             idmedecin:widget.idmedecin,
-                            //patient:widget.patient,
-                            patient:patient,
+                            patient:widget.patient,
+                            //patient:nompatient,
                             doctor:widget.doctor)
                        )
                          );
-                         }
-                        ,child: new Text('Gérer Ordonnance',style: new TextStyle(fontSize:30.0,color: Colors.white,fontWeight: FontWeight.bold,
+                       String nom=await user.getdonne(int.parse(widget.idpatient),'nom');
+                       print(nom);
+                                 if (nom=='?'){
+                                   openDialogueBox(context);
+                                 }
+                         },
+                        child: new Text('Gérer Ordonnance',style: new TextStyle(fontSize:30.0,color: Colors.white,fontWeight: FontWeight.bold,
                               ),)),
                             ],
                           ),
@@ -284,6 +285,114 @@ String patient="!!!!!!!!!!!!!!!";
       ),
       
     );
+  }
+
+  openDialogueBox(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Ajouter vos données'),
+            content: Container(
+              height: 300,
+              child: Form(
+                key: _Key,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: nom,
+                      onChanged: (value) {
+                        nomp = value;
+                      },
+
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Quel est la dose de medicament?';
+                        } else
+                          return null;
+                      },
+                      autocorrect: true,
+                      autofocus: true,
+                      maxLength: 30,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(bottom: 3),
+                        labelText: 'Nom',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: 'Tapez Nom',
+
+                        hintStyle: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blueGrey
+                        ),
+                        icon: Icon(Icons.perm_identity),
+                      ),
+                    ),
+                    TextFormField(
+                      controller: prenom,
+                      onChanged: (value) {
+                        prenomp = value;
+                      },
+
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Quel est la dose de medicament?';
+                        } else
+                          return null;
+                      },
+                      autocorrect: true,
+                      autofocus: true,
+                      maxLength: 30,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(bottom: 3),
+                        labelText: 'Prénom',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: 'Tapez Prénom',
+                        hintStyle: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blueGrey
+                        ),
+                        icon: Icon(Icons.perm_identity),
+                      ),
+
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              FlatButton(
+                onPressed: () {
+                  if (_Key.currentState!.validate()) {
+                    submitAction(context);
+                    Navigator.pop(context);
+                  };
+                },
+                child: Text('Submit'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel'),
+              )
+            ],
+          );
+        });
+  }
+
+  submitAction(BuildContext context) {
+    newuser.UpdateUserPatient(widget.idpatient, nomp, prenomp, '?', widget.idpatient,'?');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Ajouter nouveau patient'),
+      ),
+    );
+    nom.clear();
+    prenom.clear();
+
   }
 }
 

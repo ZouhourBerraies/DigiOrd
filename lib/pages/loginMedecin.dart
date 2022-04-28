@@ -222,8 +222,6 @@ class _medecin_loginstate extends State<medecin_login>{
                                   if (_formKey.currentState!.validate()) {
                                     doctor="dr."+"${await login.getdonne(cin,'nom')}"+" "+"${await login.getdonne(cin,'prenom')}";
                                     dynamic test= await login.connecter(cin,password);
-                                    print(test);
-
                                     if (test==true) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(

@@ -40,6 +40,7 @@ class _medecin_cnxState extends State<medecin_cnx> {
   String id='';
   String nompatient="?";
   String prenompatient="?";
+  String patient="//";
 
 
 
@@ -111,35 +112,31 @@ class _medecin_cnxState extends State<medecin_cnx> {
         elevation: 5,
         onPressed: () async{
           if (_formKey.currentState!.validate()) {
+            patient="${await login.getdonne(cin,'nom')}"+" "+"${await login.getdonne(cin,'prenom')}";
             dynamic test= await newuser.exist(cin);
             if (test==false) {
-             //newuser.CreateUserPatient(id, cin, nompatient, prenompatient, '?', 0, cin.toString(),'?');
-
-             // ScaffoldMessenger.of(context).showSnackBar(
-             //   SnackBar(
-             //     content: Text('Ajouter nouveau patient'),
-             //   ),
-             // );
-             Navigator.push(
-                 context,
-                 MaterialPageRoute(builder: (context) => medecin_gerer( idpatient:id,idmedecin:widget.idmedecin,doctor:widget.doctor,
-                   )
-                 )
+             newuser.CreateUserPatient(id, cin, nompatient, prenompatient, '?', 0, cin.toString(),'?');
+             ScaffoldMessenger.of(context).showSnackBar(
+               SnackBar(
+                 content: Text('Ajouter nouveau patient'),
+               ),
              );
-             openDialogueBox(context);
-            } else{
+
+            } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Patient existe déjà '),
+                  content: Text('Patient existe déjà $patient'),
                 ),
               );
+            }
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => medecin_gerer( idpatient:id,idmedecin:widget.idmedecin,doctor:widget.doctor,
-                    )
+                  MaterialPageRoute(builder: (context) => medecin_gerer(
+                      idpatient:id,idmedecin:widget.idmedecin,doctor:widget.doctor,
+                    patient:patient)
                   )
               );
-            }
+
             _cinController.clear();
 
 
@@ -301,112 +298,6 @@ class _medecin_cnxState extends State<medecin_cnx> {
     );
   }
 
-  openDialogueBox(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Ajouter Medicament'),
-            content: Container(
-              height: 300,
-              child: Form(
-                key: _Key,
-                child: Column(
-                  children: [
-                    TextFormField(
-                  controller: nom,
-                      onChanged: (value) {
-                        nompatient = value;
-                      },
 
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Quel est la dose de medicament?';
-                        } else
-                          return null;
-                      },
-                  autocorrect: true,
-                  autofocus: true,
-                  maxLength: 30,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(bottom: 3),
-                    labelText: 'Nom',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    hintText: 'Tapez Nom',
-
-                    hintStyle: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.blueGrey
-                    ),
-                    icon: Icon(Icons.perm_identity),
-                  ),
-                ),
-                    TextFormField(
-                      controller: prenom,
-                      onChanged: (value) {
-                       prenompatient = value;
-                      },
-
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Quel est la dose de medicament?';
-                        } else
-                          return null;
-                      },
-                      autocorrect: true,
-                      autofocus: true,
-                      maxLength: 30,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 3),
-                        labelText: 'Prénom',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        hintText: 'Tapez Prénom',
-                        hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blueGrey
-                        ),
-                        icon: Icon(Icons.perm_identity),
-                      ),
-
-                    ),
-
-                  ],
-                ),
-              ),
-            ),
-            actions: [
-              FlatButton(
-                onPressed: () {
-                  if (_Key.currentState!.validate()) {
-                    submitAction(context);
-                    Navigator.pop(context);
-                  };
-                },
-                child: Text('Submit'),
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Cancel'),
-              )
-            ],
-          );
-        });
-  }
-
-  submitAction(BuildContext context) {
-    newuser.CreateUserPatient(id, cin, nompatient, prenompatient, '?', 0, cin.toString(),'?');
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ajouter nouveau patient'),
-        ),
-      );
-    nom.clear();
-   prenom.clear();
-
-  }
 }
 

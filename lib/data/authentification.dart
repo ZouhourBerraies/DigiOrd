@@ -74,13 +74,25 @@ class Authentication {
 /* get information */
 Future<String> getdonne(cinn,infor) async {
   String data="";
+
   for(var user in itemsList){
     if(cinn == user['cin']) {
       data=user[infor];
       break;
     }
-
   }
   return data;
 }
+  Future<String> getPatient(String cinn) async {
+    int cin=int.parse(cinn);
+    String data="";
+    for(var user in itemsList){
+      if(cin == user['cin']) {
+        data=user['nom'];
+            //+' '+user['prenom'];
+        break;
+      }
+    }
+    return data;
+  }
 }

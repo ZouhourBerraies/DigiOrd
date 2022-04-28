@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
+import '../data/authentification.dart';
 import 'gereOrdonnance.dart';
 import '../data/CreateOrd.dart';
 
@@ -28,7 +29,7 @@ class _AddordState extends State<Addord> {
   final _formKey = GlobalKey<FormState>();
   final _Key = GlobalKey<FormState>();
 
-  final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPatient');
+  //final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPatient');
   final CreateOrd ord=CreateOrd();
 
 
@@ -47,14 +48,19 @@ class _AddordState extends State<Addord> {
   int nbrjour = 0;
   int parjour = 0;
   List itemsList = [];
-  int patient=0;
-  int medecin=0;
+
   String random='X';
   DateTime date = new DateTime.now();
   String signature='';
   String idd='X';
   String numero='';
   int n=0;
+
+
+
+
+
+
 
 
   Widget buildRnadom(){
@@ -442,7 +448,8 @@ class _AddordState extends State<Addord> {
                               buildqr(context),
                               SizedBox(height: 10,),
                               ElevatedButton.icon(
-                                  onPressed: (){
+                                  onPressed: () async{
+
                                    ord.AjouterOrd(date, widget.doctor, widget.idmedecin, widget.patient, signature, widget.idpatient, random);
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
