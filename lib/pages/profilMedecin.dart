@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../data/Create.dart';
 import '../pages/medecinCnx.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:flutter/src/services/message_codec.dart';
 
 class profile extends StatefulWidget {
   String idmedecin;
@@ -31,6 +34,11 @@ class _profilestate extends State<profile> {
   TextEditingController motdepasse = TextEditingController();
   TextEditingController location = TextEditingController();
   TextEditingController telephone = TextEditingController();
+
+  final ImagePicker _picker = ImagePicker();
+  File? image;
+
+
   int current = 0;
   @override
   void initState() {
@@ -39,7 +47,7 @@ class _profilestate extends State<profile> {
   }
 
   Future<List?> getCurrentUserData() async {
-    List infoMeedecin = [];
+    List infoMedecin = [];
     try {
       DocumentSnapshot ds =
       await profileMedecinList.doc(widget.idmedecin).get();
@@ -51,8 +59,8 @@ class _profilestate extends State<profile> {
       String telp = ds.get('telephone').toString();
 
 
-      infoMeedecin = [firstname, lastname, email, location, mdp,telp];
-      return infoMeedecin;
+      infoMedecin = [firstname, lastname, email, location, mdp,telp];
+      return infoMedecin;
     } catch (e) {
       print(e.toString());
       return null;
@@ -87,6 +95,106 @@ class _profilestate extends State<profile> {
     return result;
   }
 
+  Widget imageProfile() {
+    return Center(
+      child: Stack(children: <Widget>[
+        // CircleAvatar(
+        //   radius: 80.0,
+        //   backgroundColor: Colors.white,
+        //    backgroundImage:
+
+
+      image != null
+            ? Image(image: FileImage(image!, scale: 4))
+            : Image.asset(
+          "images/prof.jpg",
+          width: 120.0,
+          height: 120.0,
+          fit: BoxFit.cover,
+        ),
+
+        //   ,
+        // : FlutterLogo(size: 160),
+
+//  if ( _imageFile == null) {
+//    Image.asset("images/prof.jpg")
+//  } else {
+//    FileImage(File(_imageFile.path));
+//  }
+
+        Positioned(
+          bottom: 20.0,
+          right: 20.0,
+          child: InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: ((builder) => bottomSheet()),
+              );
+            },
+            child: Icon(
+              Icons.camera_alt,
+              color: Colors.teal,
+              size: 28.0,
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100.0,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: <Widget>[
+          Text(
+            "Choose Profile photo",
+            style: TextStyle(
+              fontSize: 20.0,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            FlatButton.icon(
+              icon: Icon(Icons.camera),
+              onPressed: () {
+                pickImage(ImageSource.camera);
+              },
+              label: Text("Camera"),
+            ),
+            FlatButton.icon(
+              icon: Icon(Icons.image),
+              onPressed: () {
+                pickImage(ImageSource.gallery);
+              },
+              label: Text("Gallery"),
+            ),
+          ])
+        ],
+      ),
+    );
+  }
+
+  Future pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      setState(() => this.image = imageTemporary);
+    } on PlatformException catch (e) {
+      print('failed to pick image $e');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +213,7 @@ class _profilestate extends State<profile> {
             Icons.arrow_back,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {Navigator.pop(context);},
         ),
         actions: [
           IconButton(
@@ -133,7 +241,11 @@ class _profilestate extends State<profile> {
             SizedBox(
               height: 16,
             ),
-            Center(
+            imageProfile(),
+            SizedBox(
+              height: 16,
+            ),
+            /*Center(
               child: Stack(
                 children: [
                   Container(
@@ -176,7 +288,7 @@ class _profilestate extends State<profile> {
                       ))
                 ],
               ),
-            ),
+            ),*/
             SizedBox(
               height: 16,
             ),
