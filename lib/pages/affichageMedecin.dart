@@ -147,19 +147,19 @@ class _affichageMedecinState extends State<affichageMedecin> {
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
 
-          Row(
-            children: [
-              Expanded(child: buildTextField(context)),
-              const SizedBox(width: 12),
-              FloatingActionButton(
-                backgroundColor: Theme.of(context).primaryColor,
-                child: Icon(Icons.done, size: 30),
-                onPressed: () {
-                  setState(() {});
-                },
-              )
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Expanded(child: buildTextField(context)),
+          //     const SizedBox(width: 12),
+          //     FloatingActionButton(
+          //       backgroundColor: Theme.of(context).primaryColor,
+          //       child: Icon(Icons.done, size: 30),
+          //       onPressed: () {
+          //         setState(() {});
+          //       },
+          //     )
+          //   ],
+          // ),
 
           SizedBox(height: 10),
           BarcodeWidget(

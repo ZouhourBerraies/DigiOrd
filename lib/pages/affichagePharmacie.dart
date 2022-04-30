@@ -148,21 +148,21 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
 
-          Row(
-            children: [
-              Expanded(child: buildTextField(context)),
-              const SizedBox(width: 12),
-              FloatingActionButton(
-                backgroundColor: Theme.of(context).primaryColor,
-                child: Icon(Icons.done, size: 30),
-                onPressed: () {
-                  setState(() {});
-                },
-              )
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Expanded(child: buildTextField(context)),
+          //     const SizedBox(width: 12),
+          //     FloatingActionButton(
+          //       backgroundColor: Theme.of(context).primaryColor,
+          //       child: Icon(Icons.done, size: 30),
+          //       onPressed: () {
+          //         setState(() {});
+          //       },
+          //     )
+          //   ],
+          // ),
 
-          SizedBox(height: 10),
+          //SizedBox(height: 10),
           BarcodeWidget(
             barcode: Barcode.qrCode(),
             color: Colors.black,
@@ -170,7 +170,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
             width: 500,
             height: 50,
           ),
-          SizedBox(height: 16),
+         // SizedBox(height: 16),
         ],
       ),
     );
