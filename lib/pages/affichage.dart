@@ -732,7 +732,7 @@ class _affichageState extends State<affichage> {
                               Container(
                                 padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
                                 child: new Text(
-                                  "Numéro du Médecin: ${widget.index["nom medecin"]}",
+                                  "Nom du Médecin: ${widget.index["nom medecin"]}",
                                   style: TextStyle(
                                       fontSize: 22,
                                       color: Colors.cyan.shade700,
@@ -803,7 +803,7 @@ class _affichageState extends State<affichage> {
                               Container(
                                 padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
                                 child: new Text(
-                                  "Numéro du Patient: ${widget.index["patient"]}",
+                                  "Nom du Patient: ${widget.index["patient"]}",
                                   style: TextStyle(
                                       fontSize: 22,
                                       color: Colors.cyan.shade700,
@@ -814,37 +814,6 @@ class _affichageState extends State<affichage> {
                           )
                         ],
                       ),
-
-                      Container(
-                        padding: EdgeInsets.only(left: 10,right: 50),
-                        child: Row(
-                          children: [
-                            Icon(Icons.add_box_rounded,
-                                color: Colors.cyan),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            RaisedButton(onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(builder: (context) => Inscription()
-                              //     )
-                              // );
-                            },
-                              child: Text('Ajouter Médicament',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                              color: Colors.white70,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              textColor: Colors.cyan.shade600,
-                              padding: EdgeInsets.all(15.0),
-                              splashColor: Colors.cyan.shade600,
-                            ),
-                          ],
-                        ),
-                      )
-
-
 
 
                     ],

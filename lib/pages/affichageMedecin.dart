@@ -69,88 +69,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
 
 
 
-  Widget buildRnadom(){
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: [
 
-              Expanded(
-                flex:1,
-                child:Container(
-                  width: 100,
-                  // height: 70,
-                  alignment: Alignment.center,
-                  color: Colors.white,),
-              ),
-              Expanded(
-                flex:2,
-                child:Container(
-                  width: 100,
-                  // height: 70,
-                  alignment: Alignment.center,
-                  color: Colors.white,),
-              ),
-
-              Expanded(flex:3,
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 100,
-                    //height: 100,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.lightBlue,
-                        width: 5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Colors.grey,
-                          //offset: new Offset(10.0, 10.0),
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                        child: Text("Numéro d\'ordonnance: ${widget.index['numero']}",
-                            style: TextStyle(fontSize: 20))
-                    ),
-                  )
-              ),
-
-            ],
-          ),
-        ]
-
-    );
-  }
-  Widget buildAjouter(){
-    return Row(
-      children: [
-        Expanded(flex:1,child:Container(
-          width: 50,
-          // height: 70,
-          color: Colors.white,),
-        ),
-        Expanded(
-          child:
-          ElevatedButton.icon(
-            onPressed: () {
-              openDialogueBox(context);
-            },
-            icon: const Icon(Icons.edit),
-            label: const Text('modifier medicament'),
-          ),
-        ),
-        SizedBox(
-          width: 30,
-        ),
-
-
-
-      ],
-    );
-  }
   Widget buildAff() {
     final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('profileInfoPatient').doc(widget.idpatient).collection('ListeOrdonnance').doc(widget.index['numero']).collection("ListeMedicament").snapshots();
 
@@ -290,188 +209,287 @@ class _affichageMedecinState extends State<affichageMedecin> {
     ),
   );
 
-  Widget buildMedecin(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          children: [
-
-            Container(
-              width: 500,
-              //height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.lightBlue,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  new BoxShadow(
-                    // color: Colors.grey,
-                      color:  Color.fromARGB(255, 235, 233, 233)
-                    // offset: new Offset(10.0, 10.0),
-                  ),
-                ],
-              ),
-              child: Center(
-                  child: Text("Nom de medecin: ${widget.index["nom medecin"]}",
-                    style: TextStyle(fontSize: 20),
-                  )
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget buildPatient(){
-    return  Column( crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Column(
-          children: [
-
-            Container(
-              //width: 250,
-              //height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.lightBlue,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  new BoxShadow(
-                    // color: Colors.grey,
-                      color:  Color.fromARGB(255, 235, 233, 233)
-                    // offset: new Offset(10.0, 10.0),
-                  ),
-                ],
-              ),
-              child: Center(
-                  child: Text("Nom de Patient: ${widget.index["patient"]}",
-                    style: TextStyle(fontSize: 20),
-                  )
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-
-
-
 
   /*      **************            */
   @override
 
   Widget build(BuildContext context) {
+    // final double height = MediaQuery.of(context).size.height;
+    // final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            'ordonnance',
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
+
+
+      appBar:
+      AppBar(title: Text(
+        'Zone Médecin',
+        style:TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ), backgroundColor: Colors.cyan.shade700,
+
+
+        automaticallyImplyLeading: false,
+        actions: [
+          RaisedButton(
+            onPressed: () async {
+
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => accueil()));
+
+              Navigator.pop(context);
+            },
+            child : Icon(
+              Icons.exit_to_app,
               color: Colors.white,
             ),
+            color: Colors.cyan.shade700,
           ),
-          backgroundColor: Colors.blue.shade500),
+        ],
+      ),
 
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-              child: Stack(
-                  children: <Widget>[
-                    Container(
-                      height: double.infinity,
-                      width: double.infinity,
 
-                      child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
-                        child:Form(
-                          key: _formKey,
-                          child: Column(
+      backgroundColor: Colors.white30,
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                children: <Widget>[
+                  Text(
+                    'Ordonnance Médicale',
+                    style: TextStyle(
+                      fontSize: 40,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 6
+                        ..color = Colors.cyan.shade700,
+                    ),
+                  ),
+                  Text(
+                    'Ordonnance Médicale',
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.cyan.shade50,
+                    ),
+                  )
+                ],
+              ) ,
+            ],
+          ),
+          Expanded(
+            child: Column(
+                children: [
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 32,right: 30, top: 25, bottom: 10),
+                        child: Text(
+                          //'Date:${widget.index['date'].toDate().toString()}',
+                          // 'Date : ${formattedDate(widget.index['date'])}',
+                          'Date : ${formattedDate(widget.index['date'])}',
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.right,
+                        ),
+                      )
+                    ],
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      new Stack(
+                        children: [
+                          Container(
+                            height: 80,
+                            width:500,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(50),
+                                  topRight: Radius.circular(50)),
+                              color: Colors.cyan.shade50,
+                            ),
+                          ),
+
+                          Column(
                             children: [
-                              SizedBox(
-                                width: double.infinity,
-                                child:
-                                Text(
-                                  'Date : ${formattedDate(widget.index['date'])}',
-
-                                  //'Date: ${date.day}/${date.month}/${date.year}',
-                                  style: TextStyle(fontSize: 20),
-                                  textAlign: TextAlign.right,
-
-                                ),),
-
-                              SizedBox(height: 16),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildRnadom(),
-
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildMedecin(),
-
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildPatient(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildAjouter(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-
-                                child:
-                                Table(
-                                  border: TableBorder.all(),
-                                  columnWidths: {
-                                    0: FractionColumnWidth(0.10),
-                                    1: FractionColumnWidth(0.15),
-                                    2: FractionColumnWidth(0.15),
-                                    3: FractionColumnWidth(0.15),
-                                    4: FractionColumnWidth(0.15),
-                                    5: FractionColumnWidth(0.15),
-                                    6: FractionColumnWidth(0.15),
-
-
-                                  },
-                                  children: [
-                                    buildRow(['numero','medicament', 'dose', 'parjour', 'nbrJour','délivrer','substituer'],isHeader: true),
-                                  ],
+                              Container(
+                                padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                                child: new Text(
+                                  "Nom du Médecin: ${widget.index["nom medecin"]}",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.cyan.shade700,
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ),
-                              //),
-                              SizedBox(
-                                //height: 10,
-                                child:buildAff(),
+
+                            ],
+                          )
+                        ],
+                      ),
+
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 10, top: 50),
+                        //height: 150,
+                        padding: const EdgeInsets.only(left: 20, right: 10, bottom: 20),
+                        child: new Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Colors.cyan,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                offset: Offset(-10.0, 10.0), //(x,y)
+                                blurRadius: 20,
+                                spreadRadius: 4,
                               ),
-                              SizedBox(height: 10,),
-                              buildqr(context),
-                              SizedBox(height: 10,),
-
-
+                            ],
+                          ),
+                          padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              new Text(
+                                'Numéro Ordonnance : ${widget.index['numero']}',
+                                style: new TextStyle(
+                                  fontSize: 30.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ), )
-                  ]))),
+                      ),
+                    ],
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      new Stack(
+                        children: [
+                          Container(
+                            height: 80,
+                            width:500,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(50),
+                                  topRight: Radius.circular(50)),
+                              color: Colors.cyan.shade50,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                                child: new Text(
+                                  "Nom du Patient: ${widget.index["patient"]}",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.cyan.shade700,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(left: 10,right: 50),
+                            child: Row(
+                              children: [
+                                Icon(Icons.edit_rounded,
+                                    color: Colors.cyan),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                RaisedButton(onPressed: () {
+                                  openDialogueBox(context);
+                                },
+                                  child: Text('Modifier Médicament',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                                  color: Colors.white70,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  textColor: Colors.cyan.shade600,
+                                  padding: EdgeInsets.all(15.0),
+                                  splashColor: Colors.cyan.shade600,
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      )
+
+                    ],
+                  ),
+                ]),
+          ),
+          Expanded(
+            child: AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle.light,
+                child: GestureDetector(
+                    child: Stack(
+                        children: <Widget>[
+                          Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+                              child:Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    Table(
+                                      border: TableBorder.all(),
+                                      columnWidths: {
+                                        0: FractionColumnWidth(0.10),
+                                        1: FractionColumnWidth(0.15),
+                                        2: FractionColumnWidth(0.15),
+                                        3: FractionColumnWidth(0.15),
+                                        4: FractionColumnWidth(0.15),
+                                        5: FractionColumnWidth(0.15),
+                                        6: FractionColumnWidth(0.15),
+
+                                      },
+                                      children: [
+                                        buildRow(['Numero','Médicament', 'Dose', 'NbrJour','NbrFois par Jour','Délivré','Substitué'],isHeader: true),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      // height: 10,
+                                      child:buildAff(),
+                                    ),
+                                    SizedBox(height: 10,),
+                                    buildqr(context),
+                                    SizedBox(height: 10,),
+
+
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ]
+                    )
+                )
+            ),
+          ),
+          /*------------------zou----------------*/
+        ],
+      ),
     );
   }
-
-
-
   TableRow buildRow(List<String> cells, {bool isHeader = false}) =>
       TableRow(
           children: cells.map((cell) {

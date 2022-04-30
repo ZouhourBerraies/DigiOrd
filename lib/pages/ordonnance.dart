@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 //import 'package:qr_flutter/qr_flutter.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'dart:math';
 import '../data/authentification.dart';
 import 'listeOrdonnance.dart';
@@ -63,78 +64,7 @@ class _AddordState extends State<Addord> {
 
 
 
-  Widget buildRnadom(){
-    return Row(
-      children: [
 
-        Text(
-          "Numéro d\'ordonnance: $random",
-          style: TextStyle(
-              fontSize: 20.0),
-        ),
-        SizedBox(width: 20,),
-
-        Expanded(
-          flex:1,
-          child:
-          ElevatedButton(
-            child: Text('Numero Oradonnance'),
-            onPressed: (){
-              setState(() {});
-              random= Random().nextInt(500).toString();
-            },
-          ),
-        ),
-        Expanded(flex:2,child:Container(
-          width: 50,
-          // height: 70,
-          color: Colors.white,),
-        ),
-        /*SizedBox(height: 10),
-      Expanded(
-          child:
-          ElevatedButton.icon(
-  onPressed: () {
-  openDialogueBox(context);
-  },
-  icon: const Icon(Icons.add),
-  label: const Text('ajouter medicament'),
-  ),
-
-  ),*/
-
-
-
-      ],
-    );
-  }
-  Widget buildAjouter(){
-    return Row(
-      children: [
-        Expanded(flex:1,child:Container(
-          width: 50,
-          // height: 70,
-          color: Colors.white,),
-        ),
-        Expanded(
-          child:
-          ElevatedButton.icon(
-            onPressed: () {
-              openDialogueBox(context);
-            },
-            icon: const Icon(Icons.add),
-            label: const Text('ajouter medicament'),
-          ),
-        ),
-        SizedBox(
-          width: 30,
-        ),
-
-
-
-      ],
-    );
-  }
   Widget buildAff() {
     final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('profileInfoPatient').doc(widget.idpatient).collection('ListeOrdonnance').doc(random).collection("ListeMedicament").snapshots();
 
@@ -259,78 +189,6 @@ class _AddordState extends State<Addord> {
     ),
   );
 
-  Widget buildMedecin(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          children: [
-
-            Container(
-              width: 500,
-              //height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.lightBlue,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  new BoxShadow(
-                    // color: Colors.grey,
-                      color:  Color.fromARGB(255, 235, 233, 233)
-                    // offset: new Offset(10.0, 10.0),
-                  ),
-                ],
-              ),
-              child: Center(
-                  child: Text("Nom de medecin: ${widget.doctor}",
-                      style: TextStyle(fontSize: 20),
-                  )
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-  Widget buildPatient(){
-  return  Column( crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-    Column(
-    children: [
-
-    Container(
-    //width: 250,
-    //height: 200,
-    decoration: BoxDecoration(
-    border: Border.all(
-    color: Colors.lightBlue,
-    width: 1,
-    ),
-    borderRadius: BorderRadius.circular(10),
-    boxShadow: [
-    new BoxShadow(
-    // color: Colors.grey,
-    color:  Color.fromARGB(255, 235, 233, 233)
-    // offset: new Offset(10.0, 10.0),
-    ),
-    ],
-    ),
-    child: Center(
-    child: Text("Nom de Patient: ${widget.patient}",
-    style: TextStyle(fontSize: 20),
-    )
-    ),
-    ),
-    ],
-    ),
-    ],
-    );
-  }
-
-
-
 
 
 
@@ -343,145 +201,328 @@ class _AddordState extends State<Addord> {
     super.initState();
   }*/
   Widget build(BuildContext context) {
+    // final double height = MediaQuery.of(context).size.height;
+    // final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            'ordonnance',
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
+
+
+      appBar:
+      AppBar(title: Text(
+        'Zone Médecin',
+        style:TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ), backgroundColor: Colors.cyan.shade700,
+
+
+        automaticallyImplyLeading: false,
+        actions: [
+          RaisedButton(
+            onPressed: () async {
+
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => accueil()));
+
+              Navigator.pop(context);
+            },
+            child : Icon(
+              Icons.exit_to_app,
               color: Colors.white,
             ),
+            color: Colors.cyan.shade700,
           ),
-          backgroundColor: Colors.blue.shade500),
-      /*floatingActionButton:FloatingActionButton(
-        onPressed: () {
-          openDialogueBox(context);
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 24.0,
-          semanticLabel: 'ajouter medicament',
-        ),
-      ),*/
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-              child: Stack(
-                  children: <Widget>[
-                    Container(
-                      height: double.infinity,
-                      width: double.infinity,
+        ],
+      ),
 
-                      child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
-                        child:Form(
-                          key: _formKey,
-                          child: Column(
+
+      backgroundColor: Colors.white30,
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                children: <Widget>[
+                  Text(
+                    'Ordonnance Médicale',
+                    style: TextStyle(
+                      fontSize: 40,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 6
+                        ..color = Colors.cyan.shade700,
+                    ),
+                  ),
+                  Text(
+                    'Ordonnance Médicale',
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.cyan.shade50,
+                    ),
+                  )
+                ],
+              ) ,
+            ],
+          ),
+          Expanded(
+            child: Column(
+                children: [
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 32,right: 30, top: 25, bottom: 10),
+                        child: Text(
+                          //'Date:${widget.index['date'].toDate().toString()}',
+                          // 'Date : ${formattedDate(widget.index['date'])}',
+                          'Date: ${date.day}/${date.month}/${date.year}',
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.right,
+                        ),
+                      )
+                    ],
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      new Stack(
+                        children: [
+                          Container(
+                            height: 80,
+                            width:500,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(50),
+                                  topRight: Radius.circular(50)),
+                              color: Colors.cyan.shade50,
+                            ),
+                          ),
+
+                          Column(
                             children: [
-                              Text(
-                                '${date.day}/${date.month}/${date.year}',
-                                style: TextStyle(fontSize: 32),
-                                textAlign: TextAlign.left,
-
-                              ),
-                              SizedBox(height: 16),
-                              ElevatedButton(
-                                child: Text(
-                                  'Entrer la date d\'aujourd\'hui',
-                                ),
-                                onPressed: () async {
-                                  DateTime? newDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: date,
-                                    firstDate: DateTime(1999),
-                                    lastDate: DateTime(2100),
-                                  );
-                                  if (newDate == null) return;
-                                  setState(() => date = newDate);
-                                },
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildMedecin(),
-                              SizedBox(
-                                height: 10,
-                              ),
-
-                              buildPatient(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildRnadom(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildAjouter(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-
-                                child:
-                                Table(
-                                  border: TableBorder.all(),
-                                  columnWidths: {
-                                    0: FractionColumnWidth(0.35),
-                                    1: FractionColumnWidth(0.15),
-                                    2: FractionColumnWidth(0.25),
-                                    3: FractionColumnWidth(0.25),
-                                  },
-                                  children: [
-                                    buildRow(['medicament', 'dose', 'parjour', 'nbrJour'],isHeader: true),
-                                    //buildRow(['${itemsList['Medicament']}', 'cell2', 'cell3']),
-                                  ],
+                              Container(
+                                padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                                child: new Text(
+                                  "Nom du Médecin: ${widget.doctor}",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.cyan.shade700,
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ),
-                              //),
-                              SizedBox(
-                                //height: 10,
-                                child:buildAff(),),
-                              SizedBox(height: 10,),
-                              buildqr(context),
-                              SizedBox(height: 10,),
-                              ElevatedButton.icon(
-                                  onPressed: () async{
 
-                                   ord.AjouterOrd(date, widget.doctor, widget.idmedecin, widget.patient, signature, widget.idpatient, random);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Sending data to cloud firesstore'),
-                                      ),
-                                    );
-                                    //Navigator.pop(context);
+                            ],
+                          )
+                        ],
+                      ),
 
-                                    Navigator.push(
-                                        context, MaterialPageRoute(builder: (_) =>gerer_ord(
-                                        idpatient:widget.idpatient,
-                                      idmedecin:widget.idmedecin ,
-                                      //patient: widget.patient,
-                                      doctor: widget.doctor,
-                                    )));
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 10, top: 50),
+                        //height: 150,
+                        padding: const EdgeInsets.only(left: 20, right: 10, bottom: 20),
+                        child: new Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Colors.cyan,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                offset: Offset(-10.0, 10.0), //(x,y)
+                                blurRadius: 20,
+                                spreadRadius: 4,
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              new FlatButton(
+
+                                  onPressed: (){
+                                    setState(() {});
+                                    random= Random().nextInt(500).toString();
                                   },
-                                  icon: const Icon(Icons.save),
-                                  label: const Text('Save')),
-
-
-
+                                  child: new Text(
+                                    "Numéro d\'ordonnance: $random",
+                                    style: new TextStyle(
+                                      fontSize: 30.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                              ),
 
                             ],
                           ),
                         ),
-                      ), )
-                  ]))),
+                      ),
+                    ],
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      new Stack(
+                        children: [
+                          Container(
+                            height: 80,
+                            width:500,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(50),
+                                  topRight: Radius.circular(50)),
+                              color: Colors.cyan.shade50,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                                child: new Text(
+                                  "Nom du Patient: ${widget.patient}",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.cyan.shade700,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.only(left: 10,right: 50),
+                        child: Row(
+                          children: [
+                            Icon(Icons.add_circle_rounded,
+                                color: Colors.cyan),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            RaisedButton(onPressed: () {
+    openDialogueBox(context);
+
+                            },
+                              child: Text('Ajouter Médicament',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                              color: Colors.white70,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              textColor: Colors.cyan.shade600,
+                              padding: EdgeInsets.all(15.0),
+                              splashColor: Colors.cyan.shade600,
+                            ),
+                          ],
+                        ),
+                      )
+
+
+
+
+                    ],
+                  ),
+                ]),
+          ),
+          Expanded(
+            child: AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle.light,
+                child: GestureDetector(
+                    child: Stack(
+                        children: <Widget>[
+                          Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+                              child:Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    Table(
+                                      border: TableBorder.all(),
+                                      columnWidths: {
+                                        0: FractionColumnWidth(0.35),
+                                        1: FractionColumnWidth(0.15),
+                                        2: FractionColumnWidth(0.25),
+                                        3: FractionColumnWidth(0.25),
+                                      },
+                                      children: [
+                                        buildRow(['Médicament', 'Dose', 'NbrJour','NbrFois par Jour'],isHeader: true),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      // height: 10,
+                                      child:buildAff(),
+                                    ),
+                                    SizedBox(height: 10,),
+                                    buildqr(context),
+                                    SizedBox(height: 10,),
+
+
+                                       Row(
+                                         mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.save_rounded,
+                                              color: Colors.cyan),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          RaisedButton(onPressed: () {
+                                            ord.AjouterOrd(date, widget.doctor, widget.idmedecin, widget.patient, signature, widget.idpatient, random);
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text('Sending data to cloud firesstore'),
+                                              ),
+                                            );
+                                            //Navigator.pop(context);
+
+                                            Navigator.push(
+                                                context, MaterialPageRoute(builder: (_) =>gerer_ord(
+                                              idpatient:widget.idpatient,
+                                              idmedecin:widget.idmedecin ,
+                                              //patient: widget.patient,
+                                              doctor: widget.doctor,
+                                            )));
+
+                                          },
+                                            child: Text('Save',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                                            color: Colors.white60,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(50),
+                                            ),
+                                            textColor: Colors.cyan.shade600,
+                                            padding: EdgeInsets.all(15.0),
+                                            splashColor: Colors.cyan.shade300,
+                                          ),
+                                        ],
+                                      ),
+
+
+
+
+
+
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ]
+                    )
+                )
+            ),
+          ),
+          /*------------------zou----------------*/
+        ],
+      ),
     );
   }
-
-
-
   TableRow buildRow(List<String> cells, {bool isHeader = false}) =>
       TableRow(
           children: cells.map((cell) {
@@ -602,4 +643,9 @@ class _AddordState extends State<Addord> {
     _parjourController.clear();
     _nbrjourController.clear();
   }
+String formattedDate(timeStamp) {
+  var dateFromTimeStamp =
+  DateTime.fromMillisecondsSinceEpoch(timeStamp.seconds * 1000);
+  return DateFormat('dd-MM-yyyy').format(dateFromTimeStamp);
+}
 }
