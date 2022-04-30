@@ -600,10 +600,10 @@ class _affichageState extends State<affichage> {
 
                       buildRow([
                         //'${data.docs[index]['numeroMedic']}',
-                        '${data.docs[index]['Medicament']}',
-                        '${data.docs[index]['dose']}',
-                        '${data.docs[index]['par jour']}',
+                        '${data.docs[index]['medicament']}',
+                        '${data.docs[index]['nombre de fois par jour']}',
                         '${data.docs[index]['nombre de jour']}',
+                        '${data.docs[index]['remarque']}',
                         '${data.docs[index]['délivrer']}',
                         '${data.docs[index]['substituer']}',
 
@@ -636,7 +636,7 @@ class _affichageState extends State<affichage> {
 
       appBar:
       AppBar(title: Text(
-        'Zone Médecin',
+        '',
         style:TextStyle(
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
@@ -848,7 +848,7 @@ class _affichageState extends State<affichage> {
                                    // 6: FractionColumnWidth(0.15),
                                       },
                                       children: [
-                                        buildRow(['Médicament', 'Dose', 'NbrJour','NbrFois par Jour' ,'Délivré','Substitué'],isHeader: true),
+                                        buildRow(['Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque' ,'Délivré','Substitué'],isHeader: true),
                                       ],
                                     ),
                                     SizedBox(
@@ -868,7 +868,6 @@ class _affichageState extends State<affichage> {
                 )
             ),
           ),
-          /*------------------zou----------------*/
         ],
       ),
     );

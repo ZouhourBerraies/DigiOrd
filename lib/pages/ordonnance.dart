@@ -10,6 +10,7 @@ import 'dart:math';
 import '../data/authentification.dart';
 import 'listeOrdonnance.dart';
 import '../data/CreateOrd.dart';
+import 'medecinGere.dart';
 
 
 
@@ -35,7 +36,7 @@ class _AddordState extends State<Addord> {
 
 
   TextEditingController _medicController = TextEditingController();
-  TextEditingController _doseController = TextEditingController();
+  TextEditingController _remarqueController = TextEditingController();
   TextEditingController _parjourController = TextEditingController();
   TextEditingController _nbrjourController = TextEditingController();
 
@@ -45,9 +46,9 @@ class _AddordState extends State<Addord> {
   final controllerqr = TextEditingController();
 
   String medic = '';
-  int dose = 0;
   int nbrjour = 0;
   int parjour = 0;
+  String remarque='rien';
   List itemsList = [];
 
   String random='X';
@@ -103,10 +104,10 @@ class _AddordState extends State<Addord> {
                   children: [
 
                     buildRow([
-                      '${data.docs[index]['Medicament']}',
-                      '${data.docs[index]['dose']}',
-                      '${data.docs[index]['par jour']}',
-                      '${data.docs[index]['nombre de jour']}'
+                      '${data.docs[index]['medicament']}',
+                      '${data.docs[index]['nombre de fois par jour']}',
+                      '${data.docs[index]['nombre de jour']}',
+                      '${data.docs[index]['remarque']}',
                     ]),
                   ],
                 );
@@ -134,7 +135,7 @@ class _AddordState extends State<Addord> {
               Expanded(child: buildTextField(context)),
               const SizedBox(width: 12),
               FloatingActionButton(
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: Colors.cyan,
                 child: Icon(Icons.done, size: 30),
                 onPressed: () {
                   setState(() {});
@@ -183,7 +184,7 @@ class _AddordState extends State<Addord> {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
-          color: Theme.of(context).primaryColor,
+          color: Colors.cyan,
         ),
       ),
     ),
@@ -196,15 +197,9 @@ class _AddordState extends State<Addord> {
 
   /*      **************            */
   @override
-  /*void initState(){
-    getData();
-    super.initState();
-  }*/
   Widget build(BuildContext context) {
-    // final double height = MediaQuery.of(context).size.height;
-    // final double width = MediaQuery.of(context).size.width;
-    return Scaffold(
 
+    return Scaffold(
 
       appBar:
       AppBar(title: Text(
@@ -222,9 +217,13 @@ class _AddordState extends State<Addord> {
           RaisedButton(
             onPressed: () async {
 
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => accueil()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => medecin_gerer(
+                idmedecin: widget.idmedecin,
+                idpatient: widget.idpatient,
+                doctor: widget.doctor,
+              )
+              ));
 
-              Navigator.pop(context);
             },
             child : Icon(
               Icons.exit_to_app,
@@ -453,7 +452,8 @@ class _AddordState extends State<Addord> {
                                         3: FractionColumnWidth(0.25),
                                       },
                                       children: [
-                                        buildRow(['Médicament', 'Dose', 'NbrJour','NbrFois par Jour'],isHeader: true),
+                                        buildRow(['Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque'],isHeader: true),
+
                                       ],
                                     ),
                                     SizedBox(
@@ -474,12 +474,8 @@ class _AddordState extends State<Addord> {
                                             width: 20,
                                           ),
                                           RaisedButton(onPressed: () {
+                                            if (_formKey.currentState!.validate()) {
                                             ord.AjouterOrd(date, widget.doctor, widget.idmedecin, widget.patient, signature, widget.idpatient, random);
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                content: Text('Sending data to cloud firesstore'),
-                                              ),
-                                            );
                                             //Navigator.pop(context);
 
                                             Navigator.push(
@@ -490,7 +486,8 @@ class _AddordState extends State<Addord> {
                                               doctor: widget.doctor,
                                             )));
 
-                                          },
+                                          }
+                                            },
                                             child: Text('Save',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                                             color: Colors.white60,
                                             shape: RoundedRectangleBorder(
@@ -518,7 +515,7 @@ class _AddordState extends State<Addord> {
                 )
             ),
           ),
-          /*------------------zou----------------*/
+
         ],
       ),
     );
@@ -562,23 +559,10 @@ class _AddordState extends State<Addord> {
                           return null;
                       },
                     ),
-                    TextFormField(
-                      controller: _doseController,
-                      decoration: InputDecoration(hintText: 'dose'),
-                      onChanged: (value) {
-                        dose = int.parse(value);
-                      },
 
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Quel est la dose de medicament?';
-                        } else
-                          return null;
-                      },
-                    ),
                     TextFormField(
                       controller: _parjourController,
-                      decoration: InputDecoration(hintText: 'parjour'),
+                      decoration: InputDecoration(hintText: 'nombre de fois par jour'),
                       onChanged: (value) {
                         parjour = int.parse(value);
                       },
@@ -592,19 +576,27 @@ class _AddordState extends State<Addord> {
                     ),
                     TextFormField(
                       controller: _nbrjourController,
-                      decoration: InputDecoration(hintText: 'nbrJour'),
+                      decoration: InputDecoration(hintText: 'nombre de jour'),
                       onChanged: (value) {
                         nbrjour = int.parse(value);
                       },
-
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'combien de jour utilise ce médicament?';
                         } else
                           return null;
                       },
-                    )
+                    ),
+
+                    TextFormField(
+                      controller: _remarqueController,
+                      decoration: InputDecoration(hintText: 'remarque'),
+                      onChanged: (value) {
+                        remarque = value;
+                      },
+                    ),
                   ],
+
                 ),
               ),
             ),
@@ -632,14 +624,14 @@ class _AddordState extends State<Addord> {
   }
 
   submitAction(BuildContext context) {
-    ord.AjouterMedic(random, dose, medic, numero, parjour, widget.idpatient, nbrjour);
+    ord.AjouterMedic(random, numero,medic, parjour,nbrjour,remarque,widget.idpatient,);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Sending data to cloud firesstore'),
       ),
     );
     _medicController.clear();
-    _doseController.clear();
+    _remarqueController.clear();
     _parjourController.clear();
     _nbrjourController.clear();
   }

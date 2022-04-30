@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pcd/pages/profilMedecin.dart';
 
+import 'acceuil.dart';
 import 'medecinGere.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../data/Create.dart';
 import '../data/authentification.dart';
+import 'profilMedecin.dart';
 
 
 class medecin_cnx extends StatefulWidget {
@@ -173,49 +175,74 @@ class _medecin_cnxState extends State<medecin_cnx> {
         actions: [
           RaisedButton(
             onPressed: () async {
-              //await _auth.signOut().then((result) {
-              Navigator.of(context).pop(true);
-              // });
+              Navigator.push(context, MaterialPageRoute(builder: (context) => accueil()));
             },
             child : Icon(
               Icons.exit_to_app,
               color: Colors.white,
             ),
-            color: Colors.cyan,
+            color: Colors.cyan.shade700,
           ),
         ],
       ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
+      drawer:  Drawer(
         child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+            children: [
+              DrawerHeader(
+                //   child: CircleAvatar(
+                //   child: Image.asset('images/doctor.jpg'),
+                // ),
+                child:Column(
+                    children: [
+                      Container(
+
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 2,
+                                color: Theme.of(context).scaffoldBackgroundColor),
+                            boxShadow: [
+                              BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                color: Colors.black.withOpacity(0.5),
+                                //offset: Offset(0, 1)
+                              )
+                            ],
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("images/profil.jpg"),
+                            )),
+                      ),
+                      Text('${widget.doctor}',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                    ]
+                ),
+
+
               ),
-              child: Text(''),
-            ),
-            ListTile(
-              title: const Text('Profil'),
-              onTap: () {
-                Navigator.push(
+              ListTile(
+                title: Text(
+                  'Profil',
+                  style: TextStyle(color: Colors.black),
+                ),
+                leading: Icon(
+                  Icons.person,
+                  color: Colors.cyan,
+                ),
+                onTap: () {
+                  Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (_) => profile(idmedecin: widget.idmedecin,nommedecin:widget.doctor)));
-              },
-            ),
-            ListTile(
-              title: const Text(''),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-          ],
+                    MaterialPageRoute<void>(
+                        builder: (BuildContext context) => profile(idmedecin:widget.idmedecin,nommedecin: widget.doctor,)
+                    ),
+                  );
+                },
+              ),
+            ]
         ),
       ),
       body: Container(

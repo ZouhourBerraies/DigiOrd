@@ -116,15 +116,12 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
 
                       buildRow([
                         '${data.docs[index]['numeroMedic']}',
-                        '${data.docs[index]['Medicament']}',
-                        '${data.docs[index]['dose']}',
-                        '${data.docs[index]['par jour']}',
+                        '${data.docs[index]['medicament']}',
+                        '${data.docs[index]['nombre de fois par jour']}',
                         '${data.docs[index]['nombre de jour']}',
+                        '${data.docs[index]['remarque']}',
                         '${data.docs[index]['délivrer']}',
                         '${data.docs[index]['substituer']}',
-
-
-
 
                       ]),
                     ],
@@ -483,10 +480,16 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                     Table(
                                       border: TableBorder.all(),
                                       columnWidths: {
-
+                                        0: FractionColumnWidth(0.10),
+                                        1: FractionColumnWidth(0.15),
+                                        2: FractionColumnWidth(0.15),
+                                        3: FractionColumnWidth(0.15),
+                                        4: FractionColumnWidth(0.15),
+                                        5: FractionColumnWidth(0.15),
+                                        6: FractionColumnWidth(0.15),
                                       },
                                       children: [
-                                        buildRow(['Numero','Médicament', 'Dose', 'NbrJour','NbrFois par Jour','Délivré','Substitué'],isHeader: true),
+                                        buildRow(['Numero','Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque' ,'Délivré','Substitué'],isHeader: true),
                                       ],
                                     ),
                                     SizedBox(
@@ -549,7 +552,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                 )
             ),
           ),
-          /*------------------zou----------------*/
+
         ],
       ),
     );
@@ -620,15 +623,9 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
   }
 
   submitAction(BuildContext context) async{
-    ord.delivrerMedic(NummedicD,widget.index['numero'], widget.idpatient);
+    ord.delivrerMedic(widget.index['numero'],NummedicD, widget.idpatient);
     resultD = await ord.getCurrentUserData(widget.idpatient, widget.index['numero'], NummedicD);
-    //ord.DelivMedic(widget.index['numero'], NummedicD, widget.index['medicament'], widget.index['dose'], widget.index['parjour'],widget.index['nbrjour'], widget.idpharmacie);
     ord.DelivMedic(widget.index['numero'], NummedicD, resultD[0], resultD[1], resultD[2], resultD[3], widget.idpharmacie);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Sending data to cloud firesstore'),
-      ),
-    );
     _NumeromedicDController.clear();
 
   }
@@ -698,15 +695,9 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
   }
 
   submitActionSub(BuildContext context) async{
-    ord.substituerMedic(NummedicS, medic, widget.index['numero'], widget.idpatient);
+    ord.substituerMedic( widget.index['numero'],NummedicS, medic, widget.idpatient);
      resultS = await ord.getCurrentUserData(widget.idpatient, widget.index['numero'], NummedicD);
-    //ord.SubMedic(widget.index['numero'], NummedicS, resultS[0], resultS[1], resultS[2], resultS[3], widget.idpharmacie,medic);
-    ord.SubMedic("191", "0", "medicament", 1000, 3, 7, widget.idpharmacie, medic);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Sending data to cloud firesstore'),
-      ),
-    );
+    ord.SubMedic(widget.index['numero'], NummedicS, resultS[0], resultS[1], resultS[2], resultS[3], widget.idpharmacie,medic);
     _medicController.clear();
     _NummedicSController.clear();
 

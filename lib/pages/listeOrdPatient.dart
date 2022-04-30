@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:pcd/pages/patientCnx.dart';
 
 import 'affichage.dart';
 
@@ -12,7 +13,8 @@ import 'affichage.dart';
 class afficheord extends StatefulWidget {
   //const gerer_ord({Key? key}) : super(key: key);
   String idpatient;
-  afficheord({required this.idpatient});
+  String patient;
+  afficheord({required this.idpatient,required this.patient});
   @override
   _afficheordState createState() => _afficheordState();
 }
@@ -22,8 +24,27 @@ class _afficheordState extends State<afficheord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Les ordonnances médicales')),
-
+        appBar: AppBar(
+          title: Text('Les Ordonnances Médicales',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),),
+      backgroundColor: Colors.indigo.shade300,
+      leading:IconButton(
+        icon:Icon(
+          Icons.arrow_back,
+          color:Colors.white,
+        ),
+        onPressed:(){
+          Navigator.push(context, MaterialPageRoute(builder: (_) =>patient_cnx(
+            idpatient: widget.idpatient,
+            patient: widget.patient,
+          )));
+        },
+      ),
+        ),
         body: Container(
           child: StreamBuilder<QuerySnapshot>(
               stream:

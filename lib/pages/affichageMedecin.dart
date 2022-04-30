@@ -32,7 +32,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
   TextEditingController _NummedicController = TextEditingController();
   TextEditingController _parjourController = TextEditingController();
   TextEditingController _nbrjourController = TextEditingController();
-  TextEditingController _doseController = TextEditingController();
+  TextEditingController _remarqueController = TextEditingController();
 
   TextEditingController _signateurController = TextEditingController();
 
@@ -41,7 +41,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
 
   String medic = '';
   String Nummedic='';
-  int dose = 0;
+ String remarque='rien';
   int nbrjour = 0;
   int parjour = 0;
   List itemsList = [];
@@ -115,10 +115,10 @@ class _affichageMedecinState extends State<affichageMedecin> {
 
                       buildRow([
                         '${data.docs[index]['numeroMedic']}',
-                        '${data.docs[index]['Medicament']}',
-                        '${data.docs[index]['dose']}',
-                        '${data.docs[index]['par jour']}',
+                        '${data.docs[index]['medicament']}',
+                        '${data.docs[index]['nombre de fois par jour']}',
                         '${data.docs[index]['nombre de jour']}',
+                        '${data.docs[index]['remarque']}',
                         '${data.docs[index]['délivrer']}',
                         '${data.docs[index]['substituer']}',
 
@@ -463,7 +463,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
 
                                       },
                                       children: [
-                                        buildRow(['Numero','Médicament', 'Dose', 'NbrJour','NbrFois par Jour','Délivré','Substitué'],isHeader: true),
+                                        buildRow(['Numero','Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque' ,'Délivré','Substitué'],isHeader: true),
                                       ],
                                     ),
                                     SizedBox(
@@ -542,20 +542,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
                           return null;
                       },
                     ),
-                    TextFormField(
-                      controller: _doseController,
-                      decoration: InputDecoration(hintText: 'dose'),
-                      onChanged: (value) {
-                        dose = int.parse(value);
-                      },
 
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Quel est la dose de medicament?';
-                        } else
-                          return null;
-                      },
-                    ),
                     TextFormField(
                       controller: _parjourController,
                       decoration: InputDecoration(hintText: 'parjour'),
@@ -583,7 +570,14 @@ class _affichageMedecinState extends State<affichageMedecin> {
                         } else
                           return null;
                       },
-                    )
+                    ),
+                    TextFormField(
+                      controller: _remarqueController,
+                      decoration: InputDecoration(hintText: 'dose'),
+                      onChanged: (value) {
+                        remarque=value;
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -602,7 +596,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Cancel'),
+                child: Text('Annuler'),
               )
             ],
           );
@@ -610,14 +604,14 @@ class _affichageMedecinState extends State<affichageMedecin> {
   }
 
   submitAction(BuildContext context) {
-   ord.UpdateMedic(Nummedic, dose, medic, widget.index['numero'], parjour, widget.idpatient, nbrjour);
+   ord.UpdateMedic(widget.index['numero'], Nummedic, medic, parjour, nbrjour, remarque, widget.idpatient);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Sending data to cloud firesstore'),
       ),
     );
     _medicController.clear();
-    _doseController.clear();
+    _remarqueController.clear();
     _parjourController.clear();
     _nbrjourController.clear();
     _NummedicController.clear();

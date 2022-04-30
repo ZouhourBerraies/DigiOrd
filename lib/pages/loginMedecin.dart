@@ -32,58 +32,7 @@ class _medecin_loginstate extends State<medecin_login>{
   String doctor="";
 
 
-  // /* login */
-  // Widget buildAff(){
-  //   final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoMedecin').snapshots();
-  //
-  //   return Container(
-  //     height:250 ,
-  //     padding: const EdgeInsets.symmetric(vertical:20),
-  //     child:
-  //     StreamBuilder<QuerySnapshot>(
-  //       stream: users,
-  //       builder: (
-  //           BuildContext context,
-  //           AsyncSnapshot<QuerySnapshot>snapshot,
-  //           ){
-  //         if(snapshot.hasError)
-  //         {
-  //           return Text('Something went wrong.');
-  //         }
-  //         if (snapshot.connectionState==ConnectionState.waiting)
-  //         {
-  //           return Text( 'Loading');
-  //         }
-  //         final data=snapshot.requireData;
-  //         return ListView.builder(
-  //           itemCount: data.size,
-  //           itemBuilder: (context,index)
-  //           { itemsList.add(data.docs[index]);
-  //           return
-  //             //Text('');
-  //             Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
-  //           },
-  //         );
-  //       },
-  //
-  //     ),
-  //
-  //   );
-  // }
-  // /* cin et mot de passe conforme */
-  // String doctor="";
-  // Future<dynamic> exist(cinn,mdp) async {
-  //   dynamic t=false;
-  //   for(var user in itemsList){
-  //     if(cinn == user['cin'] && mdp == user['password']) {
-  //       t = true;
-  //       doctor="dr."+"${user['nom']}"+" "+"${user['prenom']}";
-  //       break;
-  //     }
-  //
-  //   }
-  //   return t;
-  // }
+
 
   /*  ********** */
   @override
@@ -104,10 +53,10 @@ class _medecin_loginstate extends State<medecin_login>{
           actions: [
         RaisedButton(
     onPressed: () async {
-      //await _auth.signOut().then((result) {
+
         Navigator.push(context, MaterialPageRoute(builder: (context) => accueil()
                                             ));
-     // });
+
     },
     child : Icon(
     Icons.exit_to_app,

@@ -7,6 +7,7 @@ import '../data/Create.dart';
 import '../data/authentification.dart';
 import '../pages/ListeDossier.dart';
 import '../pages/listeOrdonnance.dart';
+import 'medecinCnx.dart';
 
 
 class medecin_gerer extends StatefulWidget{
@@ -51,15 +52,6 @@ class _medecin_gererState extends State<medecin_gerer> {
   String prenomp="?";
   String nompatient="####";
 
-  // @override
-  // void initState() {
-  //   intialisation();
-  //   super.initState();
-  // }
-  // intialisation() async {
-  //  String patient="${await user.getdonne(int.parse(widget.idpatient),'nom')}"+" "+"${await user.getdonne(int.parse(widget.idpatient),'prenom')}";
-  // nompatient=patient;
-  // }
 
 
   @override
@@ -76,9 +68,13 @@ class _medecin_gererState extends State<medecin_gerer> {
           actions: [
         RaisedButton(
     onPressed: () async {
-      Navigator.pop(context);
-      //Navigator.of(context).pop(true);
-     // });
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (_) => medecin_cnx(
+                idmedecin: widget.idmedecin,
+                doctor: widget.doctor,
+              )));
     },
     child : Icon(
     Icons.exit_to_app,

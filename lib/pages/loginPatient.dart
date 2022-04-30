@@ -29,61 +29,6 @@ class _patient_loginstate extends State<patient_login>{
 
   final Authentication login= Authentication(table:'profileInfoPatient');
 
-  //List itemsList=[];
-  // /* login */
-  // Widget buildAff(){
-  //   final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPatient').snapshots();
-  //
-  //   return Container(
-  //     height:250 ,
-  //     padding: const EdgeInsets.symmetric(vertical:20),
-  //     child:
-  //     StreamBuilder<QuerySnapshot>(
-  //       stream: users,
-  //       builder: (
-  //           BuildContext context,
-  //           AsyncSnapshot<QuerySnapshot>snapshot,
-  //           ){
-  //         if(snapshot.hasError)
-  //         {
-  //           return Text('Something went wrong.');
-  //         }
-  //         if (snapshot.connectionState==ConnectionState.waiting)
-  //         {
-  //           return Text( 'Loading');
-  //         }
-  //         final data=snapshot.requireData;
-  //         return ListView.builder(
-  //           itemCount: data.size,
-  //           itemBuilder: (context,index)
-  //           { itemsList.add(data.docs[index]);
-  //           return
-  //             //Text('');
-  //             Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
-  //           },
-  //         );
-  //       },
-  //
-  //     ),
-  //
-  //   );
-  // }
-  // /* cin et mot de passe conforme */
-  // String nom='';
-  // Future<dynamic> exist(cinn,mdp) async {
-  //   dynamic t=false;
-  //   for(var user in itemsList){
-  //     if(cinn == user['cin'] && mdp == user['password']) {
-  //       t = true;
-  //       nom=user['nom'];
-  //       break;
-  //     }
-  //
-  //   }
-  //   return t;
-  // }
-
-
   /* **********  */
   @override
   Widget build(BuildContext context) {
@@ -103,10 +48,8 @@ class _patient_loginstate extends State<patient_login>{
           actions: [
         RaisedButton(
     onPressed: () async {
-      //await _auth.signOut().then((result) {
         Navigator.push(context, MaterialPageRoute(builder: (context) => accueil()
                                             ));
-     // });
     },
     child : Icon(
     Icons.exit_to_app,
@@ -123,12 +66,6 @@ class _patient_loginstate extends State<patient_login>{
           padding: EdgeInsets.all(50.0),
 
           decoration: BoxDecoration(
-            // border: Border.all(
-            //     width: 10,
-            //     color: Colors.blueGrey),
-            // image: DecorationImage(
-            //     image: AssetImage("images/back.jpg"),
-            //     fit: BoxFit.cover),
           ),
           //width: 1000, height: 1000,
     child: SingleChildScrollView(
@@ -235,13 +172,14 @@ class _patient_loginstate extends State<patient_login>{
                                 );
                                 _cinController.clear();
                                 _passwordController.clear();
+                                String nom= await login.getUserData(id);
                                 Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => patient_cnx(idpatient:id)
+                                MaterialPageRoute(builder: (context) => patient_cnx(idpatient:id,patient:nom)
                                 )
                                 );
-                                String nom=await login.getdonne(cin,'nom');
-                                if (nom=='?'){
+
+                                if (nom=='? ?'){
                                   openDialogueBox(context);
                                 }
 

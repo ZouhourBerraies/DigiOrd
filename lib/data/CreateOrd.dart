@@ -27,53 +27,52 @@ class CreateOrd {
         .catchError((error) => print('erreur add user:$error'));
   }
 
-  Future<void> AjouterMedic(String random, int dose, String medic,
-      String numero, int parjour, String idpatient, int nbrjour) async {
-    //final CollectionReference profilList = FirebaseFirestore.instance.collection(table);
+  Future<void> AjouterMedic(String random, String numero,String medic,int parjour,int nbrjour,String remarque,String idpatient
+ ) async {
 
     return await profilList.doc(idpatient).collection('ListeOrdonnance').doc(
         random).collection("ListeMedicament")
         .doc(numero).set({
-      'Medicament': medic,
-      'dose': dose,
-      'par jour': parjour,
-      'nombre de jour': nbrjour,
       'numeroMedic': numero,
+      'medicament': medic,
+      'nombre de fois par jour': parjour,
+      'nombre de jour': nbrjour,
+      'remarque':remarque,
       'substituer': "non",
       'délivrer': "non"
     }).then((value) => print('user added'))
         .catchError((error) => print('erreur add user:$error'));
   }
 
-  Future<void> UpdateMedic(String Nummedic, int dose, String medic,
-      String numero, int parjour, String idpatient, int nbrjour) async {
+  Future<void> UpdateMedic(String numeroOrd,String Nummedic, String medic,
+       int parjour, int nbrjour, String remarque,String idpatient) async {
     return await profilList.doc(idpatient).collection('ListeOrdonnance').doc(
-        numero).collection("ListeMedicament")
+        numeroOrd).collection("ListeMedicament")
         .doc(Nummedic)
         .update({
-      'Medicament': medic,
-      'dose': dose,
-      'par jour': parjour,
+      'medicament': medic,
+      'nombre de fois par jour': parjour,
       'nombre de jour': nbrjour,
+      'remarque':remarque,
 
     });
   }
 
-  Future<void> substituerMedic(String Nummedic, String medic, String numero,
+  Future<void> substituerMedic(String numeroOrd, String Nummedic, String medic,
       String idpatient) async {
     return await profilList.doc(idpatient).collection('ListeOrdonnance').doc(
-        numero).collection("ListeMedicament")
+        numeroOrd).collection("ListeMedicament")
         .doc(Nummedic)
         .update({
       "substituer": medic
     });
   }
 
-  Future<void> delivrerMedic(String medic, String numero,
+  Future<void> delivrerMedic(String numeroOrd, String Nummedic,
       String idpatient) async {
     return await profilList.doc(idpatient).collection('ListeOrdonnance').doc(
-        numero).collection("ListeMedicament")
-        .doc(medic)
+        numeroOrd).collection("ListeMedicament")
+        .doc(Nummedic)
         .update({
       "délivrer": "oui"
     });
@@ -89,12 +88,12 @@ class CreateOrd {
       await profilList.doc(idpatient).collection('ListeOrdonnance').doc(
           numero).collection("ListeMedicament")
           .doc(Nummedic).get();
-      String medicament = ds.get('Medicament');
-      String dose = ds.get('dose').toString();
-      String nbrparjour = ds.get('par jour').toString();
+      String medicament = ds.get('medicament');
+      String nbrparjour = ds.get('nombre de fois par jour').toString();
       String nbrjour = ds.get('nombre de jour').toString();
+      String remarque=ds.get('remarque');
 
-      infomedic = [medicament,dose,nbrparjour,nbrjour];
+      infomedic = [medicament,nbrparjour,nbrjour,remarque];
       return infomedic;
     } catch (e) {
       print(e.toString());
@@ -118,33 +117,32 @@ class CreateOrd {
     }).then((value) => print('user added'))
         .catchError((error) => print('erreur add user:$error'));
   }
-  Future<void> DelivMedic(String numero,String numeroMedic, String medicament,
-      int dose, int parjour, int nbrjour,String idpharmacie) async {
+  Future<void> DelivMedic(String numeroOrd,String numeroMedic, String medicament,
+      int parjour, int nbrjour,String remarque,String idpharmacie) async {
     return await profilListPhar.doc(idpharmacie).collection('ListeOrdonnancePharmacie').doc(
-        numero).collection("ListeMedicamentDelivre")
+        numeroOrd).collection("ListeMedicamentDelivre")
         .doc(numeroMedic)
         .set({
-     'Medicament': medicament,
-      'dose': dose,
-      'par jour': parjour,
-      'nombre de jour': nbrjour,
       'numeroMedic':numeroMedic ,
+     'Medicament': medicament,
+      'nombre de fois par jour': parjour,
+      'nombre de jour': nbrjour,
       'substituer': "non",
       'délivrer': "oui"
 
     });
   }
-  Future<void> SubMedic(String numero,String numeroMedic, String medicament,
-      int dose, int parjour, int nbrjour,String idpharmacie,String medic) async {
+  Future<void> SubMedic(String numeroOrd,String numeroMedic, String medicament,
+       int parjour, int nbrjour,String remarque,String idpharmacie,String medic) async {
     return await profilListPhar.doc(idpharmacie).collection('ListeOrdonnancePharmacie').doc(
-        numero).collection("ListeMedicamentDelivre")
+        numeroOrd).collection("ListeMedicamentDelivre")
         .doc(numeroMedic)
         .set({
+  'numeroMedic':numeroMedic ,
       'Medicament': medicament,
-      'dose': dose,
       'par jour': parjour,
       'nombre de jour': nbrjour,
-      'numeroMedic':numeroMedic ,
+      'remarque':remarque,
       'substituer':medic ,
       'délivrer': "non"
 

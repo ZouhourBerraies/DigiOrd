@@ -71,7 +71,7 @@ class Authentication {
     }
     return t;
   }
-/* get information */
+
 Future<String> getdonne(cinn,infor) async {
   String data="";
   for(var user in itemsList){
@@ -82,21 +82,21 @@ Future<String> getdonne(cinn,infor) async {
   }
   return data;
 }
-  Future<String> getPatient(String cinn) async {
-    int cin=int.parse(cinn);
-    String data="";
-    for(var user in itemsList){
-      if(cin == user['cin']) {
-        data=user['nom'];
-            //+' '+user['prenom'];
-        break;
-      }
-    }
-    return data;
-  }
+  // Future<String> getPatient(String cinn) async {
+  //   int cin=int.parse(cinn);
+  //   String data="";
+  //   for(var user in itemsList){
+  //     if(cin == user['cin']) {
+  //       data=user['nom'];
+  //           //+' '+user['prenom'];
+  //       break;
+  //     }
+  //   }
+  //   return data;
+  // }
+  /* get information */
 
-  final profileList =
-  FirebaseFirestore.instance.collection('profileInfoPatient');
+  final profileList = FirebaseFirestore.instance.collection('profileInfoPatient');
 
   Future<List?> getCurrentUserData(idpatient) async {
     List infoMedecin = [];
@@ -125,6 +125,15 @@ Future<String> getdonne(cinn,infor) async {
       String firstname = ds.get('nom');
       String lastname = ds.get('prenom');
       return firstname+" "+lastname;
+
+  }
+  Future<dynamic> getData(idpatient,information) async {
+
+    DocumentSnapshot ds =
+    await profileList.doc(idpatient).get();
+    dynamic data = ds.get(information);
+
+    return data;
 
   }
 

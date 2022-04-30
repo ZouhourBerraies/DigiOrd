@@ -95,112 +95,112 @@ class _profilestate extends State<profile> {
     return result;
   }
 
-  Widget imageProfile() {
-    return Center(
-      child: Stack(children: <Widget>[
-        // CircleAvatar(
-        //   radius: 80.0,
-        //   backgroundColor: Colors.white,
-        //    backgroundImage:
-
-
-      image != null
-            ? Image(image: FileImage(image!, scale: 4))
-            : Image.asset(
-          "images/prof.jpg",
-          width: 120.0,
-          height: 120.0,
-          fit: BoxFit.cover,
-        ),
-
-        //   ,
-        // : FlutterLogo(size: 160),
-
-//  if ( _imageFile == null) {
-//    Image.asset("images/prof.jpg")
-//  } else {
-//    FileImage(File(_imageFile.path));
-//  }
-
-        Positioned(
-          bottom: 20.0,
-          right: 20.0,
-          child: InkWell(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: ((builder) => bottomSheet()),
-              );
-            },
-            child: Icon(
-              Icons.camera_alt,
-              color: Colors.teal,
-              size: 28.0,
-            ),
-          ),
-        ),
-      ]),
-    );
-  }
-
-  Widget bottomSheet() {
-    return Container(
-      height: 100.0,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
-      child: Column(
-        children: <Widget>[
-          Text(
-            "Choose Profile photo",
-            style: TextStyle(
-              fontSize: 20.0,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.camera),
-              onPressed: () {
-                pickImage(ImageSource.camera);
-              },
-              label: Text("Camera"),
-            ),
-            FlatButton.icon(
-              icon: Icon(Icons.image),
-              onPressed: () {
-                pickImage(ImageSource.gallery);
-              },
-              label: Text("Gallery"),
-            ),
-          ])
-        ],
-      ),
-    );
-  }
-
-  Future pickImage(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      final imageTemporary = File(image.path);
-      setState(() => this.image = imageTemporary);
-    } on PlatformException catch (e) {
-      print('failed to pick image $e');
-    }
-  }
-
+//   Widget imageProfile() {
+//     return Center(
+//       child: Stack(children: <Widget>[
+//         // CircleAvatar(
+//         //   radius: 80.0,
+//         //   backgroundColor: Colors.white,
+//         //    backgroundImage:
+//
+//
+//       image != null
+//             ? Image(image: FileImage(image!, scale: 4))
+//             : Image.asset(
+//           "images/prof.jpg",
+//           width: 120.0,
+//           height: 120.0,
+//           fit: BoxFit.cover,
+//         ),
+//
+//         //   ,
+//         // : FlutterLogo(size: 160),
+//
+// //  if ( _imageFile == null) {
+// //    Image.asset("images/prof.jpg")
+// //  } else {
+// //    FileImage(File(_imageFile.path));
+// //  }
+//
+//         Positioned(
+//           bottom: 20.0,
+//           right: 20.0,
+//           child: InkWell(
+//             onTap: () {
+//               showModalBottomSheet(
+//                 context: context,
+//                 builder: ((builder) => bottomSheet()),
+//               );
+//             },
+//             child: Icon(
+//               Icons.camera_alt,
+//               color: Colors.teal,
+//               size: 28.0,
+//             ),
+//           ),
+//         ),
+//       ]),
+//     );
+//   }
+//
+//   Widget bottomSheet() {
+//     return Container(
+//       height: 100.0,
+//       width: MediaQuery.of(context).size.width,
+//       margin: EdgeInsets.symmetric(
+//         horizontal: 20,
+//         vertical: 20,
+//       ),
+//       child: Column(
+//         children: <Widget>[
+//           Text(
+//             "Choose Profile photo",
+//             style: TextStyle(
+//               fontSize: 20.0,
+//             ),
+//           ),
+//           SizedBox(
+//             height: 20,
+//           ),
+//           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+//             FlatButton.icon(
+//               icon: Icon(Icons.camera),
+//               onPressed: () {
+//                 pickImage(ImageSource.camera);
+//               },
+//               label: Text("Camera"),
+//             ),
+//             FlatButton.icon(
+//               icon: Icon(Icons.image),
+//               onPressed: () {
+//                 pickImage(ImageSource.gallery);
+//               },
+//               label: Text("Gallery"),
+//             ),
+//           ])
+//         ],
+//       ),
+//     );
+//   }
+//
+//   Future pickImage(ImageSource source) async {
+//     try {
+//       final image = await ImagePicker().pickImage(source: source);
+//       if (image == null) return;
+//       final imageTemporary = File(image.path);
+//       setState(() => this.image = imageTemporary);
+//     } on PlatformException catch (e) {
+//       print('failed to pick image $e');
+//     }
+//   }
+//
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          'Profil',
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -213,18 +213,16 @@ class _profilestate extends State<profile> {
             Icons.arrow_back,
             color: Colors.white,
           ),
-          onPressed: () {Navigator.pop(context);},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => medecin_cnx(
+                      idmedecin: widget.idmedecin,
+                      doctor: widget.nommedecin,
+                    )));
+            },
         ),
-        actions: [
-          IconButton(
-            padding: EdgeInsets.only(right: 70),
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -238,14 +236,14 @@ class _profilestate extends State<profile> {
                 color: Colors.black45,
               ),
             ),
+            // SizedBox(
+            //   height: 16,
+            // ),
+            // imageProfile(),
             SizedBox(
               height: 16,
             ),
-            imageProfile(),
-            SizedBox(
-              height: 16,
-            ),
-            /*Center(
+            Center(
               child: Stack(
                 children: [
                   Container(
@@ -265,7 +263,7 @@ class _profilestate extends State<profile> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage("images/docicon.jpg"),
+                          image: AssetImage("images/edit.jpg"),
                         )),
                   ),
                   Positioned(
@@ -288,7 +286,7 @@ class _profilestate extends State<profile> {
                       ))
                 ],
               ),
-            ),*/
+            ),
             SizedBox(
               height: 16,
             ),
@@ -301,7 +299,7 @@ class _profilestate extends State<profile> {
                 contentPadding: EdgeInsets.only(bottom: 3),
                 labelText: 'Nom',
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                hintText: '',
+                hintText: 'Tapez Votre Nom',
                 hintStyle: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

@@ -79,6 +79,10 @@ flutter:
     - images/ord.jpg
     - images/medGerer.jpg
     - images/pharm.jpg
+    - images/profil.jpg
+    - images/edit.jpg
+    - images/medecinn.jpg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

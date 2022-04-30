@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:pcd/data/authentification.dart';
+import 'package:pcd/pages/medecinGere.dart';
 import '../data/authentification.dart';
 import 'affichage.dart';
 import 'affichageMedecin.dart';
@@ -34,12 +35,35 @@ class _gerer_ordState extends State<gerer_ord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Les ordonnances médicales')),
+      appBar:
+      AppBar(
+        title: Text('Les Ordonnances Médicales',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),),
+        backgroundColor: Colors.cyan.shade700,
+        leading:IconButton(
+          icon:Icon(
+            Icons.arrow_back,
+            color:Colors.white,
+          ),
+          onPressed:(){
+            Navigator.push(context, MaterialPageRoute(builder: (_) =>medecin_gerer(
+                idpatient: widget.idpatient,
+                idmedecin: widget.idmedecin,
+                doctor:widget.doctor,
+            )));
+          },
+        ),
+
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
+        backgroundColor: Colors.cyan.shade700,
         onPressed: ()async {
           nompatient=await user.getUserData(widget.idpatient);
-
           Navigator.push(context, MaterialPageRoute(builder: (_) =>Addord(
             idpatient: widget.idpatient,
               idmedecin: widget.idmedecin,
@@ -47,6 +71,9 @@ class _gerer_ordState extends State<gerer_ord> {
             patient:nompatient
           )));
         },
+
+
+
       ),
       body: Container(
         child: StreamBuilder<QuerySnapshot>(

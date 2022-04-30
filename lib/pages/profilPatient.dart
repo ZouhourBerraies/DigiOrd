@@ -99,18 +99,16 @@ class _profilestate extends State<profile> {
             Icons.arrow_back,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => patient_cnx(
+                      idpatient: widget.idpatient,
+                      patient: nompatient.text+' '+prenompatient.text,
+                    )));
+          },
         ),
-        actions: [
-          IconButton(
-            padding: EdgeInsets.only(right: 70),
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -147,7 +145,7 @@ class _profilestate extends State<profile> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage("images/docicon.jpg"),
+                          image: AssetImage("images/edit.jpg"),
                         )),
                   ),
                   Positioned(
@@ -286,7 +284,7 @@ class _profilestate extends State<profile> {
                         MaterialPageRoute(
                             builder: (_) => patient_cnx(
                               idpatient: widget.idpatient,
-                              //doctor: widget.nompatient,
+                              patient: nompatient.text+' '+prenompatient.text,
                             )));
                   },
                   child: Text(
@@ -309,7 +307,7 @@ class _profilestate extends State<profile> {
                           MaterialPageRoute(
                               builder: (_) => patient_cnx(
                                 idpatient: widget.idpatient,
-                                //doctor: widget.nompatient,
+                                patient: nompatient.text+" "+prenompatient.text,
                               )));
 
                   },
