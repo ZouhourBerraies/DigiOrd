@@ -2,58 +2,40 @@
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-
+//import 'package:qr_flutter/qr_flutter.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-
-import 'listeOrdonnance.dart';
-import '../data/CreateOrd.dart';
-import 'ListeOrdScanner.dart';
+import '../data/authentification.dart';
 
 
 
 
-class affichagePharmacie extends StatefulWidget {
+
+
+class affichage extends StatefulWidget {
   @override
-  _affichagePharmacieState createState() => _affichagePharmacieState();
+  _affichageState createState() => _affichageState();
   DocumentSnapshot index;
-  String idpatient;
   String idpharmacie;
-  affichagePharmacie ({required this.index ,required this.idpatient ,required this.idpharmacie});
+  affichage({required this.index ,required this.idpharmacie});
 }
 
-class _affichagePharmacieState extends State<affichagePharmacie> {
+class _affichageState extends State<affichage> {
 
   /* variable */
   final _formKey = GlobalKey<FormState>();
-  final _Key = GlobalKey<FormState>();
-  final CreateOrd ord=CreateOrd();
-  //final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPatient');
-  TextEditingController _medicController = TextEditingController();
-  TextEditingController _NummedicSController = TextEditingController();
-  TextEditingController _NumeromedicDController = TextEditingController();
+
+  final CollectionReference profilList = FirebaseFirestore.instance.collection('profileInfoPharmacie');
 
   TextEditingController _signateurController = TextEditingController();
 
 
   late final controllerqr = TextEditingController();
 
-  String medic = '';
-  String NummedicD='';
-  String NummedicS='';
-
-
   List itemsList = [];
-  dynamic resultS = [];
-  dynamic resultD = [];
-
-  String NumeroOrd='X';
-
-  DateTime date = new DateTime.now();
-
-
   String signature='';
+
 
   void initState() {
 
@@ -125,51 +107,9 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
 
     );
   }
-  Widget buildAjouter(){
-    return
 
-      Row(
-          children: [
-            Expanded(flex:1,child:Container(
-              width: 50,
-              // height: 70,
-              color: Colors.white,),
-            ),
-            Expanded(
-              flex:2,
-              child:
-              ElevatedButton.icon(
-                onPressed: () {
-                  openDialogueBox(context);
-                },
-                icon: const Icon(Icons.done),
-                label: const Text('délivrer'),
-              ),
-            ),
-            Expanded(flex:3,child:Container(
-              width: 50,
-              // height: 70,
-              color: Colors.white,),
-            ),
-            Expanded(
-              flex:4,
-              child:
-              ElevatedButton.icon(
-                onPressed: () {
-                  openDialogueBoxSub(context);
-                },
-                icon: const Icon(Icons.edit_road_rounded),
-                label: const Text('substituer'),
-              ),
-            ),
-
-
-          ]
-      );
-
-  }
   Widget buildAff() {
-    final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('profileInfoPatient').doc(widget.idpatient).collection('ListeOrdonnance').doc(widget.index['numero']).collection("ListeMedicament").snapshots();
+    final Stream <QuerySnapshot> users = FirebaseFirestore.instance.collection('profileInfoPharmacie').doc(widget.idpharmacie).collection('ListeOrdonnancePharmacie').doc(widget.index['numero']).collection("ListeMedicamentDelivre").snapshots();
 
     return Container(
       height: 250,
@@ -344,6 +284,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
   }
 
   Widget buildPatient(){
+
     return  Column( crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Column(
@@ -367,7 +308,8 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                 ],
               ),
               child: Center(
-                  child: Text("Nom de Patient: ${widget.index["patient"]}",
+                  child: Text("Nom de Patient: ${widget.index["nom patient"]}",
+
                     style: TextStyle(fontSize: 20),
                   )
               ),
@@ -384,7 +326,6 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
 
   /*      **************            */
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -397,7 +338,6 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
             ),
           ),
           backgroundColor: Colors.blue.shade500),
-
       body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: GestureDetector(
@@ -406,7 +346,6 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                     Container(
                       height: double.infinity,
                       width: double.infinity,
-
                       child: SingleChildScrollView(
                         physics: AlwaysScrollableScrollPhysics(),
                         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
@@ -418,8 +357,8 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                 width: double.infinity,
                                 child:
                                 Text(
-
-                                  'Date : ${formattedDate(widget.index['date'])}',
+                                  //'Date:${widget.index['date'].toDate().toString()}',
+                                  'Date de livraison : ${formattedDate(widget.index['date'])}',
 
                                   //'Date: ${date.day}/${date.month}/${date.year}',
                                   style: TextStyle(fontSize: 20),
@@ -427,9 +366,10 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
 
                                 ),),
 
-                              SizedBox(height: 16),
+
+
                               SizedBox(
-                                height: 10,
+                                height: 16,
                               ),
                               buildRnadom(),
 
@@ -442,10 +382,6 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                 height: 10,
                               ),
                               buildPatient(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildAjouter(),
                               SizedBox(
                                 height: 10,
                               ),
@@ -478,30 +414,6 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                               ),
                               SizedBox(height: 10,),
                               buildqr(context),
-                              SizedBox(height: 10,),
-                              ElevatedButton.icon(
-                                  onPressed: () async{
-                                    ord.AjouterOrdPhar(date,widget.idpharmacie ,widget.index["nom medecin"], widget.index["num medecin"],widget.idpatient, widget.index["patient"], widget.index['signature'], widget.index['numero']);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Sending data to cloud firesstore'),
-                                      ),
-                                    );
-                                    //Navigator.pop(context);
-
-                                    Navigator.push(
-                                        context, MaterialPageRoute(builder: (_) =>gerer_ord_phar(idpharmacie: widget.idpharmacie,
-
-
-                                    )));
-                                  },
-                                  icon: const Icon(Icons.save),
-                                  label: const Text('scanner')),
-
-
-
-
-
                             ],
                           ),
                         ),
@@ -525,151 +437,6 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
               child: Center(child: Text(cell)),
             );
           }).toList());
-
-  openDialogueBox(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('délivrer Medicament'),
-            content: Container(
-              height: 100,
-              child: Form(
-                key: _Key,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _NumeromedicDController,
-                      decoration: InputDecoration(hintText: 'Numero medicament'),
-                      onChanged: (value) {
-                        NummedicD = value;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Entrez numero de medicament à deliver!';
-                        } else
-                          return null;
-                      },
-                    ),
-
-                  ],
-                ),
-              ),
-            ),
-            actions: [
-              FlatButton(
-                onPressed: () {
-                  if (_Key.currentState!.validate()) {
-                    submitAction(context);
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('délivrer'),
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Cancel'),
-              )
-            ],
-          );
-        });
-  }
-
-  submitAction(BuildContext context) async{
-    ord.delivrerMedic(NummedicD,widget.index['numero'], widget.idpatient);
-    resultD = await ord.getCurrentUserData(widget.idpatient, widget.index['numero'], NummedicD);
-    //ord.DelivMedic(widget.index['numero'], NummedicD, widget.index['medicament'], widget.index['dose'], widget.index['parjour'],widget.index['nbrjour'], widget.idpharmacie);
-    ord.DelivMedic(widget.index['numero'], NummedicD, resultD[0], resultD[1], resultD[2], resultD[3], widget.idpharmacie);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Sending data to cloud firesstore'),
-      ),
-    );
-    _NumeromedicDController.clear();
-
-  }
-
-  openDialogueBoxSub(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('substituer Medicament'),
-            content: Container(
-              height: 100,
-              child: Form(
-                key: _Key,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _NummedicSController,
-                      decoration: InputDecoration(hintText: 'Numero medicament à substituer'),
-                      onChanged: (value) {
-                        NummedicS = value;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Entrez numero de medicament à substituer!';
-                        } else
-                          return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _medicController,
-                      decoration: InputDecoration(hintText: ' nouveau medicament'),
-                      onChanged: (value) {
-                        medic = value;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Entrez le nouveau nom de medicament à substituer!';
-                        } else
-                          return null;
-                      },
-                    ),
-
-                  ],
-                ),
-              ),
-            ),
-            actions: [
-              FlatButton(
-                onPressed: () {
-                  if (_Key.currentState!.validate()) {
-                    submitActionSub(context);
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('substituer'),
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Cancel'),
-              )
-            ],
-          );
-        });
-  }
-
-  submitActionSub(BuildContext context) async{
-    ord.substituerMedic(NummedicS, medic, widget.index['numero'], widget.idpatient);
-     resultS = await ord.getCurrentUserData(widget.idpatient, widget.index['numero'], NummedicD);
-    //ord.SubMedic(widget.index['numero'], NummedicS, resultS[0], resultS[1], resultS[2], resultS[3], widget.idpharmacie,medic);
-    ord.SubMedic("191", "0", "medicament", 1000, 3, 7, widget.idpharmacie, medic);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Sending data to cloud firesstore'),
-      ),
-    );
-    _medicController.clear();
-    _NummedicSController.clear();
-
-  }
-
 
 }
 String formattedDate(timeStamp) {

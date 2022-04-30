@@ -29,14 +29,12 @@ class _InscriptionState extends State<Inscription> {
 
   TextEditingController _cinController = TextEditingController();
   TextEditingController _nomController = TextEditingController();
-  TextEditingController _prenomController = TextEditingController();
   TextEditingController _emailContoller = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _mdpcContoller = TextEditingController();
   TextEditingController _telController = TextEditingController();
   int cin=11111111;
   String  nom='';
-  String  prenom='';
   String  email='';
   String password='0000';
   String mdpc='0000';
@@ -145,55 +143,55 @@ class _InscriptionState extends State<Inscription> {
     );
   }
 
-  Widget builPrenom() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Prenom',
-          style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
-              ]),
-          height: 60,
-          child: TextFormField(
-            controller: _prenomController,
-            onChanged: (value){
-              prenom=value;
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-
-                return 'Entrez votre prenom !';
-              } else
-                return null;
-            },
-            keyboardType: TextInputType.name,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14),
-                prefixIcon: Icon(Icons.face_outlined,
-                    color: Colors.blue.shade300),
-                hintText: 'Prenom',
-                hintStyle: TextStyle(color: Colors.black26)),
-          ),
-        )
-      ],
-    );
-  }
-
+  // Widget builPrenom() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: <Widget>[
+  //       Text(
+  //         'Prenom',
+  //         style: TextStyle(
+  //             color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+  //       ),
+  //       SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         alignment: Alignment.centerLeft,
+  //         decoration: BoxDecoration(
+  //             color: Colors.white,
+  //             borderRadius: BorderRadius.circular(10),
+  //             boxShadow: [
+  //               BoxShadow(
+  //                   color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+  //             ]),
+  //         height: 60,
+  //         child: TextFormField(
+  //           controller: _prenomController,
+  //           onChanged: (value){
+  //             prenom=value;
+  //           },
+  //           validator: (value) {
+  //             if (value == null || value.isEmpty) {
+  //
+  //               return 'Entrez votre prenom !';
+  //             } else
+  //               return null;
+  //           },
+  //           keyboardType: TextInputType.name,
+  //           style: TextStyle(color: Colors.black),
+  //           decoration: InputDecoration(
+  //               border: InputBorder.none,
+  //               contentPadding: EdgeInsets.only(top: 14),
+  //               prefixIcon: Icon(Icons.face_outlined,
+  //                   color: Colors.blue.shade300),
+  //               hintText: 'Prenom',
+  //               hintStyle: TextStyle(color: Colors.black26)),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
+  //
 
   Widget buildemail() {
     return Column(
@@ -506,7 +504,7 @@ class _InscriptionState extends State<Inscription> {
             dynamic test= await newuser.exist(cin);
 
             if (test==false) {
-              newuser.CreateUser(id, cin, nom, prenom, email, tel, password);
+              newuser.CreateUser(id, cin, nom,'!', email, tel, password);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('inscription a été effectué avec succès.'),
@@ -514,7 +512,6 @@ class _InscriptionState extends State<Inscription> {
               );
               _cinController.clear();
               _nomController.clear();
-              _prenomController.clear();
               _emailContoller.clear();
               _passwordController.clear();
               _mdpcContoller.clear();
@@ -596,10 +593,6 @@ class _InscriptionState extends State<Inscription> {
                               height: 20,
                             ),
                             builNom(),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            builPrenom(),
                             SizedBox(
                               height: 20,
                             ),

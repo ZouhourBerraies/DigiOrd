@@ -7,7 +7,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
 import '../data/authentification.dart';
-import 'gereOrdonnance.dart';
+import 'listeOrdonnance.dart';
 import '../data/CreateOrd.dart';
 
 
@@ -462,7 +462,7 @@ class _AddordState extends State<Addord> {
                                         context, MaterialPageRoute(builder: (_) =>gerer_ord(
                                         idpatient:widget.idpatient,
                                       idmedecin:widget.idmedecin ,
-                                      patient: widget.patient,
+                                      //patient: widget.patient,
                                       doctor: widget.doctor,
                                     )));
                                   },

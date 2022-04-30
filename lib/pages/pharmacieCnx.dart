@@ -4,10 +4,14 @@ import 'package:flutter/services.dart';
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../data/Create.dart';
+import '../data/authentification.dart';
 import '../pages/pharmacieGere.dart';
 
 
 class pharmacie_cnx extends StatefulWidget {
+  String idpharmacie;
+  pharmacie_cnx ({required this.idpharmacie});
   @override
   _pharmacie_cnxState createState() => _pharmacie_cnxState();
 }
@@ -19,6 +23,7 @@ class pharmacie_cnx extends StatefulWidget {
 class _pharmacie_cnxState extends State<pharmacie_cnx> {
   final _formKey = GlobalKey<FormState>();
   final CollectionReference profileList = FirebaseFirestore.instance.collection('profileInfoPatient');
+  final Create user= Create(table:'profileInfoPatient');
 
 
   TextEditingController _cinController = TextEditingController();
@@ -83,61 +88,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
   }
 
 
-  List itemsList=[];
 
-
-
-
-
-  /* login */
-  Widget buildAff(){
-    final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPatient').snapshots();
-
-    return Container(
-      height:250 ,
-      padding: const EdgeInsets.symmetric(vertical:20),
-      child:
-      StreamBuilder<QuerySnapshot>(
-        stream: users,
-        builder: (
-            BuildContext context,
-            AsyncSnapshot<QuerySnapshot>snapshot,
-            ){
-          if(snapshot.hasError)
-          {
-            return Text('Something went wrong.');
-          }
-          if (snapshot.connectionState==ConnectionState.waiting)
-          {
-            return Text( 'Loading');
-          }
-          final data=snapshot.requireData;
-          return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context,index)
-            { itemsList.add(data.docs[index]['cin']);
-            return
-              //Text('');
-              Text('cin= ${data.docs[index]['cin']} ');
-            },
-          );
-        },
-
-      ),
-
-    );
-  }
-  /* rechercher patient */
-  Future<dynamic> exist(cinn) async {
-    dynamic t=false;
-    for(var user in itemsList){
-      if(cinn == user) {
-        t = true;
-        break;
-      }
-    }
-    return t;
-  }
   Widget buildOkBtn(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25),
@@ -146,7 +97,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
         elevation: 5,
         onPressed: () async{
           if (_formKey.currentState!.validate()) {
-            dynamic test= await exist(cin);
+            dynamic test= await user.exist(cin);
             print(test);
 
             if (test==true) {
@@ -157,7 +108,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
               );
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => pharamcie_gere(idpatient:id)
+                  MaterialPageRoute(builder: (context) => pharamcie_gere(idpatient:id,idpharmacie:widget.idpharmacie)
                   )
               );
               _cinController.clear();
@@ -262,7 +213,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
                             SizedBox(
                               height: 30,
                             ),
-                            buildAff(),
+                            user.buildAff(),
                           ],
                         ),
                       ),

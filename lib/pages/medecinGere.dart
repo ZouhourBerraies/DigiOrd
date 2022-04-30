@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 import '../data/Create.dart';
 import '../data/authentification.dart';
-import '../pages/gereDossier.dart';
-import '../pages/gereOrdonnance.dart';
+import '../pages/ListeDossier.dart';
+import '../pages/listeOrdonnance.dart';
 
 
 class medecin_gerer extends StatefulWidget{
@@ -14,9 +14,11 @@ class medecin_gerer extends StatefulWidget{
   String idmedecin;
   String idpatient;
   String doctor;
-  String patient;
+  //String patient;
 
-  medecin_gerer({required this.idmedecin,required this.idpatient,required this.doctor,required this.patient});
+  medecin_gerer({required this.idmedecin,required this.idpatient,required this.doctor
+   // ,required this.patient
+  });
   State<StatefulWidget> createState() {
     return new _medecin_gererState();
   }
@@ -41,14 +43,24 @@ class _medecin_gererState extends State<medecin_gerer> {
   final Authentication user =Authentication (table:'profileInfoPatient');
   final _Key = GlobalKey<FormState>();
 
-
-
   final Create newuser= Create(table:'profileInfoPatient');
 
   TextEditingController nom = TextEditingController();
   TextEditingController prenom = TextEditingController();
   String nomp="?";
   String prenomp="?";
+  String nompatient="####";
+
+  // @override
+  // void initState() {
+  //   intialisation();
+  //   super.initState();
+  // }
+  // intialisation() async {
+  //  String patient="${await user.getdonne(int.parse(widget.idpatient),'nom')}"+" "+"${await user.getdonne(int.parse(widget.idpatient),'prenom')}";
+  // nompatient=patient;
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +228,7 @@ class _medecin_gererState extends State<medecin_gerer> {
                         Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => gerer_doss(idmedecin: widget.idmedecin,idpatient:
-                        widget.idpatient,
+                        widget.idpatient,nommedecin: widget.doctor,
                         )
                         )
                         );
@@ -251,20 +263,20 @@ class _medecin_gererState extends State<medecin_gerer> {
                               //new
                               FlatButton(
                                   onPressed: () async {
-                       Navigator.push(
+                                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => gerer_ord(
                             idpatient:widget.idpatient,
                             idmedecin:widget.idmedecin,
-                            patient:widget.patient,
+                            //patient:widget.patient,
                             //patient:nompatient,
                             doctor:widget.doctor)
                        )
                          );
-                       String nom=await user.getdonne(int.parse(widget.idpatient),'nom');
+                       String nom=await  user.getUserData(widget.idpatient);
                        print(nom);
-                                 if (nom=='?'){
+                                 if (nom=='? ?'){
                                    openDialogueBox(context);
                                  }
                          },
@@ -387,7 +399,7 @@ class _medecin_gererState extends State<medecin_gerer> {
     newuser.UpdateUserPatient(widget.idpatient, nomp, prenomp, '?', widget.idpatient,'?');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Ajouter nouveau patient'),
+        content: Text('Ajouter information nouveau patient'),
       ),
     );
     nom.clear();

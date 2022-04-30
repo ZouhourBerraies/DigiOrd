@@ -112,7 +112,8 @@ class _medecin_cnxState extends State<medecin_cnx> {
         elevation: 5,
         onPressed: () async{
           if (_formKey.currentState!.validate()) {
-            patient="${await login.getdonne(cin,'nom')}"+" "+"${await login.getdonne(cin,'prenom')}";
+           // patient="M."+"${await login.getdonne(cin,'nom')}"+" "+"${await login.getdonne(cin,'prenom')}";
+            //patient=await login.getUserData(id);
             dynamic test= await newuser.exist(cin);
             if (test==false) {
              newuser.CreateUserPatient(id, cin, nompatient, prenompatient, '?', 0, cin.toString(),'?');
@@ -121,8 +122,8 @@ class _medecin_cnxState extends State<medecin_cnx> {
                  content: Text('Ajouter nouveau patient'),
                ),
              );
-
             } else {
+              patient=await login.getUserData(id);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Patient existe déjà $patient'),
@@ -133,7 +134,8 @@ class _medecin_cnxState extends State<medecin_cnx> {
                   context,
                   MaterialPageRoute(builder: (context) => medecin_gerer(
                       idpatient:id,idmedecin:widget.idmedecin,doctor:widget.doctor,
-                    patient:patient)
+                      //patient:patient
+                    )
                   )
               );
 

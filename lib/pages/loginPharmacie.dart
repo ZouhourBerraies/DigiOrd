@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../pages/pharmacieCnx.dart';
 
+import 'acceuilPhrmacie.dart';
 import 'inscriptionPhar.dart';
 import 'acceuil.dart';
 import 'pharmacieCnx.dart';
@@ -27,6 +28,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
   String password='0000';
   int cin=11111111;
   List itemsList=[];
+  String id='';
   // /* login */
   // Widget buildAff(){
   //   final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPharmacie').snapshots();
@@ -155,6 +157,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                   controller: _cinController,
                                   onChanged: (value){
                                     cin=int.parse(value);
+                                    id=value;
                                   },
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -227,7 +230,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
 
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => pharmacie_cnx()
+                                        MaterialPageRoute(builder: (context) => accueilPhar(idpharmacie:id)
                                         )
                                     );
 

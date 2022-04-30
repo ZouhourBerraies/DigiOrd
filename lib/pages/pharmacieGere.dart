@@ -9,7 +9,9 @@ import '../pages/listeOrdPharamcie.dart';
 class pharamcie_gere extends StatefulWidget{
   @override
   String idpatient;
-  pharamcie_gere({required this.idpatient});
+  String idpharmacie;
+
+  pharamcie_gere({required this.idpatient ,required this.idpharmacie});
   State<StatefulWidget> createState() {
     return new _pharamcie_gereState();
   }
@@ -218,7 +220,7 @@ class _pharamcie_gereState extends State<pharamcie_gere> {
                                   () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => afficheord(idpatient:widget.idpatient)
+                                    MaterialPageRoute(builder: (context) => afficheord(idpatient:widget.idpatient,idpharmacie: widget.idpharmacie,)
                                     )
                                 );
                               }

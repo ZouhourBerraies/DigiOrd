@@ -74,7 +74,6 @@ class Authentication {
 /* get information */
 Future<String> getdonne(cinn,infor) async {
   String data="";
-
   for(var user in itemsList){
     if(cinn == user['cin']) {
       data=user[infor];
@@ -95,4 +94,38 @@ Future<String> getdonne(cinn,infor) async {
     }
     return data;
   }
+
+  final profileList =
+  FirebaseFirestore.instance.collection('profileInfoPatient');
+
+  Future<List?> getCurrentUserData(idpatient) async {
+    List infoMedecin = [];
+    try {
+      DocumentSnapshot ds =
+      await profileList.doc(idpatient).get();
+      String firstname = ds.get('nom');
+      String lastname = ds.get('prenom');
+      String email = ds.get('email');
+      String location = ds.get('location');
+      String mdp = ds.get('password');
+      String telp = ds.get('telephone').toString();
+
+
+      infoMedecin = [firstname, lastname, email, location, mdp,telp];
+      return infoMedecin;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+  Future<String> getUserData(idpatient) async {
+
+      DocumentSnapshot ds =
+      await profileList.doc(idpatient).get();
+      String firstname = ds.get('nom');
+      String lastname = ds.get('prenom');
+      return firstname+" "+lastname;
+
+  }
+
 }

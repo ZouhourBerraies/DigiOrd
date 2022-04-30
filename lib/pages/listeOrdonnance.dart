@@ -16,17 +16,19 @@ class gerer_ord extends StatefulWidget {
   String idmedecin;
   String idpatient;
   String doctor;
-  String patient;
+  //String patient;
 
-  gerer_ord({required this.idmedecin,required this.idpatient,required this.doctor,required this.patient});
+  gerer_ord({required this.idmedecin,required this.idpatient,required this.doctor
+    //,required this.patient
+  });
   @override
   _gerer_ordState createState() => _gerer_ordState();
 }
 
 class _gerer_ordState extends State<gerer_ord> {
 
-
-
+  final Authentication user= Authentication(table:'profileInfoPatient');
+  String nompatient='###';
 
 
   @override
@@ -36,11 +38,13 @@ class _gerer_ordState extends State<gerer_ord> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: ()async {
+          nompatient=await user.getUserData(widget.idpatient);
 
           Navigator.push(context, MaterialPageRoute(builder: (_) =>Addord(
-            idpatient: widget.idpatient,idmedecin: widget.idmedecin,
+            idpatient: widget.idpatient,
+              idmedecin: widget.idmedecin,
             doctor:widget.doctor,
-            patient:widget.patient
+            patient:nompatient
           )));
         },
       ),
