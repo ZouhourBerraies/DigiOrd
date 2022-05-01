@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pcd/pages/pharmacieCnx.dart';
+import 'package:pcd/pages/profilePharmacie.dart';
 
 
 import 'ListeOrdScanner.dart';
 
 class accueilPhar extends StatefulWidget {
   String idpharmacie;
-  accueilPhar ({required this.idpharmacie});
+  String pharmacie;
+  accueilPhar ({required this.idpharmacie,required this.pharmacie});
   @override
   State<StatefulWidget> createState() {
     return new _accueilPharState();
@@ -48,10 +50,83 @@ class _accueilPharState extends State<accueilPhar> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      drawer:  Drawer(
+        child: ListView(
+            children: [
+              DrawerHeader(
+                //   child: CircleAvatar(
+                //   child: Image.asset('images/doctor.jpg'),
+                // ),
+                child:Column(
+                    children: [
+                      Container(
+
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 2,
+                                color: Theme.of(context).scaffoldBackgroundColor),
+                            boxShadow: [
+                              BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                color: Colors.black.withOpacity(0.5),
+                                //offset: Offset(0, 1)
+                              )
+                            ],
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("images/pharmacy.png"),
+                            )),
+                      ),
+                      Text(
+                        '${widget.pharmacie}',
+                        style: TextStyle(fontSize: 24.0),
+                      ),
+                    ]
+                ),
+
+
+              ),
+              ListTile(
+                title: Text(
+                  'Profil',
+                  style: TextStyle(color: Colors.black),
+                ),
+                leading: Icon(
+                  Icons.person,
+                  color: Colors.cyan,
+                ),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute<void>(
+                        builder: (BuildContext context) => profile(idpharmacie: widget.idpharmacie,
+                        pharmacie:widget.pharmacie)
+                    ),
+                  );
+                },
+              ),
+            ]
+        ),
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
 
+        leading: Builder(builder: (context) {
+          return   RaisedButton(
+            onPressed: ()async{
 
+              Scaffold.of(context).openDrawer();}
+            ,
+            child: Icon(Icons.settings_applications_rounded,
+              color: Colors.white,
+            ),
+            color: Colors.cyan,
+          );
+        }),
         backgroundColor: Colors.white,
         actions: [
           RaisedButton(

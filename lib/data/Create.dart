@@ -75,6 +75,7 @@ class Create {
         'email': email,
         'telephone': tel,
         'password': password,
+       'location':"",
       }).then((value) => print('user added'))
           .catchError((error) => print('erreur add user:$error'));
     }

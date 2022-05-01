@@ -81,7 +81,12 @@ flutter:
     - images/pharm.jpg
     - images/profil.jpg
     - images/edit.jpg
-    - images/medecinn.jpg
+    - images/pharamcieclient.jpg
+    - images/pharmacy.png
+    - images/profilpatient.png
+    - images/f.png
+    - images/h.jpg
+    - images/profilmedecin.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

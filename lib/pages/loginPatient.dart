@@ -167,19 +167,21 @@ class _patient_loginstate extends State<patient_login>{
                                 if (test==true) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                content: Text('connecter'),
+                                content: Text('Connecter'),
                                 ),
                                 );
                                 _cinController.clear();
                                 _passwordController.clear();
                                 String nom= await login.getUserData(id);
+                                dynamic genre=await login.getData(id,'genre');
                                 Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => patient_cnx(idpatient:id,patient:nom)
+                                MaterialPageRoute(builder: (context) => patient_cnx(idpatient:id,patient:nom,
+                               )
                                 )
                                 );
 
-                                if (nom=='? ?'){
+                                if (nom=='? ?' || genre=="-----")  {
                                   openDialogueBox(context);
                                 }
 

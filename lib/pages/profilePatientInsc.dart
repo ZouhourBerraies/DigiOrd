@@ -104,7 +104,7 @@ class _profilestate extends State<profile>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          'Profil',
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -116,7 +116,9 @@ class _profilestate extends State<profile>{
             Icons.arrow_back,
             color:Colors.white,
           ),
-          onPressed:(){},
+          onPressed:(){
+            Navigator.pop(context);
+          },
         ),
         actions: [
           IconButton(
@@ -163,7 +165,7 @@ class _profilestate extends State<profile>{
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image:AssetImage("images/docicon.jpg"),
+                          image:AssetImage("images/profilpatient.png"),
 
                         )
                     ),
@@ -304,20 +306,11 @@ class _profilestate extends State<profile>{
                 icon: Icon(Icons.mobile_friendly_outlined),
               ),
             ),
-            Padding(padding: EdgeInsets.only(left: 16,bottom: 13,top: 29,right: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Categories',style: TextStyle(fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.blueGrey),),
-                ],
-              ),
-            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FlatButton(onPressed: (){}, child: Text('Cancel',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
+                FlatButton(onPressed: (){}, child: Text('Annuler',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
                   color: Colors.blueGrey,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
@@ -332,7 +325,7 @@ class _profilestate extends State<profile>{
                   Navigator.pop(context);
 
                 },
-                  child: Text('Save',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
+                  child: Text('Sauvegarder',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
                   color: Colors.blueGrey,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),

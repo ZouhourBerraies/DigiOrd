@@ -213,7 +213,7 @@ class _medecin_cnxState extends State<medecin_cnx> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage("images/profil.jpg"),
+                              image: AssetImage("images/profilmedecin.png"),
                             )),
                       ),
                       Text('${widget.doctor}',
@@ -305,25 +305,25 @@ class _medecin_cnxState extends State<medecin_cnx> {
       ),
     ),
       ),
-       bottomNavigationBar:
-      new BottomNavigationBar(items:[
-        new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),
-          label:'PHOTO TIME',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.ac_unit_rounded),
-          label:'WINTER',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.wifi_sharp),
-          label:'WIFI',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.add_ic_call_outlined),
-          label:'PHONE CALL',
-        )
-      ],
-        onTap: (int x)=>debugPrint('index $x'),
-        type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.cyan.shade700,
-      ),
+      //  bottomNavigationBar:
+      // new BottomNavigationBar(items:[
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),
+      //     label:'PHOTO TIME',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.ac_unit_rounded),
+      //     label:'WINTER',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.wifi_sharp),
+      //     label:'WIFI',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.add_ic_call_outlined),
+      //     label:'PHONE CALL',
+      //   )
+      // ],
+      //   onTap: (int x)=>debugPrint('index $x'),
+      //   type: BottomNavigationBarType.fixed,
+      //   fixedColor: Colors.cyan.shade700,
+      // ),
     );
   }
 

@@ -147,22 +147,24 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
+
       appBar: AppBar(
         title: Text('Zone Pharmacie'),
-        backgroundColor: Colors.cyan.shade700,
-
+        backgroundColor: Colors.cyan.shade100,
+        automaticallyImplyLeading: false,
         actions: [
           RaisedButton(
             onPressed: () async {
-              //await _auth.signOut().then((result) {
+
               Navigator.of(context).pop(true);
-              // });
             },
             child : Icon(
               Icons.exit_to_app,
               color: Colors.white,
             ),
-            color: Colors.cyan,
+            color: Colors.cyan.shade100,
           ),
         ],
       ),
@@ -179,7 +181,10 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Image(image: AssetImage('images/ord.jpg')),
+                  child: Image(image: AssetImage('images/pharamcieclient.jpg')),
+                ),
+                SizedBox(
+                  width: 30,
                 ),
                 Expanded(
                   child: Column(
@@ -190,6 +195,9 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
 
                         child: Column(
                           children: [
+                            SizedBox(
+                              height: 50,
+                            ),
                             Text(
                               'Bienvenue Chez DigiOrd ',
                               textAlign: TextAlign.center,
@@ -200,7 +208,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
                               ),
                             ),
                             SizedBox(
-                              height: 50,
+                              height: 100,
                             ),
                             builNumero(),
                             SizedBox(
@@ -224,25 +232,25 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
             ),
           ]),
         ),),),
-      bottomNavigationBar:
-      new BottomNavigationBar(items:[
-        new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),
-          label:'PHOTO TIME',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.ac_unit_rounded),
-          label:'WINTER',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.wifi_sharp),
-          label:'WIFI',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.add_ic_call_outlined),
-          label:'PHONE CALL',
-        )
-      ],
-        onTap: (int x)=>debugPrint('index $x'),
-        type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.cyan.shade700,
-      ),
+      // bottomNavigationBar:
+      // new BottomNavigationBar(items:[
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),
+      //     label:'PHOTO TIME',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.ac_unit_rounded),
+      //     label:'WINTER',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.wifi_sharp),
+      //     label:'WIFI',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.add_ic_call_outlined),
+      //     label:'PHONE CALL',
+      //   )
+      // ],
+      //   onTap: (int x)=>debugPrint('index $x'),
+      //   type: BottomNavigationBarType.fixed,
+      //   fixedColor: Colors.cyan.shade700,
+      // ),
     );
   }
 }

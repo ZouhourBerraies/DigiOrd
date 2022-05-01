@@ -81,7 +81,7 @@ class _profilestate extends State<profile> {
       String motdpass = result[4];
       motdepasse.text = motdpass;
       String tel = result[5];
-      location.text = tel;
+      telephone.text = tel;
 
     }
   }
@@ -229,7 +229,7 @@ class _profilestate extends State<profile> {
         child: ListView(
           children: [
             Text(
-              'Edit Profile',
+              'Modifier Votre Profil',
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -394,21 +394,6 @@ class _profilestate extends State<profile> {
                 icon: Icon(Icons.location_on_outlined),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 16, bottom: 13, top: 29, right: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Categories',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.blueGrey),
-                  ),
-                ],
-              ),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -423,7 +408,7 @@ class _profilestate extends State<profile> {
                             )));
                   },
                   child: Text(
-                    'Cancel',
+                    'Annuler',
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                   ),
                   color: Colors.blueGrey,
@@ -447,7 +432,7 @@ class _profilestate extends State<profile> {
 
                   },
                   child: Text(
-                    'Save',
+                    'Sauvegarder',
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                   ),
                   color: Colors.blueGrey,

@@ -177,7 +177,7 @@ class _EditNoteState extends State<EditNote> {
                 onPressed: () {
                   widget.docToEdit.reference.update({
                     'NomMedecin': nommedecin.text,
-                    'Nomatient': nompatient.text,
+                    'Nompatient': nompatient.text,
                     'Date': date,
                     'content': content.text,
                   }).whenComplete(() {

@@ -14,6 +14,7 @@ class patient_cnx extends StatefulWidget{
   @override
   String idpatient;
   String patient;
+
   patient_cnx({required this.idpatient,required this.patient});
   State<StatefulWidget> createState() {
     return new _patient_cnxState();
@@ -35,7 +36,7 @@ class _patient_cnxState extends State<patient_cnx> {
       );
     },);
   }
-
+String img='';
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +223,7 @@ class _patient_cnxState extends State<patient_cnx> {
               shape: BoxShape.circle,
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage("images/profil.jpg"),
+                image: AssetImage("images/h.jpg"),
               )),
         ),
             Text('${widget.patient}',

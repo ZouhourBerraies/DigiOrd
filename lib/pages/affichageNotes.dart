@@ -65,7 +65,7 @@ class _EditNoteState extends State<AffichageNote> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Nom du medecin : ${widget.nommedecin}',
+                          'Nom du medecin :  ${widget.docToEdit.get('NomMedecin')}',
                           style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.left,
                         ),
@@ -89,7 +89,7 @@ class _EditNoteState extends State<AffichageNote> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Numero patient : ${widget.docToEdit.get('Nomatient')}',
+                          'Nom patient : ${widget.docToEdit.get('Nompatient')}',
                           style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.left,
                         ),

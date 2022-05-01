@@ -1,15 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pcd/pages/acceuilPhrmacie.dart';
 import '../data/Create.dart';
-import '../pages/patientCnx.dart';
+
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
 
 class profile extends StatefulWidget {
-  String idpatient;
-  //String nompatient;
+  String idpharmacie;
+  String pharmacie;
 
   profile({
-    required this.idpatient,
-    //required this.nompatient,
+    required this.idpharmacie,
+    required this.pharmacie,
+
   });
 
   @override
@@ -18,17 +23,24 @@ class profile extends StatefulWidget {
 
 class _profilestate extends State<profile> {
 
-  final Create user = Create (table: 'profileInfoPatient');
+  final Create user = Create (table: 'profileInfoPharmacie');
+
   late AsyncSnapshot<QuerySnapshot> snapshot;
   late DocumentSnapshot docToEdit;
-  final profilepatientList =
-  FirebaseFirestore.instance.collection('profileInfoPatient');
+  final profilepharmacieList =
+  FirebaseFirestore.instance.collection('profileInfoPharmacie');
 
-  TextEditingController nompatient = TextEditingController();
-  TextEditingController prenompatient = TextEditingController();
+  TextEditingController nompharmacie = TextEditingController();
+  TextEditingController prenompharmacie = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController motdepasse = TextEditingController();
+  TextEditingController location = TextEditingController();
   TextEditingController telephone = TextEditingController();
+
+  final ImagePicker _picker = ImagePicker();
+  File? image;
+
+
   int current = 0;
   @override
   void initState() {
@@ -37,18 +49,20 @@ class _profilestate extends State<profile> {
   }
 
   Future<List?> getCurrentUserData() async {
-    List infoPatient= [];
+    List infopharmacie = [];
     try {
       DocumentSnapshot ds =
-      await profilepatientList.doc(widget.idpatient).get();
+      await profilepharmacieList.doc(widget.idpharmacie).get();
       String firstname = ds.get('nom');
-      String lastname = ds.get('prenom');
-      String email = ds.get('email');
-      String telephone = ds.get('telephone');
-      String mdp = ds.get('password');
 
-      infoPatient= [firstname, lastname, email, telephone, mdp];
-      return infoPatient;
+      String email = ds.get('email');
+      String location = ds.get('location');
+      String mdp = ds.get('password');
+      String telp = ds.get('telephone').toString();
+
+
+      infopharmacie = [firstname, email, location, mdp,telp];
+      return infopharmacie;
     } catch (e) {
       print(e.toString());
       return null;
@@ -59,16 +73,16 @@ class _profilestate extends State<profile> {
     dynamic result = await getCurrentUserData();
     if (result != null) {
       String nom = result[0];
-      nompatient.text = nom;
-      String prenom = result[1];
-      prenompatient.text = prenom;
-      String emailad = result[2];
+      nompharmacie.text = nom;
+      String emailad = result[1];
       email.text = emailad;
-
-      String tel = result[3];
-      telephone.text = tel;
-      String motdpass = result[4];
+      String loc = result[2];
+      location.text = loc;
+      String motdpass = result[3];
       motdepasse.text = motdpass;
+      String tel = result[4];
+      telephone.text = tel;
+
     }
   }
 
@@ -80,6 +94,8 @@ class _profilestate extends State<profile> {
     }
     return result;
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,12 +116,13 @@ class _profilestate extends State<profile> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.pushReplacement(
+            Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => patient_cnx(
-                      idpatient: widget.idpatient,
-                      patient: nompatient.text+' '+prenompatient.text,
+                    builder: (_) => accueilPhar(
+                      idpharmacie: widget.idpharmacie,
+                      pharmacie: widget.pharmacie,
+
                     )));
           },
         ),
@@ -122,6 +139,10 @@ class _profilestate extends State<profile> {
                 color: Colors.black45,
               ),
             ),
+            // SizedBox(
+            //   height: 16,
+            // ),
+            // imageProfile(),
             SizedBox(
               height: 16,
             ),
@@ -145,7 +166,7 @@ class _profilestate extends State<profile> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage("images/profilpatient"),
+                          image: AssetImage("images/edit.jpg"),
                         )),
                   ),
                   Positioned(
@@ -173,7 +194,7 @@ class _profilestate extends State<profile> {
               height: 16,
             ),
             TextField(
-              controller: nompatient,
+              controller: nompharmacie,
               autocorrect: true,
               autofocus: true,
               maxLength: 30,
@@ -181,7 +202,7 @@ class _profilestate extends State<profile> {
                 contentPadding: EdgeInsets.only(bottom: 3),
                 labelText: 'Nom',
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                hintText: 'Tapez Votre Nom',
+                hintText: 'Tapez  Nom de pharmacie' ,
                 hintStyle: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -189,23 +210,7 @@ class _profilestate extends State<profile> {
                 icon: Icon(Icons.perm_identity),
               ),
             ),
-            TextField(
-              controller: prenompatient,
-              autocorrect: true,
-              autofocus: true,
-              maxLength: 30,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(bottom: 3),
-                labelText: 'Prénom',
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                hintText: 'Tapez Votre Prénom',
-                hintStyle: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.blueGrey),
-                icon: Icon(Icons.perm_identity),
-              ),
-            ),
+
             TextField(
               controller: motdepasse,
               obscureText: true,
@@ -249,9 +254,9 @@ class _profilestate extends State<profile> {
               maxLength: 30,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(bottom: 3),
-                labelText: 'telephone',
+                labelText: 'Telephone',
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                hintText: 'Tapez Votre telephone',
+                hintText: 'Tapez Votre Numero Telephone',
                 hintStyle: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -259,6 +264,24 @@ class _profilestate extends State<profile> {
                 icon: Icon(Icons.mobile_friendly_outlined),
               ),
             ),
+            TextField(
+              controller: location,
+              autocorrect: true,
+              autofocus: true,
+              maxLength: 30,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(bottom: 3),
+                labelText: 'Location',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                hintText: 'Tapez Votre Location',
+                hintStyle: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.blueGrey),
+                icon: Icon(Icons.location_on_outlined),
+              ),
+            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -267,9 +290,10 @@ class _profilestate extends State<profile> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => patient_cnx(
-                              idpatient: widget.idpatient,
-                              patient: nompatient.text+' '+prenompatient.text,
+                            builder: (_) => accueilPhar(
+                              idpharmacie: widget.idpharmacie,
+                              pharmacie: widget.pharmacie,
+
                             )));
                   },
                   child: Text(
@@ -286,14 +310,15 @@ class _profilestate extends State<profile> {
                 ),
                 FlatButton(
                   onPressed: () {
-                   user.UpdateUserPatient(widget.idpatient, nompatient.text, prenompatient.text, email.text, motdepasse.text, telephone.text,);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => patient_cnx(
-                                idpatient: widget.idpatient,
-                                patient: nompatient.text+" "+prenompatient.text,
-                              )));
+                    user.UpdateUser(widget.idpharmacie, nompharmacie.text, 'Pharmacie:', email.text, motdepasse.text, telephone.text, location.text);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => accueilPhar(
+                              idpharmacie: widget.idpharmacie,
+                              pharmacie: widget.pharmacie,
+
+                            )));
 
                   },
                   child: Text(

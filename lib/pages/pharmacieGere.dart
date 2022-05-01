@@ -39,6 +39,8 @@ class _pharamcie_gereState extends State<pharamcie_gere> {
     final double height=MediaQuery.of(context).size.height;
     final double width=MediaQuery.of(context).size.width;
     return Scaffold(
+
+
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -48,9 +50,8 @@ class _pharamcie_gereState extends State<pharamcie_gere> {
         actions: [
           RaisedButton(
             onPressed: () async {
-              //await _auth.signOut().then((result) {
               Navigator.of(context).pop(true);
-              // });
+
             },
             child : Icon(
               Icons.exit_to_app,

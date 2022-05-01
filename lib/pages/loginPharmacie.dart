@@ -29,56 +29,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
   int cin=11111111;
   List itemsList=[];
   String id='';
-  // /* login */
-  // Widget buildAff(){
-  //   final Stream <QuerySnapshot> users=FirebaseFirestore.instance.collection('profileInfoPharmacie').snapshots();
-  //
-  //   return Container(
-  //     height:250 ,
-  //     padding: const EdgeInsets.symmetric(vertical:20),
-  //     child:
-  //     StreamBuilder<QuerySnapshot>(
-  //       stream: users,
-  //       builder: (
-  //           BuildContext context,
-  //           AsyncSnapshot<QuerySnapshot>snapshot,
-  //           ){
-  //         if(snapshot.hasError)
-  //         {
-  //           return Text('Something went wrong.');
-  //         }
-  //         if (snapshot.connectionState==ConnectionState.waiting)
-  //         {
-  //           return Text( 'Loading');
-  //         }
-  //         final data=snapshot.requireData;
-  //         return ListView.builder(
-  //           itemCount: data.size,
-  //           itemBuilder: (context,index)
-  //           { itemsList.add(data.docs[index]);
-  //           return
-  //             //Text('');
-  //             Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
-  //           },
-  //         );
-  //       },
-  //
-  //     ),
-  //
-  //   );
-  // }
-  // /* cin et mot de passe conforme */
-  // Future<dynamic> exist(cinn,mdp) async {
-  //   dynamic t=false;
-  //   for(var user in itemsList){
-  //     if(cinn == user['cin'] && mdp == user['password']) {
-  //       t = true;
-  //       break;
-  //     }
-  //
-  //   }
-  //   return t;
-  // }
+  String pharmacie='phar';
 
   /* ********* */
   @override
@@ -216,13 +167,15 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                 RaisedButton(onPressed:()async {
                                   if (_formKey.currentState!.validate())
                                 {
-                                  dynamic test = await login.connecter(cin, password);
-                                  print(test);
+                                  pharmacie="${await login.getdonne(cin,'prenom')}"+" "+"${await login.getdonne(cin,'nom')}";
+
+                                dynamic test = await login.connecter(cin, password);
+
 
                                   if (test == true) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text('connecter'),
+                                        content: Text('Connecter'),
                                       ),
                                     );
                                     _cinController.clear();
@@ -230,7 +183,8 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
 
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => accueilPhar(idpharmacie:id)
+                                        MaterialPageRoute(builder: (context) => accueilPhar(idpharmacie:id
+                                            ,pharmacie:pharmacie)
                                         )
                                     );
 

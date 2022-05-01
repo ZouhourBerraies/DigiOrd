@@ -124,7 +124,7 @@ Future<String> getdonne(cinn,infor) async {
       await profileList.doc(idpatient).get();
       String firstname = ds.get('nom');
       String lastname = ds.get('prenom');
-      return firstname+" "+lastname;
+      return lastname+" "+firstname+" ";
 
   }
   Future<dynamic> getData(idpatient,information) async {
