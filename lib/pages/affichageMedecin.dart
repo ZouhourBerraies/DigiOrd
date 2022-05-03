@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'liste medicament.dart';
 import 'listeOrdonnance.dart';
 import '../data/CreateOrd.dart';
 
@@ -531,7 +532,25 @@ class _affichageMedecinState extends State<affichageMedecin> {
                     ),
                     TextFormField(
                       controller: _medicController,
-                      decoration: InputDecoration(hintText: 'nouveau medicament'),
+                      decoration: InputDecoration(
+                          icon:IconButton(
+                            icon: new Icon(Icons.search),
+                            alignment: Alignment.topRight,
+                            onPressed: () async {
+                              final results = await showSearch(
+                                  context: context, delegate: MedicamentSearch());
+
+                              print(results);
+                              _medicController.text = results!;
+                              medic = _medicController.text;
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => ListSearch()));
+                            },
+                          ),
+                          hintText: 'nouveau medicament'
+                      ),
                       onChanged: (value) {
                         medic = value;
                       },

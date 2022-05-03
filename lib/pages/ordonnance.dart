@@ -13,7 +13,7 @@ import '../data/CreateOrd.dart';
 import 'medecinGere.dart';
 
 
-
+import"liste medicament.dart";
 
 class Addord extends StatefulWidget {
   @override
@@ -546,9 +546,45 @@ class _AddordState extends State<Addord> {
                 key: _Key,
                 child: Column(
                   children: [
+                    // Container(
+                    //   alignment: Alignment.topRight,
+                    //   child: IconButton(
+                    //     icon: new Icon(Icons.search),
+                    //     alignment: Alignment.topRight,
+                    //     onPressed: () async {
+                    //       final results = await showSearch(
+                    //           context: context, delegate: MedicamentSearch());
+                    //
+                    //       print(results);
+                    //       _medicController.text = results!;
+                    //       medic = _medicController.text;
+                    //       // Navigator.push(
+                    //       //     context,
+                    //       //     MaterialPageRoute(
+                    //       //         builder: (context) => ListSearch()));
+                    //     },
+                    //   ),
+                    // ),
                     TextFormField(
                       controller: _medicController,
-                      decoration: InputDecoration(hintText: 'medicament'),
+                      decoration: InputDecoration
+                        (icon:IconButton(
+                        icon: new Icon(Icons.search),
+                        alignment: Alignment.topRight,
+                        onPressed: () async {
+                          final results = await showSearch(
+                              context: context, delegate: MedicamentSearch());
+
+                          print(results);
+                          _medicController.text = results!;
+                          medic = _medicController.text;
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => ListSearch()));
+                        },
+                      ),
+                          hintText: 'medicament'),
                       onChanged: (value) {
                         medic = value;
                       },
@@ -558,6 +594,7 @@ class _AddordState extends State<Addord> {
                         } else
                           return null;
                       },
+
                     ),
 
                     TextFormField(
@@ -610,13 +647,13 @@ class _AddordState extends State<Addord> {
                   }
                   n=n+1;
                 },
-                child: Text('Submit'),
+                child: Text('Ajouter'),
               ),
               FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Cancel'),
+                child: Text('Annuler'),
               )
             ],
           );
@@ -627,7 +664,7 @@ class _AddordState extends State<Addord> {
     ord.AjouterMedic(random, numero,medic, parjour,nbrjour,remarque,widget.idpatient,);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Sending data to cloud firesstore'),
+        content: Text(' Medicament Ajouté'),
       ),
     );
     _medicController.clear();

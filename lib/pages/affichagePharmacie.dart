@@ -7,6 +7,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
+import 'liste medicament.dart';
 import 'listeOrdonnance.dart';
 import '../data/CreateOrd.dart';
 import 'ListeOrdScanner.dart';
@@ -637,7 +638,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
           return AlertDialog(
             title: Text('substituer Medicament'),
             content: Container(
-              height: 100,
+              height: 150,
               child: Form(
                 key: _Key,
                 child: Column(
@@ -657,7 +658,23 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                     ),
                     TextFormField(
                       controller: _medicController,
-                      decoration: InputDecoration(hintText: ' nouveau medicament'),
+                      decoration: InputDecoration(hintText: ' nouveau medicament',
+                        icon:IconButton(
+                          icon: new Icon(Icons.search),
+                          alignment: Alignment.topRight,
+                          onPressed: () async {
+                            final results = await showSearch(
+                                context: context, delegate: MedicamentSearch());
+
+                            print(results);
+                            _medicController.text = results!;
+                            medic = _medicController.text;
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => ListSearch()));
+                          },
+                        ),),
                       onChanged: (value) {
                         medic = value;
                       },
