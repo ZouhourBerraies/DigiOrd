@@ -65,19 +65,14 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
       body: Center(
         child: Container(
           //margin:  EdgeInsets.all(0.05),
-          padding: EdgeInsets.all(0),
+          padding: EdgeInsets.all(0.0),
           decoration: BoxDecoration(
-            // border: Border.all(
-            //     width: 10,
-            //     color: Colors.blueGrey),
-            // image: DecorationImage(
-            //     image: AssetImage("images/back.jpg"),
-            //     fit: BoxFit.cover),
+
         ),
           //width: 1000, height: 1000,
-    child: SingleChildScrollView(
-    physics: AlwaysScrollableScrollPhysics(),
-    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+    // child: SingleChildScrollView(
+    // physics: AlwaysScrollableScrollPhysics(),
+    // padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
     child:Form(
     key: _formKey,
           child:Column(
@@ -236,7 +231,10 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                         splashColor: Colors.deepOrange.shade700,)
                                     ]
                                 ),
-                                login.buildAff(),
+                                SizedBox(
+                                 // height: 20,
+                                child:login.buildAff(),
+                                ),
 
                               ],
                             ),
@@ -251,7 +249,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
               ]
           ),
     ),
-    ),
+    //),
         ),
       ),
       bottomNavigationBar:

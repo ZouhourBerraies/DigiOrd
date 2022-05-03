@@ -68,9 +68,9 @@ class _patient_loginstate extends State<patient_login>{
           decoration: BoxDecoration(
           ),
           //width: 1000, height: 1000,
-    child: SingleChildScrollView(
-    physics: AlwaysScrollableScrollPhysics(),
-    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+   // child: SingleChildScrollView(
+   // physics: AlwaysScrollableScrollPhysics(),
+  //  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
     child:Form(
 
     key: _formKey,
@@ -233,7 +233,6 @@ class _patient_loginstate extends State<patient_login>{
                                     ]
                                 ),
                                 login.buildAff(),
-
                               ],
                             ),
                           ),
@@ -247,7 +246,7 @@ class _patient_loginstate extends State<patient_login>{
               ]
           ),
     ),
-        ),
+       // ),
         ),
       ),
       bottomNavigationBar:

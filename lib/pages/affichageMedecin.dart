@@ -114,19 +114,24 @@ class _affichageMedecinState extends State<affichageMedecin> {
                     },
                     children: [
 
-                      buildRow([
-                        '${data.docs[index]['numeroMedic']}',
-                        '${data.docs[index]['medicament']}',
-                        '${data.docs[index]['nombre de fois par jour']}',
-                        '${data.docs[index]['nombre de jour']}',
-                        '${data.docs[index]['remarque']}',
-                        '${data.docs[index]['délivrer']}',
-                        '${data.docs[index]['substituer']}',
 
-
-
-
-                      ]),
+                      TableRow(
+                          children: [
+                            Text('${data.docs[index]['numeroMedic']}',
+                              textAlign: TextAlign.center,),
+                            Text('${data.docs[index]['medicament']}',
+                              textAlign: TextAlign.center,),
+                            Text('${data
+                                .docs[index]['nombre de fois par jour']}',textAlign: TextAlign.center,),
+                            Text('${data.docs[index]['nombre de jour']}',textAlign: TextAlign.center,),
+                            Text('${data.docs[index]['remarque']}',textAlign: TextAlign.center,),
+                            Icon(
+                              Icons.cancel,
+                              color: Colors.black26,
+                            ),
+                            Text('${data.docs[index]['substituer']}',textAlign: TextAlign.center,),
+                          ]
+                      )
                     ],
                   ),
                 );
@@ -452,7 +457,8 @@ class _affichageMedecinState extends State<affichageMedecin> {
                                 child: Column(
                                   children: [
                                     Table(
-                                      border: TableBorder.all(),
+                                     // border: TableBorder.all(),
+                                      border: TableBorder.symmetric(outside: BorderSide(width: 2, color: Colors.cyan),),
                                       columnWidths: {
                                         0: FractionColumnWidth(0.10),
                                         1: FractionColumnWidth(0.15),
@@ -486,7 +492,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
                 )
             ),
           ),
-          /*------------------zou----------------*/
+
         ],
       ),
     );
@@ -592,7 +598,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
                     ),
                     TextFormField(
                       controller: _remarqueController,
-                      decoration: InputDecoration(hintText: 'dose'),
+                      decoration: InputDecoration(hintText: 'remarque'),
                       onChanged: (value) {
                         remarque=value;
                       },

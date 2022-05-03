@@ -91,43 +91,179 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
           }
           final data = snapshot.requireData;
           return ListView.builder(
-            //scrollDirection: Axis.vertical,
-            //physics: NeverScrollableScrollPhysics(),
-            //addAutomaticKeepAlives: false,
-            //cacheExtent: 100.0,
+
             itemCount: data.size,
             itemBuilder: (context, index) {
               itemsList.add(data.docs[index]);
-              return
-                Center(
-                  child:
-                  Table(
-                    border: TableBorder.all(),
-                    columnWidths: {
-                      0: FractionColumnWidth(0.10),
-                      1: FractionColumnWidth(0.15),
-                      2: FractionColumnWidth(0.15),
-                      3: FractionColumnWidth(0.15),
-                      4: FractionColumnWidth(0.15),
-                      5: FractionColumnWidth(0.15),
-                      6: FractionColumnWidth(0.15),
 
-                    },
-                    children: [
+              if('${data.docs[index]['délivrer']}'=="oui" && '${data.docs[index]['substituer']}'== "non") {
+                return
+                  Center(
+                    child:
+                    Table(
+                      // border: TableBorder.all(),
+                      border: TableBorder.lerp(
+                          TableBorder(top: BorderSide(width: 2,
+                              color: Colors.grey)),
+                          TableBorder(bottom: BorderSide(width: 4,
+                              color: Colors.green))
+                          , 0
+                      ),
+                      columnWidths: {
+                        0: FractionColumnWidth(0.10),
+                        1: FractionColumnWidth(0.15),
+                        2: FractionColumnWidth(0.15),
+                        3: FractionColumnWidth(0.15),
+                        4: FractionColumnWidth(0.15),
+                        5: FractionColumnWidth(0.15),
+                        6: FractionColumnWidth(0.15),
 
-                      buildRow([
-                        '${data.docs[index]['numeroMedic']}',
-                        '${data.docs[index]['medicament']}',
-                        '${data.docs[index]['nombre de fois par jour']}',
-                        '${data.docs[index]['nombre de jour']}',
-                        '${data.docs[index]['remarque']}',
-                        '${data.docs[index]['délivrer']}',
-                        '${data.docs[index]['substituer']}',
+                      },
+                      children: [
 
-                      ]),
-                    ],
-                  ),
-                );
+
+                        TableRow(
+                            children: [
+                              Text('${data.docs[index]['numeroMedic']}',
+                                textAlign: TextAlign.center,),
+
+                              Text('${data.docs[index]['medicament']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data
+                                  .docs[index]['nombre de fois par jour']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data.docs[index]['nombre de jour']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data.docs[index]['remarque']}',
+                                textAlign: TextAlign.center,),
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.cyan,
+                              ),
+                              Text('${data.docs[index]['substituer']}',
+                                textAlign: TextAlign.center,
+                              ),
+                            ]
+                        )
+                      ],
+                    ),
+                  );
+              }
+              if('${data.docs[index]['délivrer']}'=="non" && '${data.docs[index]['substituer']}'== "non") {
+    return
+    Center(
+    child:
+    Table(
+    // border: TableBorder.all(),
+    border: TableBorder.lerp(
+    TableBorder(top: BorderSide(width: 2,
+    color: Colors.grey)),
+    TableBorder(bottom: BorderSide(width: 4,
+    color: Colors.green))
+    , 0
+    ),
+    columnWidths: {
+    0: FractionColumnWidth(0.10),
+    1: FractionColumnWidth(0.15),
+    2: FractionColumnWidth(0.15),
+    3: FractionColumnWidth(0.15),
+    4: FractionColumnWidth(0.15),
+    5: FractionColumnWidth(0.15),
+    6: FractionColumnWidth(0.15),
+
+    },
+    children: [
+
+    TableRow(
+    children: [
+    Text('${data.docs[index]['numeroMedic']}',
+    textAlign: TextAlign.center,),
+
+    Text('${data.docs[index]['medicament']}',
+    textAlign: TextAlign.center,),
+    Text('${data
+        .docs[index]['nombre de fois par jour']}',
+    textAlign: TextAlign.center,),
+    Text('${data.docs[index]['nombre de jour']}',
+    textAlign: TextAlign.center,),
+    Text('${data.docs[index]['remarque']}',
+    textAlign: TextAlign.center,),
+      IconButton(
+          onPressed: (){
+            print ('deliver $index');
+            ord.delivrerMedic(widget.index['numero'],'$index', widget.idpatient);
+          },
+          icon: Icon(Icons.cancel,color: Colors.black26,)
+      ),
+      IconButton(
+          onPressed: (){
+            print ('substituer $index');
+            openDialogueBoxSub(context);
+          },
+          icon: Icon(Icons.autorenew_outlined,color: Colors.cyan,)
+      ),
+    ]
+    )
+    ],
+    ),
+    );
+
+
+              }
+              if('${data.docs[index]['délivrer']}'=="non" && '${data.docs[index]['substituer']}'!= "non") {
+                return
+                  Center(
+                    child:
+                    Table(
+                      // border: TableBorder.all(),
+                      border: TableBorder.lerp(
+                          TableBorder(top: BorderSide(width: 2,
+                              color: Colors.grey)),
+                          TableBorder(bottom: BorderSide(width: 4,
+                              color: Colors.green))
+                          , 0
+                      ),
+                      columnWidths: {
+                        0: FractionColumnWidth(0.10),
+                        1: FractionColumnWidth(0.15),
+                        2: FractionColumnWidth(0.15),
+                        3: FractionColumnWidth(0.15),
+                        4: FractionColumnWidth(0.15),
+                        5: FractionColumnWidth(0.15),
+                        6: FractionColumnWidth(0.15),
+
+                      },
+                      children: [
+
+                        TableRow(
+                            children: [
+                              Text('${data.docs[index]['numeroMedic']}',
+                                textAlign: TextAlign.center,),
+
+                              Text('${data.docs[index]['medicament']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data
+                                  .docs[index]['nombre de fois par jour']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data.docs[index]['nombre de jour']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data.docs[index]['remarque']}',
+                                textAlign: TextAlign.center,),
+                              Icon(
+                                Icons.cancel,
+                                color: Colors.black26,
+                              ),
+                              Text('${data.docs[index]['substituer']}',
+                                textAlign: TextAlign.center,
+                              ),
+
+                            ]
+                        )
+                      ],
+                    ),
+                  );
+              }
+              return Text('');
             },
           );
         },
@@ -405,58 +541,59 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                         ],
                       ),
 
-                      Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 10,right: 50),
-                            child: Row(
-                              children: [
-                                Icon(Icons.beenhere,
-                                    color: Colors.cyan),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                RaisedButton(onPressed: () {
-                                  openDialogueBox(context);
-                                },
-                                  child: Text('Délivrer Médicament',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                                  color: Colors.white70,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  textColor: Colors.cyan.shade600,
-                                  padding: EdgeInsets.all(15.0),
-                                  splashColor: Colors.cyan.shade600,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 8,left: 30,right: 50),
-                            child: Row(
-                              children: [
-                                Icon(Icons.autorenew_outlined,
-                                    color: Colors.cyan),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                RaisedButton(onPressed: () {
-                                 openDialogueBoxSub(context);
-                                },
-                                  child: Text('Substituer Médicament',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                                  color: Colors.white70,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  textColor: Colors.cyan.shade600,
-                                  padding: EdgeInsets.all(15.0),
-                                  splashColor: Colors.cyan.shade600,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      )
+                      // Column(
+                      //   children: [
+                      //     Container(
+                      //       padding: EdgeInsets.only(left: 10,right: 50),
+                      //       child: Row(
+                      //         children: [
+                      //           Icon(Icons.beenhere,
+                      //               color: Colors.cyan),
+                      //           SizedBox(
+                      //             width: 20,
+                      //           ),
+                      //           RaisedButton(onPressed: () {
+                      //             openDialogueBox(context);
+                      //           },
+                      //             child: Text('Délivrer Médicament',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                      //             color: Colors.white70,
+                      //             shape: RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.circular(50),
+                      //             ),
+                      //             textColor: Colors.cyan.shade600,
+                      //             padding: EdgeInsets.all(15.0),
+                      //             splashColor: Colors.cyan.shade600,
+                      //           ),
+                      //         ],
+
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //       padding: EdgeInsets.only(top: 8,left: 30,right: 50),
+                      //       child: Row(
+                      //         children: [
+                      //           Icon(Icons.autorenew_outlined,
+                      //               color: Colors.cyan),
+                      //           SizedBox(
+                      //             width: 20,
+                      //           ),
+                      //           RaisedButton(onPressed: () {
+                      //            openDialogueBoxSub(context);
+                      //           },
+                      //             child: Text('Substituer Médicament',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                      //             color: Colors.white70,
+                      //             shape: RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.circular(50),
+                      //             ),
+                      //             textColor: Colors.cyan.shade600,
+                      //             padding: EdgeInsets.all(15.0),
+                      //             splashColor: Colors.cyan.shade600,
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     )
+                      //   ],
+                      // )
 
                     ],
                   ),
@@ -479,7 +616,9 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                 child: Column(
                                   children: [
                                     Table(
-                                      border: TableBorder.all(),
+                                     // border: TableBorder.all(),
+                                      border: TableBorder.symmetric(outside: BorderSide(width: 2, color: Colors.cyan),),
+
                                       columnWidths: {
                                         0: FractionColumnWidth(0.10),
                                         1: FractionColumnWidth(0.15),
@@ -557,6 +696,8 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
         ],
       ),
     );
+
+
   }
   TableRow buildRow(List<String> cells, {bool isHeader = false}) =>
       TableRow(
@@ -718,6 +859,29 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
     _medicController.clear();
     _NummedicSController.clear();
 
+  }
+  MaterialStateProperty<Color>getColor(Color color,Color colorPressed){
+    final getColor=(Set<MaterialState>states)
+    {
+      if (states.contains(MaterialState.pressed))
+      {
+        return colorPressed;
+      }
+      else
+        return color;
+    };
+    return  MaterialStateProperty.resolveWith(getColor);
+  }
+  MaterialStateProperty<BorderSide>getBorder(Color color,Color colorPressed){
+    final getBorder=(Set<MaterialState>states)
+    {
+      if (states.contains(MaterialState.pressed))
+      {
+        return BorderSide(color: colorPressed,width:2);
+      }
+      else
+        return BorderSide(color: color,width:2);      };
+    return  MaterialStateProperty.resolveWith(getBorder);
   }
 
 

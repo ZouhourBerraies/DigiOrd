@@ -574,46 +574,122 @@ class _affichageState extends State<affichage> {
           }
           final data = snapshot.requireData;
           return ListView.builder(
-            //scrollDirection: Axis.vertical,
-            //physics: NeverScrollableScrollPhysics(),
-            //addAutomaticKeepAlives: false,
-            //cacheExtent: 100.0,
             itemCount: data.size,
             itemBuilder: (context, index) {
               itemsList.add(data.docs[index]);
-              return
-                Center(
-                  child:
-                  Table(
-                    border: TableBorder.all(),
-                    columnWidths: {
-                      0: FractionColumnWidth(0.15),
-                      1: FractionColumnWidth(0.15),
-                      2: FractionColumnWidth(0.15),
-                      3: FractionColumnWidth(0.15),
-                      4: FractionColumnWidth(0.15),
-                      5: FractionColumnWidth(0.15),
-                      //6: FractionColumnWidth(0.15),
+              if('${data.docs[index]['délivrer']}'=="oui") {
+                return
+                  Center(
+                    child:
+                    Table(
+                      // border: TableBorder.all(),
+                      border: TableBorder.lerp(
+                          TableBorder(top: BorderSide(width: 2,
+                              color: Colors.grey)),
+                          TableBorder(bottom: BorderSide(width: 4,
+                              color: Colors.green))
+                          , 0
+                      ),
+                      columnWidths: {
+                        0: FractionColumnWidth(0.15),
+                        1: FractionColumnWidth(0.15),
+                        2: FractionColumnWidth(0.15),
+                        3: FractionColumnWidth(0.15),
+                        4: FractionColumnWidth(0.15),
+                        5: FractionColumnWidth(0.15),
+                        //6: FractionColumnWidth(0.15),
 
-                    },
-                    children: [
+                      },
+                      children: [
 
-                      buildRow([
-                        //'${data.docs[index]['numeroMedic']}',
-                        '${data.docs[index]['medicament']}',
-                        '${data.docs[index]['nombre de fois par jour']}',
-                        '${data.docs[index]['nombre de jour']}',
-                        '${data.docs[index]['remarque']}',
-                        '${data.docs[index]['délivrer']}',
-                        '${data.docs[index]['substituer']}',
+                        // buildRow([
+                        //   //'${data.docs[index]['numeroMedic']}',
+                        //   '${data.docs[index]['medicament']}',
+                        //   '${data.docs[index]['nombre de fois par jour']}',
+                        //   '${data.docs[index]['nombre de jour']}',
+                        //   '${data.docs[index]['remarque']}',
+                        //   '${data.docs[index]['délivrer']}',
+                        //   '${data.docs[index]['substituer']}',
+                        // ]),
+                        TableRow(
+                            children: [
 
+                              Text('${data.docs[index]['medicament']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data
+                                  .docs[index]['nombre de fois par jour']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data.docs[index]['nombre de jour']}',
+                                textAlign: TextAlign.center,),
+                              Text('${data.docs[index]['remarque']}',
+                                textAlign: TextAlign.center,),
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.cyan,
+                              ),
+                              Text('${data.docs[index]['substituer']}',
+                                textAlign: TextAlign.center,
+                              ),
+                            ]
+                        )
+                      ],
+                    ),
+                  );
+              }
+              else{
+                return
+                  Center(
+                    child:
+                    Table(
+                      // border: TableBorder.all(),
+                      border: TableBorder.lerp(
+                          TableBorder(
+                              top: BorderSide(width: 2,
+                              color: Colors.white)),
+                          TableBorder(bottom: BorderSide(width: 4,
+                              color: Colors.green))
+                          , 0
+                      ),
+                      columnWidths: {
+                        0: FractionColumnWidth(0.15),
+                        1: FractionColumnWidth(0.15),
+                        2: FractionColumnWidth(0.15),
+                        3: FractionColumnWidth(0.15),
+                        4: FractionColumnWidth(0.15),
+                        5: FractionColumnWidth(0.15),
+                        //6: FractionColumnWidth(0.15),
 
+                      },
+                      children: [
 
-
-                      ]),
-                    ],
-                  ),
-                );
+                        // buildRow([
+                        //   //'${data.docs[index]['numeroMedic']}',
+                        //   '${data.docs[index]['medicament']}',
+                        //   '${data.docs[index]['nombre de fois par jour']}',
+                        //   '${data.docs[index]['nombre de jour']}',
+                        //   '${data.docs[index]['remarque']}',
+                        //   '${data.docs[index]['délivrer']}',
+                        //   '${data.docs[index]['substituer']}',
+                        // ]),
+                        TableRow(
+                            children: [
+                              Text('${data.docs[index]['medicament']}',
+                              textAlign: TextAlign.center,),
+                              Text('${data
+                                  .docs[index]['nombre de fois par jour']}',textAlign: TextAlign.center,),
+                              Text('${data.docs[index]['nombre de jour']}',textAlign: TextAlign.center,),
+                              Text('${data.docs[index]['remarque']}',textAlign: TextAlign.center,),
+                              Icon(
+                                Icons.cancel,
+                                color: Colors.black26,
+                              ),
+                              Text('${data.docs[index]['substituer']}',textAlign: TextAlign.center,),
+                            ]
+                        )
+                      ],
+                    ),
+                  );
+              }
             },
           );
         },
@@ -831,13 +907,15 @@ class _affichageState extends State<affichage> {
                             width: double.infinity,
                             child: SingleChildScrollView(
                               physics: AlwaysScrollableScrollPhysics(),
-                              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+                             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+
                               child:Form(
                                 key: _formKey,
                                 child: Column(
                                   children: [
                                     Table(
-                                      border: TableBorder.all(),
+                                     // border: TableBorder.all(),
+                                      border: TableBorder.symmetric(outside: BorderSide(width: 2, color: Colors.cyan),),
                                       columnWidths: {
                                         0: FractionColumnWidth(0.15),
                                     1: FractionColumnWidth(0.15),
@@ -855,9 +933,9 @@ class _affichageState extends State<affichage> {
                                      // height: 10,
                                       child:buildAff(),
                                     ),
-                                    SizedBox(height: 10,),
+                                   // SizedBox(height: 10,),
                                     buildqr(context),
-                                    SizedBox(height: 10,),
+                                   // SizedBox(height: 10,),
                                   ],
                                 ),
                               ),
