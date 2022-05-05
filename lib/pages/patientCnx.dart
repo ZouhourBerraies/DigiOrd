@@ -241,7 +241,7 @@ String img='';
     ),
     leading: Icon(
     Icons.person,
-    color: Colors.cyan,
+    color: Colors.black26,
     ),
     onTap: () {
                 Navigator.pushReplacement(
@@ -266,7 +266,7 @@ String img='';
               child: Icon(Icons.settings_applications_rounded,
               color: Colors.white,
               ),
-              color: Colors.cyan,
+              color: Colors.indigo.shade300,
             );
           }),
           backgroundColor: Colors.white,
@@ -281,7 +281,7 @@ String img='';
                 Icons.exit_to_app,
                 color: Colors.white,
               ),
-              color: Colors.cyan,
+              color: Colors.indigo.shade300,
             ),
           ],
         ),
@@ -327,8 +327,8 @@ String img='';
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(50),),
-                color: Colors.cyan.shade100,
-                //color: Colors.deepOrange.shade100,
+                //color: Colors.cyan.shade100,
+                color: Colors.indigo.shade100,
               ),
 
               child: new Stack(
@@ -352,7 +352,7 @@ String img='';
                       top: 80,
                       child: new Text("Espace Patient", style: TextStyle(
                           fontSize: 35.0,
-                          color: Colors.cyan.shade700,
+                          color: Colors.indigo.shade400,
                           fontWeight: FontWeight.bold),))
                 ],
               ),
@@ -400,7 +400,7 @@ String img='';
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage("images/medGerer.jpg"),
+                              image: AssetImage("images/téléchargement.png"),
                             )
                         ),
                       ),
@@ -417,10 +417,11 @@ String img='';
                           children: [
                             Text(
                               "DigiOrd est à votre service", style: TextStyle(
-                                color: Colors.cyan.shade700,
+                                color: Colors.indigo.shade400,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25),),
-                            Text("  Pret de gérer l'état du patient.",
+                            Text("  ",
+                               // "Pret de gérer l'état du patient.",
                               style: TextStyle(color: Colors.cyan.shade300,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 22),),
@@ -432,15 +433,16 @@ String img='';
                               color: Colors.grey,
                             ),
                             Text(
-                              "Avec DigiOrd, il n'est pas seulement possible d'écrire une ordonnance digitale mais aussi de gérer l'état de votre patient à distance et de partager toute information désirée avec les différents proffesionnels de santé .",
+                              "Avec DigiOrd,Tous vos ordonnances sont sauvdageés."
+                                  " Vous pouvez les consulter à tout moment.",
                               style: TextStyle(color: Colors.grey,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),),
-                            FlatButton(onPressed: shownBottomSheet, child: Text(
-                              "Show Details?", style: TextStyle(
-                                color: Colors.cyan.shade700,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12), textAlign: TextAlign.center,),),
+                            // FlatButton(onPressed: shownBottomSheet, child: Text(
+                            //   "Show Details?", style: TextStyle(
+                            //     color: Colors.cyan.shade700,
+                            //     fontWeight: FontWeight.bold,
+                            //     fontSize: 12), textAlign: TextAlign.center,),),
                           ],
                         ),
                       )
@@ -485,7 +487,8 @@ String img='';
                               left: 20, right: 10, bottom: 20),
                           child: new Container(
                             decoration: BoxDecoration(
-                              color: Colors.cyan,
+                             // color: Colors.cyan,
+                              color: Colors.indigo.shade300,
                               borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(80)),
                               boxShadow: [
@@ -516,7 +519,7 @@ String img='';
                                   );
                                 }
                                     ,
-                                    child: new Text('Listes Des Ordonnance',
+                                    child: new Text('Liste Des Ordonnances',
                                       style: new TextStyle(fontSize: 30.0,
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
