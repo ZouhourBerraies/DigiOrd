@@ -78,7 +78,7 @@ class CreateOrd {
     });
   }
 
-/*******/
+/*******PharmacieScanner*****/
 
 
   Future<List?> getCurrentUserData(String idpatient,String numero,String Nummedic) async {

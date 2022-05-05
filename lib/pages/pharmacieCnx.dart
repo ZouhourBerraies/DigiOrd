@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../data/Create.dart';
 import '../data/authentification.dart';
 import '../pages/pharmacieGere.dart';
+import 'listeOrdPharamcie.dart';
 
 
 class pharmacie_cnx extends StatefulWidget {
@@ -106,9 +107,14 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
                   content: Text('Patient existe !'),
                 ),
               );
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => pharamcie_gere(idpatient:id,idpharmacie:widget.idpharmacie)
+              //     )
+              // );
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => pharamcie_gere(idpatient:id,idpharmacie:widget.idpharmacie)
+                  MaterialPageRoute(builder: (context) => afficheord(idpatient:id,idpharmacie: widget.idpharmacie,)
                   )
               );
               _cinController.clear();

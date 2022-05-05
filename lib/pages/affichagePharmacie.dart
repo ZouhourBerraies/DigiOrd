@@ -192,6 +192,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
           onPressed: (){
             print ('deliver $index');
             ord.delivrerMedic(widget.index['numero'],'$index', widget.idpatient);
+            ord.DelivMedic(widget.index['numero'], '$index',data.docs[index]['medicament'], data.docs[index]['nombre de fois par jour'],data.docs[index]['nombre de jour'],'${data.docs[index]['remarque']}', widget.idpharmacie);
           },
           icon: Icon(Icons.cancel,color: Colors.black26,)
       ),
@@ -713,64 +714,64 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
             );
           }).toList());
 
-  openDialogueBox(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('délivrer Medicament'),
-            content: Container(
-              height: 100,
-              child: Form(
-                key: _Key,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _NumeromedicDController,
-                      decoration: InputDecoration(hintText: 'Numero medicament'),
-                      onChanged: (value) {
-                        NummedicD = value;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Entrez numero de medicament à deliver!';
-                        } else
-                          return null;
-                      },
-                    ),
-
-                  ],
-                ),
-              ),
-            ),
-            actions: [
-              FlatButton(
-                onPressed: () {
-                  if (_Key.currentState!.validate()) {
-                    submitAction(context);
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('délivrer'),
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Cancel'),
-              )
-            ],
-          );
-        });
-  }
-
-  submitAction(BuildContext context) async{
-    ord.delivrerMedic(widget.index['numero'],NummedicD, widget.idpatient);
-    resultD = await ord.getCurrentUserData(widget.idpatient, widget.index['numero'], NummedicD);
-    ord.DelivMedic(widget.index['numero'], NummedicD, resultD[0], resultD[1], resultD[2], resultD[3], widget.idpharmacie);
-    _NumeromedicDController.clear();
-
-  }
+  // openDialogueBox(BuildContext context) {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text('délivrer Medicament'),
+  //           content: Container(
+  //             height: 100,
+  //             child: Form(
+  //               key: _Key,
+  //               child: Column(
+  //                 children: [
+  //                   TextFormField(
+  //                     controller: _NumeromedicDController,
+  //                     decoration: InputDecoration(hintText: 'Numero medicament'),
+  //                     onChanged: (value) {
+  //                       NummedicD = value;
+  //                     },
+  //                     validator: (value) {
+  //                       if (value == null || value.isEmpty) {
+  //                         return 'Entrez numero de medicament à deliver!';
+  //                       } else
+  //                         return null;
+  //                     },
+  //                   ),
+  //
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //           actions: [
+  //             FlatButton(
+  //               onPressed: () {
+  //                 if (_Key.currentState!.validate()) {
+  //                   submitAction(context);
+  //                   Navigator.pop(context);
+  //                 }
+  //               },
+  //               child: Text('délivrer'),
+  //             ),
+  //             FlatButton(
+  //               onPressed: () {
+  //                 Navigator.pop(context);
+  //               },
+  //               child: Text('Cancel'),
+  //             )
+  //           ],
+  //         );
+  //       });
+  // }
+  //
+  // submitAction(BuildContext context) async{
+  //   ord.delivrerMedic(widget.index['numero'],NummedicD, widget.idpatient);
+  //   resultD = await ord.getCurrentUserData(widget.idpatient, widget.index['numero'], NummedicD);
+  //   ord.DelivMedic(widget.index['numero'], NummedicD, resultD[0], resultD[1], resultD[2], resultD[3], widget.idpharmacie);
+  //   _NumeromedicDController.clear();
+  //
+  // }
 
   openDialogueBoxSub(BuildContext context) {
     return showDialog(

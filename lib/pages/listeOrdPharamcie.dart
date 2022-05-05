@@ -24,7 +24,9 @@ class _afficheordState extends State<afficheord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Les ordonnances médicales')),
+        appBar: AppBar(title: Text('Les ordonnances médicales'),
+          backgroundColor: Colors.cyan.shade100,)
+        ,
 
         body: Container(
           child: StreamBuilder<QuerySnapshot>(

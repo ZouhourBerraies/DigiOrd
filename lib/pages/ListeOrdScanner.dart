@@ -29,7 +29,7 @@ class _gerer_ord_pharState extends State<gerer_ord_phar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Les ordonnances médicales')),
+        appBar: AppBar(title: Text('Les ordonnances médicales Délivrés')),
 
         body: Container(
           child: StreamBuilder<QuerySnapshot>(
@@ -49,7 +49,7 @@ class _gerer_ord_pharState extends State<gerer_ord_phar> {
 
                   return list.isEmpty
                       ? const Center(
-                    child: Text("Aucun Dossier "),
+                    child: Text("Aucun Ordonnance "),
                   )
                       : ListView.builder(
                     //itemCount: querySnapshot.data!.docs.length,
@@ -58,7 +58,8 @@ class _gerer_ord_pharState extends State<gerer_ord_phar> {
                       return Card(
                         color: Color.fromARGB(255, 235, 233, 233),
                         child: ListTile(
-                          title: Text("ordonnance  $index  (${data.docs[index]['nom patient']})"),
+                          title: Text("ordonnance  $index"
+                              " (${data.docs[index]['nom patient']})"),
                           //title: Text("ordonnance ${data.docs[index]['numero']}"),
 
                           //selected: true,

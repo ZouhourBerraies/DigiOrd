@@ -127,10 +127,6 @@ class _affichageState extends State<affichage> {
           }
           final data = snapshot.requireData;
           return ListView.builder(
-            //scrollDirection: Axis.vertical,
-            //physics: NeverScrollableScrollPhysics(),
-            //addAutomaticKeepAlives: false,
-            //cacheExtent: 100.0,
             itemCount: data.size,
             itemBuilder: (context, index) {
               itemsList.add(data.docs[index]);
@@ -138,32 +134,47 @@ class _affichageState extends State<affichage> {
                 Center(
                   child:
                   Table(
-                    border: TableBorder.all(),
+                    // border: TableBorder.all(),
+                    // border: TableBorder.lerp(
+                    //     TableBorder(top: BorderSide(width: 2,
+                    //         color: Colors.grey)),
+                    //     TableBorder(bottom: BorderSide(width: 4,
+                    //         color: Colors.green))
+                    //     , 0
+                    // ),
                     columnWidths: {
-                      0: FractionColumnWidth(0.10),
+                      0: FractionColumnWidth(0.15),
                       1: FractionColumnWidth(0.15),
                       2: FractionColumnWidth(0.15),
                       3: FractionColumnWidth(0.15),
                       4: FractionColumnWidth(0.15),
                       5: FractionColumnWidth(0.15),
-                      6: FractionColumnWidth(0.15),
+                      //6: FractionColumnWidth(0.15),
 
                     },
                     children: [
 
-                      buildRow([
-                        '${data.docs[index]['numeroMedic']}',
-                        '${data.docs[index]['Medicament']}',
-                        '${data.docs[index]['dose']}',
-                        '${data.docs[index]['par jour']}',
-                        '${data.docs[index]['nombre de jour']}',
-                        '${data.docs[index]['délivrer']}',
-                        '${data.docs[index]['substituer']}',
+                      TableRow(
+                          children: [
 
-
-
-
-                      ]),
+                            Text('${data.docs[index]['Medicament']}',
+                              textAlign: TextAlign.center,),
+                            Text('${data
+                                .docs[index]['nombre de fois par jour']}',
+                              textAlign: TextAlign.center,),
+                            Text('${data.docs[index]['nombre de jour']}',
+                              textAlign: TextAlign.center,),
+                            Text('${data.docs[index]['remarque']}',
+                              textAlign: TextAlign.center,),
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.cyan,
+                            ),
+                            Text('${data.docs[index]['substituer']}',
+                              textAlign: TextAlign.center,
+                            ),
+                          ]
+                      )
                     ],
                   ),
                 );
@@ -178,26 +189,25 @@ class _affichageState extends State<affichage> {
 
 
 
-
   Widget buildqr(BuildContext context) {
     return Container(
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
 
-          Row(
-            children: [
-              Expanded(child: buildTextField(context)),
-              const SizedBox(width: 12),
-              FloatingActionButton(
-                backgroundColor: Theme.of(context).primaryColor,
-                child: Icon(Icons.done, size: 30),
-                onPressed: () {
-                  setState(() {});
-                },
-              )
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Expanded(child: buildTextField(context)),
+          //     const SizedBox(width: 12),
+          //     // FloatingActionButton(
+          //     //   backgroundColor: Theme.of(context).primaryColor,
+          //     //   child: Icon(Icons.done, size: 30),
+          //     //   onPressed: () {
+          //     //     setState(() {});
+          //     //   },
+          //     // )
+          //   ],
+          // ),
 
           SizedBox(height: 10),
           BarcodeWidget(
@@ -212,7 +222,6 @@ class _affichageState extends State<affichage> {
       ),
     );
   }
-
   Widget buildTextField(BuildContext context) => TextFormField(
     controller: controllerqr,
     //   controller:_signateurController,
@@ -247,183 +256,255 @@ class _affichageState extends State<affichage> {
     ),
   );
 
-  Widget buildMedecin(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          children: [
-
-            Container(
-              width: 500,
-              //height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.lightBlue,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  new BoxShadow(
-                    // color: Colors.grey,
-                      color:  Color.fromARGB(255, 235, 233, 233)
-                    // offset: new Offset(10.0, 10.0),
-                  ),
-                ],
-              ),
-              child: Center(
-                  child: Text("Nom de medecin: ${widget.index["nom medecin"]}",
-                    style: TextStyle(fontSize: 20),
-                  )
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget buildPatient(){
-
-    return  Column( crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Column(
-          children: [
-
-            Container(
-              //width: 250,
-              //height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.lightBlue,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  new BoxShadow(
-                    // color: Colors.grey,
-                      color:  Color.fromARGB(255, 235, 233, 233)
-                    // offset: new Offset(10.0, 10.0),
-                  ),
-                ],
-              ),
-              child: Center(
-                  child: Text("Nom de Patient: ${widget.index["nom patient"]}",
-
-                    style: TextStyle(fontSize: 20),
-                  )
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-
-
-
 
   /*      **************            */
   @override
   Widget build(BuildContext context) {
+    // final double height = MediaQuery.of(context).size.height;
+    // final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            'ordonnance',
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
+
+
+      appBar:
+      AppBar(title: Text(
+        '',
+        style:TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ), backgroundColor: Colors.cyan.shade700,
+
+
+        automaticallyImplyLeading: false,
+        actions: [
+          RaisedButton(
+            onPressed: () async {
+
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => accueil()));
+
+              Navigator.pop(context);
+            },
+            child : Icon(
+              Icons.exit_to_app,
               color: Colors.white,
             ),
+            color: Colors.cyan.shade700,
           ),
-          backgroundColor: Colors.blue.shade500),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-              child: Stack(
-                  children: <Widget>[
-                    Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
-                        child:Form(
-                          key: _formKey,
-                          child: Column(
+        ],
+      ),
+
+
+      backgroundColor: Colors.white30,
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                children: <Widget>[
+                  Text(
+                    'Ordonnance Médicale',
+                    style: TextStyle(
+                      fontSize: 40,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 6
+                        ..color = Colors.cyan.shade700,
+                    ),
+                  ),
+                  Text(
+                    'Ordonnance Médicale',
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.cyan.shade50,
+                    ),
+                  )
+                ],
+              ) ,
+            ],
+          ),
+          Expanded(
+            child: Column(
+                children: [
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 32,right: 30, top: 25, bottom: 10),
+                        child: Text(
+                          //'Date:${widget.index['date'].toDate().toString()}',
+                          // 'Date : ${formattedDate(widget.index['date'])}',
+                            'Date de livraison : ${formattedDate(widget.index['date'])}',
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.right,
+                        ),
+                      )
+                    ],
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      new Stack(
+                        children: [
+                          Container(
+                            height: 80,
+                            width:500,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(50),
+                                  topRight: Radius.circular(50)),
+                              color: Colors.cyan.shade50,
+                            ),
+                          ),
+
+                          Column(
                             children: [
-                              SizedBox(
-                                width: double.infinity,
-                                child:
-                                Text(
-                                  //'Date:${widget.index['date'].toDate().toString()}',
-                                  'Date de livraison : ${formattedDate(widget.index['date'])}',
-
-                                  //'Date: ${date.day}/${date.month}/${date.year}',
-                                  style: TextStyle(fontSize: 20),
-                                  textAlign: TextAlign.right,
-
-                                ),),
-
-
-
-                              SizedBox(
-                                height: 16,
-                              ),
-                              buildRnadom(),
-
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildMedecin(),
-
-                              SizedBox(
-                                height: 10,
-                              ),
-                              buildPatient(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-
-                                child:
-                                Table(
-                                  border: TableBorder.all(),
-                                  columnWidths: {
-                                    0: FractionColumnWidth(0.10),
-                                    1: FractionColumnWidth(0.15),
-                                    2: FractionColumnWidth(0.15),
-                                    3: FractionColumnWidth(0.15),
-                                    4: FractionColumnWidth(0.15),
-                                    5: FractionColumnWidth(0.15),
-                                    6: FractionColumnWidth(0.15),
-
-
-                                  },
-                                  children: [
-                                    buildRow(['numero','medicament', 'dose', 'parjour', 'nbrJour','délivrer','substituer'],isHeader: true),
-
-                                  ],
+                              Container(
+                                padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                                child: new Text(
+                                  "Nom du Médecin: ${widget.index["nom medecin"]}",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.cyan.shade700,
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ),
-                              //),
-                              SizedBox(
-                                //height: 10,
-                                child:buildAff(),
+
+                            ],
+                          )
+                        ],
+                      ),
+                      new Container(
+                        margin: const EdgeInsets.only(bottom: 10, top: 50),
+                        //height: 150,
+                        padding: const EdgeInsets.only(left: 20, right: 10, bottom: 20),
+                        child: new Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Colors.cyan,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                offset: Offset(-10.0, 10.0), //(x,y)
+                                blurRadius: 20,
+                                spreadRadius: 4,
                               ),
-                              SizedBox(height: 10,),
-                              buildqr(context),
+                            ],
+                          ),
+                          padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              new Text(
+                                'Numéro Ordonnance : ${widget.index['numero']}',
+                                style: new TextStyle(
+                                  fontSize: 30.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+
                             ],
                           ),
                         ),
-                      ), )
-                  ]))),
+                      ),
+                    ],
+                  ),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      new Stack(
+                        children: [
+                          Container(
+                            height: 80,
+                            width:500,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(50),
+                                  topRight: Radius.circular(50)),
+                              color: Colors.cyan.shade50,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(left: 32, top: 25, bottom: 10),
+                                child: new Text(
+                                  "Nom du Patient: ${widget.index["nom patient"]}",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.cyan.shade700,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+
+
+                    ],
+                  ),
+                ]),
+          ),
+          Expanded(
+            child: AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle.light,
+                child: GestureDetector(
+                    child: Stack(
+                        children: <Widget>[
+                          Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+
+                              child:Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    Table(
+                                      // border: TableBorder.all(),
+                                      border: TableBorder.symmetric(outside: BorderSide(width: 2, color: Colors.cyan),),
+                                      columnWidths: {
+                                        0: FractionColumnWidth(0.15),
+                                        1: FractionColumnWidth(0.15),
+                                        2: FractionColumnWidth(0.15),
+                                        3: FractionColumnWidth(0.15),
+                                        4: FractionColumnWidth(0.15),
+                                        5: FractionColumnWidth(0.15),
+                                        // 6: FractionColumnWidth(0.15),
+                                      },
+                                      children: [
+                                        buildRow(['Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque' ,'Délivré','Substitué'],isHeader: true),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      // height: 10,
+                                      child:buildAff(),
+                                    ),
+                                    // SizedBox(height: 10,),
+                                    buildqr(context),
+                                    // SizedBox(height: 10,),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ]
+                    )
+                )
+            ),
+          ),
+        ],
+      ),
     );
   }
-
-
-
   TableRow buildRow(List<String> cells, {bool isHeader = false}) =>
       TableRow(
           children: cells.map((cell) {
@@ -437,7 +518,6 @@ class _affichageState extends State<affichage> {
               child: Center(child: Text(cell)),
             );
           }).toList());
-
 }
 String formattedDate(timeStamp) {
   var dateFromTimeStamp =

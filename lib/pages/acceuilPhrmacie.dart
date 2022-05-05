@@ -230,7 +230,7 @@ class _accueilPharState extends State<accueilPhar> {
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage("images/accueil.jpg"),
+                            image: AssetImage("images/pharmacienne-client-illustration.jpg"),
                           )),
                     ),
                   ),
@@ -245,14 +245,14 @@ class _accueilPharState extends State<accueilPhar> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Bienvenue Chez ",
+                            "DigiOrd est à votre service. ",
                             style: TextStyle(
                                 color: Colors.cyan.shade700,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25),
                           ),
                           Text(
-                            "  ${widget.pharmacie}.",
+                            "  Prêt de délivrer des medicament.",
                             style: TextStyle(
                                 color: Colors.cyan.shade300,
                                 fontWeight: FontWeight.bold,
@@ -272,17 +272,17 @@ class _accueilPharState extends State<accueilPhar> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15),
                           ),
-                          FlatButton(
-                            onPressed: shownBottomSheet,
-                            child: Text(
-                              "Show Details?",
-                              style: TextStyle(
-                                  color: Colors.cyan.shade700,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                          // FlatButton(
+                          //   onPressed: shownBottomSheet,
+                          //   child: Text(
+                          //     "Show Details?",
+                          //     style: TextStyle(
+                          //         color: Colors.cyan.shade700,
+                          //         fontWeight: FontWeight.bold,
+                          //         fontSize: 12),
+                          //     textAlign: TextAlign.center,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ))

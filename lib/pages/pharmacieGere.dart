@@ -225,7 +225,7 @@ class _pharamcie_gereState extends State<pharamcie_gere> {
                                     )
                                 );
                               }
-                                  ,child: new Text('Listes Des Ordonnance',style: new TextStyle(fontSize:30.0,color: Colors.white,fontWeight: FontWeight.bold,
+                                  ,child: new Text('Liste Des Ordonnances',style: new TextStyle(fontSize:30.0,color: Colors.white,fontWeight: FontWeight.bold,
                                   ),)),
                             ],
                           ),
