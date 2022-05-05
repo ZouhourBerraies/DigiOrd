@@ -145,27 +145,28 @@ class _profilestate extends State<profile> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage("images/profilpatient"),
+                          image: AssetImage("images/profilpatient.png"),
                         )),
                   ),
-                  Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 4,
-                                color:
-                                Theme.of(context).scaffoldBackgroundColor),
-                            shape: BoxShape.circle,
-                            color: Colors.indigo.shade50),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.blueGrey.shade700,
-                        ),
-                      ))
+                  // Positioned(
+                  //     bottom: 0,
+                  //     right: 0,
+                  //     child: Container(
+                  //       height: 40,
+                  //       width: 40,
+                  //       decoration: BoxDecoration(
+                  //           border: Border.all(
+                  //               width: 4,
+                  //               color:
+                  //               Theme.of(context).scaffoldBackgroundColor),
+                  //           shape: BoxShape.circle,
+                  //           color: Colors.indigo.shade50),
+                  //       child: Icon(
+                  //         Icons.edit,
+                  //         color: Colors.blueGrey.shade700,
+                  //       ),
+                  //     )
+                  // )
                 ],
               ),
             ),

@@ -101,7 +101,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
                 Center(
                   child:
                   Table(
-                    border: TableBorder.all(),
+                  //  border: TableBorder.all(),
                     columnWidths: {
                       0: FractionColumnWidth(0.10),
                       1: FractionColumnWidth(0.15),

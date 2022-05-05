@@ -176,7 +176,7 @@ class _accueilPharState extends State<accueilPhar> {
                     left: 35,
                     top: 80,
                     child: new Text(
-                      "Le Monde DigiOrd",
+                      "Bienvenue Chez ${widget.pharmacie}",
                       style: TextStyle(
                           fontSize: 35.0,
                           color: Colors.cyan.shade700,
@@ -245,14 +245,14 @@ class _accueilPharState extends State<accueilPhar> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Bienvenue Chez Le Monde DigiOrd",
+                            "Bienvenue Chez ",
                             style: TextStyle(
                                 color: Colors.cyan.shade700,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25),
                           ),
                           Text(
-                            "   Ne Perdez Plus Votre Ordonnance.",
+                            "  ${widget.pharmacie}.",
                             style: TextStyle(
                                 color: Colors.cyan.shade300,
                                 fontWeight: FontWeight.bold,

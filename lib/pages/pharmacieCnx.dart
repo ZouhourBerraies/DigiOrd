@@ -181,7 +181,7 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Image(image: AssetImage('images/pharamcieclient.jpg')),
+                  child: Image(image: AssetImage('images/pharamcieclient.jpg'),alignment: Alignment.center,),
                 ),
                 SizedBox(
                   width: 30,
@@ -221,7 +221,11 @@ class _pharmacie_cnxState extends State<pharmacie_cnx> {
                             SizedBox(
                               height: 30,
                             ),
-                            user.buildAff(),
+                            SizedBox(
+                              height: 10,
+                              child:user.buildAff(),
+                            ),
+
                           ],
                         ),
                       ),

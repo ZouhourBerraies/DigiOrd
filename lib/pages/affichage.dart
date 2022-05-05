@@ -583,13 +583,13 @@ class _affichageState extends State<affichage> {
                     child:
                     Table(
                       // border: TableBorder.all(),
-                      border: TableBorder.lerp(
-                          TableBorder(top: BorderSide(width: 2,
-                              color: Colors.grey)),
-                          TableBorder(bottom: BorderSide(width: 4,
-                              color: Colors.green))
-                          , 0
-                      ),
+                      // border: TableBorder.lerp(
+                      //     TableBorder(top: BorderSide(width: 2,
+                      //         color: Colors.grey)),
+                      //     TableBorder(bottom: BorderSide(width: 4,
+                      //         color: Colors.green))
+                      //     , 0
+                      // ),
                       columnWidths: {
                         0: FractionColumnWidth(0.15),
                         1: FractionColumnWidth(0.15),
@@ -602,15 +602,6 @@ class _affichageState extends State<affichage> {
                       },
                       children: [
 
-                        // buildRow([
-                        //   //'${data.docs[index]['numeroMedic']}',
-                        //   '${data.docs[index]['medicament']}',
-                        //   '${data.docs[index]['nombre de fois par jour']}',
-                        //   '${data.docs[index]['nombre de jour']}',
-                        //   '${data.docs[index]['remarque']}',
-                        //   '${data.docs[index]['délivrer']}',
-                        //   '${data.docs[index]['substituer']}',
-                        // ]),
                         TableRow(
                             children: [
 
@@ -642,14 +633,14 @@ class _affichageState extends State<affichage> {
                     child:
                     Table(
                       // border: TableBorder.all(),
-                      border: TableBorder.lerp(
-                          TableBorder(
-                              top: BorderSide(width: 2,
-                              color: Colors.white)),
-                          TableBorder(bottom: BorderSide(width: 4,
-                              color: Colors.green))
-                          , 0
-                      ),
+                      // border: TableBorder.lerp(
+                      //     TableBorder(
+                      //         top: BorderSide(width: 2,
+                      //         color: Colors.white)),
+                      //     TableBorder(bottom: BorderSide(width: 4,
+                      //         color: Colors.green))
+                      //     , 0
+                      // ),
                       columnWidths: {
                         0: FractionColumnWidth(0.15),
                         1: FractionColumnWidth(0.15),

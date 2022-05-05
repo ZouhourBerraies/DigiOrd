@@ -94,7 +94,13 @@ class _AddordState extends State<Addord> {
               itemsList.add(data.docs[index]);
               return
                 Table(
-                  border: TableBorder.all(),
+                  // border: TableBorder.lerp(
+                  //     TableBorder(top: BorderSide(width: 2,
+                  //         color: Colors.grey)),
+                  //     TableBorder(bottom: BorderSide(width: 4,
+                  //         color: Colors.green))
+                  //     , 0
+                  // ),
                   columnWidths: {
                     0: FractionColumnWidth(0.35),
                     1: FractionColumnWidth(0.15),
@@ -444,7 +450,8 @@ class _AddordState extends State<Addord> {
                                 child: Column(
                                   children: [
                                     Table(
-                                      border: TableBorder.all(),
+                                     // border: TableBorder.all(),
+                                      border: TableBorder.symmetric(outside: BorderSide(width: 2, color: Colors.cyan),),
                                       columnWidths: {
                                         0: FractionColumnWidth(0.35),
                                         1: FractionColumnWidth(0.15),
@@ -457,12 +464,12 @@ class _AddordState extends State<Addord> {
                                       ],
                                     ),
                                     SizedBox(
-                                      // height: 10,
+                                       //height: 70,
                                       child:buildAff(),
                                     ),
-                                    SizedBox(height: 10,),
+                                   //SizedBox(height: 10,),
                                     buildqr(context),
-                                    SizedBox(height: 10,),
+                                    //SizedBox(height: 10,),
 
 
                                        Row(
@@ -488,7 +495,7 @@ class _AddordState extends State<Addord> {
 
                                           }
                                             },
-                                            child: Text('Save',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                                            child: Text('Sauvegarder',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                                             color: Colors.white60,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(50),

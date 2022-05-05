@@ -45,8 +45,8 @@ class Authentication {
             { itemsList.add(data.docs[index]);
 
             return
-              //Text('');
-              Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
+              Text('');
+             // Text('cin= ${data.docs[index]['cin']} ++++|| ++++password= ${data.docs[index]['password']}');
             },
           );
         },

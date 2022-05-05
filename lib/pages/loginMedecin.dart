@@ -71,9 +71,9 @@ class _medecin_loginstate extends State<medecin_login>{
       body: Center(
         child: Container(
           padding: EdgeInsets.all(50.0),
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+          // child: SingleChildScrollView(
+          //   physics: AlwaysScrollableScrollPhysics(),
+          //   padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
           child: Form(
             key: _formKey,
           child:Column(
@@ -230,7 +230,11 @@ class _medecin_loginstate extends State<medecin_login>{
                                         splashColor: Colors.cyan.shade600,)
                                     ]
                                 ),
-                                login.buildAff(),
+                                //login.buildAff(),
+                                SizedBox(
+                                  height: 10,
+                                  child:login.buildAff(),
+                                ),
                               ],
                             ),
 
@@ -245,26 +249,27 @@ class _medecin_loginstate extends State<medecin_login>{
               ]
           ),
     ),
-        ),),
+       // ),
+        ),
       ),
-      bottomNavigationBar: new BottomNavigationBar(items:[
-        new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),
-          label:'PHOTO TIME',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.ac_unit_rounded),
-          label:'WINTER',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.wifi_sharp),
-          label:'WIFI',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.add_ic_call_outlined),
-          label:'PHONE CALL',
-        )
-      ],
-        onTap: (int x)=>debugPrint('index $x'),
-        type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.cyan.shade600,
-      ),
+      // bottomNavigationBar: new BottomNavigationBar(items:[
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),
+      //     label:'PHOTO TIME',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.ac_unit_rounded),
+      //     label:'WINTER',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.wifi_sharp),
+      //     label:'WIFI',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.add_ic_call_outlined),
+      //     label:'PHONE CALL',
+      //   )
+      // ],
+      //   onTap: (int x)=>debugPrint('index $x'),
+      //   type: BottomNavigationBarType.fixed,
+      //   fixedColor: Colors.cyan.shade600,
+      // ),
     );
   }
 }

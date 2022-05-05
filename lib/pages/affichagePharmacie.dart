@@ -102,13 +102,13 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                     child:
                     Table(
                       // border: TableBorder.all(),
-                      border: TableBorder.lerp(
-                          TableBorder(top: BorderSide(width: 2,
-                              color: Colors.grey)),
-                          TableBorder(bottom: BorderSide(width: 4,
-                              color: Colors.green))
-                          , 0
-                      ),
+                      // border: TableBorder.lerp(
+                      //     TableBorder(top: BorderSide(width: 2,
+                      //         color: Colors.grey)),
+                      //     TableBorder(bottom: BorderSide(width: 4,
+                      //         color: Colors.green))
+                      //     , 0
+                      // ),
                       columnWidths: {
                         0: FractionColumnWidth(0.10),
                         1: FractionColumnWidth(0.15),
@@ -155,13 +155,13 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
     child:
     Table(
     // border: TableBorder.all(),
-    border: TableBorder.lerp(
-    TableBorder(top: BorderSide(width: 2,
-    color: Colors.grey)),
-    TableBorder(bottom: BorderSide(width: 4,
-    color: Colors.green))
-    , 0
-    ),
+    // border: TableBorder.lerp(
+    // TableBorder(top: BorderSide(width: 2,
+    // color: Colors.grey)),
+    // TableBorder(bottom: BorderSide(width: 4,
+    // color: Colors.green))
+    // , 0
+    // ),
     columnWidths: {
     0: FractionColumnWidth(0.10),
     1: FractionColumnWidth(0.15),
@@ -216,13 +216,13 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                     child:
                     Table(
                       // border: TableBorder.all(),
-                      border: TableBorder.lerp(
-                          TableBorder(top: BorderSide(width: 2,
-                              color: Colors.grey)),
-                          TableBorder(bottom: BorderSide(width: 4,
-                              color: Colors.green))
-                          , 0
-                      ),
+                      // border: TableBorder.lerp(
+                      //     TableBorder(top: BorderSide(width: 2,
+                      //         color: Colors.grey)),
+                      //     TableBorder(bottom: BorderSide(width: 4,
+                      //         color: Colors.green))
+                      //     , 0
+                      // ),
                       columnWidths: {
                         0: FractionColumnWidth(0.10),
                         1: FractionColumnWidth(0.15),
@@ -362,7 +362,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
 
       appBar:
       AppBar(title: Text(
-        'Zone Médecin',
+        'Zone Pharmacie',
         style:TextStyle(
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
@@ -633,12 +633,12 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                       ],
                                     ),
                                     SizedBox(
-                                      // height: 10,
+                                       //height: 70,
                                       child:buildAff(),
                                     ),
-                                    SizedBox(height: 10,),
+                                    //SizedBox(height: 10,),
                                     buildqr(context),
-                                    SizedBox(height: 10,),
+                                    //SizedBox(height: 10,),
 
 
                                     Row(
@@ -651,11 +651,11 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                         ),
                                         RaisedButton(onPressed: () {
                                           ord.AjouterOrdPhar(date,widget.idpharmacie ,widget.index["nom medecin"], widget.index["num medecin"],widget.idpatient, widget.index["patient"], widget.index['signature'], widget.index['numero']);
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(
-                                              content: Text('Sending data to cloud firesstore'),
-                                            ),
-                                          );
+                                          // ScaffoldMessenger.of(context).showSnackBar(
+                                          //   SnackBar(
+                                          //     content: Text('Sending data to cloud firesstore'),
+                                          //   ),
+                                          // );
                                           //Navigator.pop(context);
 
                                           Navigator.push(

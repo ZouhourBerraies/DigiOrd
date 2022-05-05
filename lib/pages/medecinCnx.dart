@@ -292,7 +292,12 @@ class _medecin_cnxState extends State<medecin_cnx> {
                           SizedBox(
                             height: 30,
                           ),
-                          newuser.buildAff(),
+                          SizedBox(
+                            height: 10,
+                            child:newuser.buildAff(),
+                          ),
+                          //newuser.buildAff(),
+
                         ],
                       ),
                     ),

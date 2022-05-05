@@ -231,8 +231,9 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                         splashColor: Colors.deepOrange.shade700,)
                                     ]
                                 ),
+                              //login.buildAff(),
                                 SizedBox(
-                                 // height: 20,
+                                  height: 10,
                                 child:login.buildAff(),
                                 ),
 
@@ -252,25 +253,25 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
     //),
         ),
       ),
-      bottomNavigationBar:
-        new BottomNavigationBar(items:[
-        new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),
-          label:'PHOTO TIME',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.ac_unit_rounded),
-          label:'WINTER',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.wifi_sharp),
-          label:'WIFI',
-        ),
-        new BottomNavigationBarItem(icon: new Icon(Icons.add_ic_call_outlined),
-          label:'PHONE CALL',
-        )
-      ],
-        onTap: (int x)=>debugPrint('index $x'),
-        type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.deepOrange.shade700,
-      ),
+      // bottomNavigationBar:
+      //   new BottomNavigationBar(items:[
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.add_a_photo),
+      //     label:'PHOTO TIME',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.ac_unit_rounded),
+      //     label:'WINTER',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.wifi_sharp),
+      //     label:'WIFI',
+      //   ),
+      //   new BottomNavigationBarItem(icon: new Icon(Icons.add_ic_call_outlined),
+      //     label:'PHONE CALL',
+      //   )
+      // ],
+      //   onTap: (int x)=>debugPrint('index $x'),
+      //   type: BottomNavigationBarType.fixed,
+      //   fixedColor: Colors.deepOrange.shade700,
+      // ),
     );
   }
 }

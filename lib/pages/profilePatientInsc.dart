@@ -137,7 +137,7 @@ class _profilestate extends State<profile>{
         child: ListView(
           children: [
             Text(
-              'Edit Profil',
+              'Modifier Votre  Profil',
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
