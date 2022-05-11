@@ -81,7 +81,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child:Image(image:AssetImage('images/pharm.jpg')),),
+                      child:Image(image:AssetImage('images/phar.png')),),
                     Expanded(
                       child: Column(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,

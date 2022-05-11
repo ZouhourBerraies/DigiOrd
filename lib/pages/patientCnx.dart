@@ -264,7 +264,7 @@ String img='';
                 Scaffold.of(context).openDrawer();}
               ,
               child: Icon(Icons.settings_applications_rounded,
-              color: Colors.white,
+              color: Colors.indigo.shade100,
               ),
               color: Colors.indigo.shade300,
             );

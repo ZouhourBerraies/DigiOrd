@@ -29,7 +29,7 @@ class _gerer_ord_pharState extends State<gerer_ord_phar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Les ordonnances médicales Délivrés')),
+        appBar: AppBar(title: Text('Les ordonnances médicales Délivrées')),
 
         body: Container(
           child: StreamBuilder<QuerySnapshot>(
