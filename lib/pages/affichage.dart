@@ -917,11 +917,11 @@ class _affichageState extends State<affichage> {
                                    // 6: FractionColumnWidth(0.15),
                                       },
                                       children: [
-                                        buildRow(['Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque' ,'Délivré','Substitué'],isHeader: true),
+                                        buildRow(['Médicament', 'Nombre de fois par jour','Nombre Jours','Remarque' ,'Délivré','Substitué'],isHeader: true),
                                       ],
                                     ),
                                     SizedBox(
-                                     // height: 10,
+                                     height: 120,
                                       child:buildAff(),
                                     ),
                                    // SizedBox(height: 10,),

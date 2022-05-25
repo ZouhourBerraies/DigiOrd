@@ -295,7 +295,7 @@ class MedicamentSearch extends SearchDelegate<String> {
   "IRYS 	2 mg" 	,
  " IRYS 	3 mg ",
   "IRYS 	4 mg "	,
-  // IRYS 	1 mg 	Comprimé pelliculé sécable 	B/90 	GLIMEPIRIDE 	LES LABORATOIRES MEDIS 	Tunisie 	9233359 	2010-03-27 	Générique
+  "IRYS 	1 mg ",
   // IRYS 	3 mg 	Comprimé pelliculé sécable 	B/90 	GLIMEPIRIDE 	LES LABORATOIRES MEDIS 	Tunisie 	92333511 	2010-03-27 	Générique
   // IRYS 	4 mg 	Comprimé pelliculé sécable 	B/90 	GLIMEPIRIDE 	LES LABORATOIRES MEDIS 	Tunisie 	92333512 	2010-03-27 	Générique
   // IRYS 	2 mg 	Comprimé pelliculé sécable 	B/90 	GLIMEPIRIDE 	LES LABORATOIRES MEDIS 	Tunisie 	92333510 	2010-03-27 	Générique
@@ -316,12 +316,12 @@ class MedicamentSearch extends SearchDelegate<String> {
   // JANUMET 	50 mg/1000mg 	Comprimé pelliculé 	B/56 	SITAGLIPTINE+METFORMINE 	MERCK SHARP & DOHME BV 	HOLLANDE 	70133141 	2021-11-03 	Princeps
   //
   //
-  // JANUMET 	50 mg/850mg 	Comprimé pelliculé 	B/56 	SITAGLIPTINE+METFORMINE 	Merck Sharp & Dohme Ltd R.U 	United Kingdom 	3443092 	2016-02-04 	Princeps
+  "JANUMET 	50 mg/850mg" ,
   //
   //
   //
   //
-  // JANUVIA 	100 mg 	Comprimé pelliculé 	B/28 	SITAGLIPTINE 	Merck Sharp & Dohme Ltd R.U 	United Kingdom 	3443071 	2011-12-28 	Princeps
+  "JANUVIA 	100 mg ",
   //
   //
   //
@@ -356,7 +356,7 @@ class MedicamentSearch extends SearchDelegate<String> {
   //
   //
   // KOMBIGLYZE XR 	5 mg/1000 mg 	Comprimé 	B/30 	SAXAGLIPTIN+METFORMINE 	AstraZeneca AB SUEDE 	SUEDE 	8233022 	2015-12-01 	Princeps
-  // LANTUS 	100 UI/ML 	Solution injectable 	B/5 Cartouches/3ML 	INSULINE ANALOGUE 	SANOFI-AVENTIS Deutschland GmbH 	Germany 	1823021 	2003-04-24 	Princeps
+   "LANTUS 	100 UI/ML "	,
   // LANTUS SOLOSTAR 	100 UI/ML 	Solution injectable 	B/5 stylos préremplis/3 ml 	INSULINE ANALOGUE 	SANOFI-AVENTIS Deutschland GmbH 	Germany 	1823025 	2008-05-28 	Princeps
   //
   //
@@ -393,7 +393,7 @@ class MedicamentSearch extends SearchDelegate<String> {
   // MIXTARD 30 PENFILL 	100 UI/ML 	Suspension injectable 	B/5/3 ML 	INSULINE HUMAINE 	NOVO NORDISK A/S Bagsvaerd 	Denmark 	5993025 	2001-12-12 	Princeps
   //
   //
-  // MONOREL 	1 mg 	Comprimé sécable 	B/90 	GLIMEPIRIDE 	DAR-ESSAYDALI. 	Tunisie 	9213215 	2014-03-19 	Générique
+  "MONOREL 	1 mg" 	,
   // MONOREL 	4 mg 	Comprimé sécable 	B/90 	GLIMEPIRIDE 	DAR-ESSAYDALI. 	Tunisie 	9213218 	2014-03-19 	Générique
   // MONOREL 	3 mg 	Comprimé sécable 	B/90 	GLIMEPIRIDE 	DAR-ESSAYDALI. 	Tunisie 	9213217 	2014-03-19 	Générique
   // MONOREL 	2 mg 	Comprimé sécable 	B/90 	GLIMEPIRIDE 	DAR-ESSAYDALI. 	Tunisie 	9213216 	2014-03-19 	Générique
@@ -416,7 +416,7 @@ class MedicamentSearch extends SearchDelegate<String> {
   // NOVORAPID FLEXPEN 	100 UI/ML 	Solution injectable 	B/5 stylos pré-remplis/3 ML 	INSULINE ANALOGUE 	NOVO NORDISK A/S Bagsvaerd 	Denmark 	5993081 	2007-02-28 	Princeps
   //
   //
-  // PIAGTOS 	30 mg 	Comprimé 	FL/30 	PIOGLITAZONE 	TERIAK 	Tunisie 	9253392 	2009-08-22 	Générique
+  " PIAGTOS 	30 mg" 	,
   // PIAGTOS 	15 MG 	Comprimé 	FL/30 	PIOGLITAZONE 	TERIAK 	Tunisie 	9253391 	2008-06-25 	Générique
   // REPAGLINID SANDOZ 	0.5 MG 	Comprimé 	B/90 	REPAGLINIDE 	SANDOZ GmbH 	AUTRICHE 	11073071 	2019-09-17 	Générique
   // REPAGLINID SANDOZ 	1MG 	Comprimé 	B/90 	REPAGLINIDE 	SANDOZ GmbH 	AUTRICHE 	11073072 	2019-08-22 	Générique
@@ -431,7 +431,7 @@ class MedicamentSearch extends SearchDelegate<String> {
   //
   //
   //
-  // SITA 50 	50 mg 	Comprimé pelliculé 	B/30 	SITAGLIPTINE 	TERIAK 	Tunisie 	9254101 	2019-02-06 	Générique
+  " SITA 50 	50 mg "	,
   // SITAGLIP 	100 mg 	Comprimé pelliculé 	B/30 	SITAGLIPTINE 	THERA 	Tunisie 	9403061 	2019-06-19 	Générique
   //
   //
@@ -453,7 +453,7 @@ class MedicamentSearch extends SearchDelegate<String> {
   //
   //
   // TOUJEO SOLOSTAR 	300unités/ml 	Solution injectable 	B/3Stylos/1.5ml 	INSULINE GLARGINE 	SANOFI-AVENTIS Deutschland GmbH 	Germany 	1823041 	2021-01-26 	Princeps
-  // TRAJENTA 	5 mg 	Comprimé pelliculé 	B/28 	LINAGLIPTINE 	BOEHRINGER ING.INT.GmbH 	Germany 	11533061 	2017-02-20 	Princeps
+   "TRAJENTA 	5 mg" 	,
   //
   //
   //
@@ -461,11 +461,11 @@ class MedicamentSearch extends SearchDelegate<String> {
   // TRESIBA FLEXTOUCH 	100 U/ ML 	Solution injectable 	B/5 stylos préremplis de 3 ml 	INSULINE DEGLUDEC 	NOVO NORDISK A/S Bagsvaerd 	Denmark 	5993131 	2019-08-22 	Princeps
   // TRESIBA FLEXTOUCH 	200 U/ ML 	Solution injectable 	B/3 stylos préremplis de 3 ml 	INSULINE DEGLUDEC 	NOVO NORDISK A/S Bagsvaerd 	Denmark 	5993132 	2019-08-22 	Princeps
   // VICTOZA 	6 mg/ml 	Solution injectable 	B/ 2 stylos/ 3ml 	LIRAGLUTIDE 	NOVO NORDISK A/S Bagsvaerd 	Denmark 	5993111 	2013-09-10 	Princeps
-  // VILDA 	50 mg 	Comprimé 	B/30 	VILDAGLIPTINE 	PHILADELPHIA PHARMA 	Tunisie 	9353201 	2018-03-07 	Générique
+  "VILDA 	50 mg" 	,
   // VILDAMET 	50 mg/1000 mg 	Comprimé pelliculé 	B/60 	VILDAGLIPTINE+METFORMINE 	PHILADELPHIA PHARMA 	Tunisie 	9353281 	2021-03-30 	Générique
   // VILDAMET 	50 mg/1000 mg 	Comprimé pelliculé 	B/30 	VILDAGLIPTINE+METFORMINE 	PHILADELPHIA PHARMA 	Tunisie 	9353282 	2021-12-30 	Générique
   // VILDYNE 	50 mg 	Comprimé 	B/30 	VILDAGLIPTINE 	TAHA PHARMA 	Tunisie 	9373471 	2018-03-07 	Générique
-  // VILDYNE 	50 mg 	Comprimé 	B/60 	VILDAGLIPTINE 	TAHA PHARMA 	Tunisie 	9373472 	2019-05-02 	Génériq
+   "VILDYNE 	50 mg" 	,
 
   ];
   final recentmedicaments = [];

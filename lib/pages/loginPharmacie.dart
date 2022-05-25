@@ -44,7 +44,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
-      ), backgroundColor: Colors.blue.shade300,
+      ), backgroundColor: Colors.cyan.shade300,
       automaticallyImplyLeading: false,
           actions: [
         RaisedButton(
@@ -58,7 +58,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
     Icons.exit_to_app,
     color: Colors.white,
       ),
-      color: Colors.blue.shade300,
+      color: Colors.cyan.shade300,
     ),
           ],),
 
@@ -96,7 +96,7 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                   style:TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.deepOrange.shade700,
+                                    color: Colors.cyan.shade600,
                                   ),),
                                 SizedBox(height: 50,),
                                 TextFormField(
@@ -226,9 +226,9 @@ class _pharmacie_loginstate extends State<pharmacie_login>{
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10),
                                         ),
-                                        textColor: Colors.deepOrange.shade700,
+                                        textColor: Colors.cyan.shade600,
                                         padding: EdgeInsets.all(15.0),
-                                        splashColor: Colors.deepOrange.shade700,)
+                                        splashColor: Colors.cyan.shade600,)
                                     ]
                                 ),
                               //login.buildAff(),

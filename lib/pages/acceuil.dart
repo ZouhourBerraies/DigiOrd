@@ -50,43 +50,64 @@ class _accueilState extends State<accueil> {
       body: Column(
         children: [
           new Container(
-            height: 180,
-            //width: width*0.9,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(50),
-              ),
-              color: Colors.cyan.shade100,
-              //color: Colors.deepOrange.shade100,
-            ),
-            child: new Stack(
-              children: [
-                Positioned(
-                  top: 40,
-                  left: 0,
-                  child: Container(
-                    height: 100,
-                    width: 900,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(50),
-                          topRight: Radius.circular(50)),
-                      color: Colors.white,
-                    ),
-                  ),
+              height: 180,
+              //width: width*0.9,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(50),
                 ),
-                Positioned(
-                    left: 35,
-                    top: 80,
-                    child: new Text(
-                      "Le Monde DigiOrd",
-                      style: TextStyle(
-                          fontSize: 35.0,
-                          color: Colors.cyan.shade700,
-                          fontWeight: FontWeight.bold),
-                    ))
-              ],
-            ),
+                color: Colors.cyan.shade100,
+                //color: Colors.deepOrange.shade100,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  new Stack(
+                    children: [
+                      Positioned(
+                        // top: 40,
+                        // left: 0,
+                        child: Container(
+                          height: 100,
+                          width: 500,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(50),
+                                topRight: Radius.circular(50)),
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                          left: 35,
+                          top: 40,
+                          child: Row(
+                            children: [
+                              new Text(
+                                "Le Monde DigiOrd",
+                                style: TextStyle(
+                                    fontSize: 35.0,
+                                    color: Colors.cyan.shade700,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )
+                      )
+                    ],
+                  ),
+                  new Container(
+                    //padding: EdgeInsets.only(right: 10,bottom: 100, top: 5),
+                    height: 120,
+                    width: 350,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("images/Logo.jpg"),
+                        )),
+                  ),
+                ],
+              )
           ),
           SizedBox(
             height: height * 0.05,
@@ -200,7 +221,7 @@ class _accueilState extends State<accueil> {
                     margin: const EdgeInsets.only(bottom: 10, top: 50),
                     width: 500,
                     padding:
-                        const EdgeInsets.only(left: 20, right: 10, bottom: 20),
+                    const EdgeInsets.only(left: 20, right: 10, bottom: 20),
                     child: new Container(
                       decoration: BoxDecoration(
                         color: Colors.cyan,
@@ -216,19 +237,19 @@ class _accueilState extends State<accueil> {
                         ],
                       ),
                       padding:
-                          const EdgeInsets.only(left: 32, top: 50, bottom: 50),
+                      const EdgeInsets.only(left: 32, top: 50, bottom: 50),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           new FlatButton(
-                           
+
                               onPressed: () {
-          Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => medecin_login()
-            )
-            );
-        },
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => medecin_login()
+                                    )
+                                );
+                              },
                               child: new Text(
                                 'Médecin',
                                 style: new TextStyle(
@@ -245,7 +266,7 @@ class _accueilState extends State<accueil> {
                     margin: const EdgeInsets.only(bottom: 10, top: 50),
                     width: 500,
                     padding:
-                        const EdgeInsets.only(left: 20, right: 10, bottom: 20),
+                    const EdgeInsets.only(left: 20, right: 10, bottom: 20),
                     child: new Container(
                       decoration: BoxDecoration(
                         color: Colors.cyan,
@@ -261,18 +282,18 @@ class _accueilState extends State<accueil> {
                         ],
                       ),
                       padding:
-                          const EdgeInsets.only(left: 32, top: 50, bottom: 50),
+                      const EdgeInsets.only(left: 32, top: 50, bottom: 50),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           new FlatButton(
                               onPressed: () {
-          Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => pharmacie_login()
-            )
-            );
-        },
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => pharmacie_login()
+                                    )
+                                );
+                              },
                               child: new Text(
                                 'Pharmacien',
                                 style: new TextStyle(
@@ -289,7 +310,7 @@ class _accueilState extends State<accueil> {
                     margin: const EdgeInsets.only(bottom: 10, top: 50),
                     width: 500,
                     padding:
-                        const EdgeInsets.only(left: 20, right: 10, bottom: 20),
+                    const EdgeInsets.only(left: 20, right: 10, bottom: 20),
                     child: new Container(
                       decoration: BoxDecoration(
                         color: Colors.cyan,
@@ -305,18 +326,18 @@ class _accueilState extends State<accueil> {
                         ],
                       ),
                       padding:
-                          const EdgeInsets.only(left: 32, top: 50, bottom: 50),
+                      const EdgeInsets.only(left: 32, top: 50, bottom: 50),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           new FlatButton(
                               onPressed: () {
-          Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => patient_login()
-            )
-            );
-        },
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => patient_login()
+                                    )
+                                );
+                              },
                               child: new Text(
                                 'Patient',
                                 style: new TextStyle(

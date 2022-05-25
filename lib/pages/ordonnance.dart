@@ -181,7 +181,7 @@ class _AddordState extends State<Addord> {
       fontSize: 20,
     ),
     decoration: InputDecoration(
-      hintText: 'Enter Signature',
+      hintText: 'Entrez Signature',
       hintStyle: TextStyle(color: Colors.grey),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
@@ -459,15 +459,15 @@ class _AddordState extends State<Addord> {
                                         3: FractionColumnWidth(0.25),
                                       },
                                       children: [
-                                        buildRow(['Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque'],isHeader: true),
+                                        buildRow(['Médicament', 'Nombre de fois par jour','Nombre de Jours','Remarque'],isHeader: true),
 
                                       ],
                                     ),
                                     SizedBox(
-                                       //height: 70,
+                                       height: 120,
                                       child:buildAff(),
                                     ),
-                                   //SizedBox(height: 10,),
+                                  // SizedBox(height: 70,),
                                     buildqr(context),
                                     //SizedBox(height: 10,),
 
@@ -546,7 +546,7 @@ class _AddordState extends State<Addord> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Ajouter Medicament'),
+            title: Text('Ajouter  Médicament'),
             content: Container(
               height: 300,
               child: Form(
@@ -591,13 +591,13 @@ class _AddordState extends State<Addord> {
                           //         builder: (context) => ListSearch()));
                         },
                       ),
-                          hintText: 'medicament'),
+                          hintText: 'médicament'),
                       onChanged: (value) {
                         medic = value;
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Entrez nom de medicament!';
+                          return 'Entrez nom de  médicament!';
                         } else
                           return null;
                       },
@@ -620,7 +620,7 @@ class _AddordState extends State<Addord> {
                     ),
                     TextFormField(
                       controller: _nbrjourController,
-                      decoration: InputDecoration(hintText: 'nombre de jour'),
+                      decoration: InputDecoration(hintText: 'nombre de jours'),
                       onChanged: (value) {
                         nbrjour = int.parse(value);
                       },
@@ -671,13 +671,14 @@ class _AddordState extends State<Addord> {
     ord.AjouterMedic(random, numero,medic, parjour,nbrjour,remarque,widget.idpatient,);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(' Medicament Ajouté'),
+        content: Text('Médicament Ajouté'),
       ),
     );
     _medicController.clear();
     _remarqueController.clear();
     _parjourController.clear();
     _nbrjourController.clear();
+    remarque='rien';
   }
 String formattedDate(timeStamp) {
   var dateFromTimeStamp =

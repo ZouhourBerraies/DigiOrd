@@ -128,7 +128,8 @@ class CreateOrd {
       'nombre de fois par jour': parjour,
       'nombre de jour': nbrjour,
       'substituer': "non",
-      'délivrer': "oui"
+      'délivrer': "oui",
+      'remarque': remarque,
 
     });
   }

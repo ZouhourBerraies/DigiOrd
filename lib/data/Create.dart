@@ -38,8 +38,9 @@ class Create {
             {
               itemsList.add(data.docs[index]['cin']);
 
-              return Text('cin= ${data.docs[index]['cin']}');
-              //Text('');
+              return
+                //Text('cin= ${data.docs[index]['cin']}');
+              Text('');
             },
           );
         },

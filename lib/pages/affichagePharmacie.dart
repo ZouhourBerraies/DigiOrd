@@ -192,7 +192,7 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
           onPressed: (){
             print ('deliver $index');
             ord.delivrerMedic(widget.index['numero'],'$index', widget.idpatient);
-            ord.DelivMedic(widget.index['numero'], '$index',data.docs[index]['medicament'], data.docs[index]['nombre de fois par jour'],data.docs[index]['nombre de jour'],'${data.docs[index]['remarque']}', widget.idpharmacie);
+            ord.DelivMedic(widget.index['numero'], '$index',data.docs[index]['medicament'], data.docs[index]['nombre de fois par jour'],data.docs[index]['nombre de jour'],data.docs[index]['remarque'], widget.idpharmacie);
           },
           icon: Icon(Icons.cancel,color: Colors.black26,)
       ),
@@ -630,14 +630,15 @@ class _affichagePharmacieState extends State<affichagePharmacie> {
                                         6: FractionColumnWidth(0.15),
                                       },
                                       children: [
-                                        buildRow(['Numero','Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque' ,'Délivré','Substitué'],isHeader: true),
+                                        buildRow(['Numéro','Médicament', 'Nombre de fois par jour','Nombre de Jours','Remarque' ,'Délivré','Substitué'],isHeader: true),
                                       ],
                                     ),
                                     SizedBox(
-                                       //height: 70,
+                                       height: 120,
                                       child:buildAff(),
                                     ),
                                     //SizedBox(height: 10,),
+
                                     buildqr(context),
                                     //SizedBox(height: 10,),
 

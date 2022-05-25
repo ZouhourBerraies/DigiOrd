@@ -1,4 +1,5 @@
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -391,27 +392,58 @@ class _InscriptionState extends State<Inscription> {
       ],
     );
   }
-  Widget builddiplome(context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 25),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5,
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => QRScanPage(),)),
-        padding: EdgeInsets.all(15),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        color: Colors.white,
-        child: Text(
-          'Scan QR Code',
-
+  // Widget builddiplome(context) {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(vertical: 25),
+  //     width: double.infinity,
+  //     child: RaisedButton(
+  //       elevation: 5,
+  //       onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+  //         builder: (BuildContext context) => QRScanPage(),)),
+  //       padding: EdgeInsets.all(15),
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+  //       color: Colors.white,
+  //       child: Text(
+  //         'Scan QR Code',
+  //
+  //         style: TextStyle(
+  //             color: Colors.blue.shade300,
+  //             fontWeight: FontWeight.bold),
+  //       ),
+  //     ),
+  //   );
+  // }
+  Widget builddiplome() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Téléchargez Votre Diplome',
           style: TextStyle(
-              color: Colors.blue.shade300,
-              fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
-      ),
+        SizedBox(
+          height: 10,
+        ),
+        RaisedButton(
+          onPressed: selectFile,
+          child: Icon(
+            Icons.arrow_circle_down,
+            color: Colors.cyan,
+          ),
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100)),
+          padding: EdgeInsets.all(20.0),
+
+
+        )
+
+      ],
     );
   }
+
 
 
   Widget buildRetourBtn(BuildContext context) {
@@ -558,18 +590,18 @@ class _InscriptionState extends State<Inscription> {
                               height: 20,
                             ),
 
-                            SizedBox(
-                              width: double.infinity,
-                              child: Container(
-                                child:
-                                Text(
-                                  'Entrez Votre Diplome',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                                ),),
-                            ),
-                            builddiplome(context),
+                            // SizedBox(
+                            //   width: double.infinity,
+                            //   child: Container(
+                            //     child:
+                            //     Text(
+                            //       'Entrez Votre Diplome',
+                            //       textAlign: TextAlign.left,
+                            //       style: TextStyle(
+                            //           color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                            //     ),),
+                            // ),
+                            builddiplome(),
                             SizedBox(
                               height: 20,
                             ),
@@ -588,5 +620,13 @@ class _InscriptionState extends State<Inscription> {
                     ))
               ]))),
     );
+  }
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    // if (result != null && result.files.isNotEmpty) {
+    //   final fileBytes = result.files.first.bytes;
+    //   final fileName = result.files.first.name;
+    //   await FirebaseStorage.instance.ref('Médecins/$fileName').putData(fileBytes!);
+    // }
   }
 }

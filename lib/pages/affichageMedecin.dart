@@ -470,7 +470,7 @@ class _affichageMedecinState extends State<affichageMedecin> {
 
                                       },
                                       children: [
-                                        buildRow(['Numero','Médicament', 'Nombre de fois par jour','Nombre de Jour','remarque' ,'Délivré','Substitué'],isHeader: true),
+                                        buildRow(['Numéro','Médicament', 'Nombre de fois par jour','Nombre de Jours','Remarque' ,'Délivré','Substitué'],isHeader: true),
                                       ],
                                     ),
                                     SizedBox(
